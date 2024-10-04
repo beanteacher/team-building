@@ -24,6 +24,7 @@ import sansam.team.security.handler.LoginFailureHandler;
 import sansam.team.security.handler.LoginSuccessHandler;
 import sansam.team.security.util.JWTUtil;
 import sansam.team.security.util.SecurityUtil;
+import sansam.team.user.command.application.service.UserService;
 import sansam.team.user.query.service.UserDetailServiceImpl;
 
 @Configuration
@@ -35,6 +36,7 @@ public class SecurityConfig {
     private final JWTUtil jwtUtil;
     private final Environment env;
     private final UserDetailServiceImpl userDetailService;
+    private final UserService userService;
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
@@ -82,7 +84,7 @@ public class SecurityConfig {
     private Filter getAuthenticationFilter() {
         CustomAuthenticationFilter customAuthenticationFilter = new CustomAuthenticationFilter();
         customAuthenticationFilter.setAuthenticationManager(getAuthenticationManager());
-        customAuthenticationFilter.setAuthenticationSuccessHandler(new LoginSuccessHandler(env));
+        customAuthenticationFilter.setAuthenticationSuccessHandler(new LoginSuccessHandler(env, userService));
         customAuthenticationFilter.setAuthenticationFailureHandler(new LoginFailureHandler());
         return customAuthenticationFilter;
     }

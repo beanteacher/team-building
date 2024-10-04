@@ -25,7 +25,7 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 
     private final Environment env;
 
-    private UserService userService;
+    private final UserService userService;
 
 
     @Override
