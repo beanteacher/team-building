@@ -12,6 +12,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import sansam.team.security.jwt.JwtToken;
+import sansam.team.user.command.application.service.UserService;
 import sansam.team.user.query.dto.CustomUserDTO;
 
 import javax.crypto.SecretKey;
@@ -24,10 +25,14 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 
     private final Environment env;
 
+    private final UserService userService;
+
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
-        log.info("로그인 성공 : {}", authentication);
+        if(userService.setLoginLog(authentication, request)) {
+            log.error("setLoginLog Error : {}", authentication);
+        }
 
         byte[] keyBytes = Decoders.BASE64.decode(env.getProperty("JWT_SECRET_KEY"));
         SecretKey secretKey = Keys.hmacShaKeyFor(keyBytes);
