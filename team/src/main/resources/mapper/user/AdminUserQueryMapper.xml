@@ -4,7 +4,7 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="sansam.team.user.query.mapper.UserQueryMapper">
 
-    <select id="findAllLoginLog" resultType="sansam.team.user.query.dto.UserQueryDTO$AdminLoginLogDTO">
+    <select id="findAllLoginLog" resultType="sansam.team.user.query.dto.AdminLoginLogDTO">
         SELECT tl.login_log_seq logSeq
             , tl.login_log_code loginCode
             , tl.login_log_reg_date regDate
