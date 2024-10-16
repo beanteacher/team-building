@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="sansam.team.user.query.mapper.AdminUserInfoQueryMapper">
+
+    <!-- 관리자 회원 전체 조회 -->
+    <select id="findAllUserInfo" resultType="AdminUserInfoAllQueryDTO">
+        SELECT
+        user_seq AS userSeq,
+        user_name AS userName,
+        user_id AS userId,
+        user_nickname AS userNickname,
+        user_auth AS userAuth,
+        user_status AS userStatus,
+        reg_date AS regDate,
+        user_email AS userEmail,
+        user_phone AS userPhone
+        FROM
+        tbl_user
+        ORDER BY
+        reg_date DESC
+    </select>
+
+</mapper>
