@@ -23,6 +23,7 @@ public class LoginLog {
     @Column(name = "user_seq")
     private long userSeq;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "login_log_code")
     private LoginType loginCode;
 

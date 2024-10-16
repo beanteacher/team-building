@@ -3,12 +3,14 @@ package sansam.team.security.util;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import io.jsonwebtoken.security.SecurityException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
+import sansam.team.exception.CustomException;
 import sansam.team.user.query.service.UserDetailServiceImpl;
 
 import javax.crypto.SecretKey;
@@ -33,7 +35,7 @@ public class JWTUtil {
         try {
             Jwts.parserBuilder().setSigningKey(secretKey).build().parseClaimsJws(token);
             return true;
-        } catch (io.jsonwebtoken.security.SecurityException | MalformedJwtException e) {
+        } catch (SecurityException | MalformedJwtException e) {
             log.info("Invalid JWT Token {}", e);
         } catch (ExpiredJwtException e) {
             log.info("Expired JWT Token {}", e);
@@ -48,7 +50,14 @@ public class JWTUtil {
 
     /* 넘어온 AccessToken으로 인증 객체 추출 */
     public Authentication getAuthentication(String token) {
-        UserDetails userDetails = userDetailService.loadUserByUsername(this.getUserId(token));
+        UserDetails userDetails = null;
+        try {
+            userDetails = userDetailService.loadUserByUsername(this.getUserId(token));
+        } catch (Exception e) {
+            if (((CustomException) e).getErrorCode() != null) {
+                //TODO 아영 - 아이디는 있는데 비밀번호가 없을경우 로그인 로그 넣기
+            }
+        }
 
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }

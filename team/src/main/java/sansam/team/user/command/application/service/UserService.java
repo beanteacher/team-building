@@ -55,19 +55,33 @@ public class UserService {
     }
 
     @Transactional
-    public boolean setLoginLog(Authentication authentication, HttpServletRequest request) {
+    public boolean setLoginSuccessLog(Authentication authentication, HttpServletRequest request) {
 
         if(ObjectUtils.isEmpty(authentication)) return false;
+
+        // TODO 아영 - user_status = 'active'가 아닐 경우 로그인 실패
+        // TODO 아영 - fail이 연속 5회일경우 회원 상태 정지 후 로그인 상태도 정지 (로그인 시도 횟수를 초과하였습니다. 관리자에게 문의해 주세요.)
 
         LoginLogDTO.LoginLogRequestDto logRequestDto = LoginLogDTO.LoginLogRequestDto.builder()
                 .userSeq(Long.parseLong(authentication.getName()))
                 .loginCode(LoginType.SUCCESS)
                 .loginIp(getClientIP(request))
-                .loginAgent("")                 //TODO ayoeng - agent 값 필요없으면 삭제하기
                 .build();
         LoginLog log = loginLogRepository.save(modelMapper.map(logRequestDto, LoginLog.class));
 
         return ObjectUtils.isEmpty(log);
+    }
+
+    @Transactional
+    public void setLoginErrorLog(Authentication authentication, HttpServletRequest request) {
+
+        LoginLogDTO.LoginLogRequestDto logRequestDto = LoginLogDTO.LoginLogRequestDto.builder()
+                .userSeq(Long.parseLong(authentication.getName()))
+                .loginCode(LoginType.FAIL)
+                .loginIp(getClientIP(request))
+                .build();
+
+        loginLogRepository.save(modelMapper.map(logRequestDto, LoginLog.class));
     }
 
     private static String getClientIP(HttpServletRequest request) {
