@@ -6,20 +6,20 @@
     <!--유저 정보 조회 (마이페이지 기본 정보)-->
     <select id="findUserInfoByUserSeq" resultType="sansam.team.user.query.dto.UserInfoResponseDTO">
         SELECT
-        user_seq,
-        user_id,
-        user_name,
-        user_nickname,
-        user_phone,
-        user_email,
-        user_birth_date,
-        user_gender,
-        user_github_id,
-        user_profile_img,
-        user_status,
-        user_major,
-        reg_date,
-        mod_date
+            user_seq,
+            user_id,
+            user_name,
+            user_nickname,
+            user_phone,
+            user_email,
+            user_birth_date,
+            user_gender,
+            user_github_id,
+            user_profile_img,
+            user_status,
+            user_major,
+            reg_date,
+            mod_date
         FROM tbl_user
         WHERE user_seq = #{userSeq};
     </select>

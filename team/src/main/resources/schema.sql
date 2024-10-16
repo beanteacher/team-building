@@ -53,7 +53,6 @@ CREATE TABLE `tbl_login_log`
     `login_log_code` varchar(30) NOT NULL,
     `login_log_reg_date` timestamp NOT NULL,
     `login_log_ip` varchar(15) NOT NULL,
-    `login_log_agent` varchar(255) NOT NULL,
     PRIMARY KEY (`login_log_seq`),
     CONSTRAINT `FK_TBL_LOGIN_LOG_USER_SEQ` FOREIGN KEY (`user_seq`) REFERENCES `tbl_user`(`user_seq`)
 );

@@ -19,6 +19,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
+        // TODO 아영 - 비밀번호도 확인하기
         UserQueryDTO.LoginResponseDTO user = userMapper.findByUserId(userId)
                 .filter(pw -> pw.getUserPassword()!=null)
                 .orElseThrow(() -> new CustomException(ErrorCodeType.USER_LOGIN_NOT_FOUND));
