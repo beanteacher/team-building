@@ -30,9 +30,6 @@ public class LoginLog {
     @Column(name = "login_log_ip")
     private String loginIp;
 
-    @Column(name = "login_log_agent")
-    private long loginAgent;
-
     @CreationTimestamp
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
     @Column(name = "login_log_reg_date", updatable = false)
