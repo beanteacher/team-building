@@ -15,6 +15,7 @@
             , tu.user_auth userAuth
             , tu.user_status userStatus
         FROM tbl_login_log tl
+        INNER JOIN tbl_user tu ON (tl.user_seq = tu.user_seq)
         WHERE 0=0
         <if test="userId != ''">
             AND tu.user_id = #{userId}
