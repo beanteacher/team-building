@@ -1,15 +1,16 @@
-package sansam.team.user.command.application.dto;
+package sansam.team.user.query.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import sansam.team.user.command.domain.aggregate.LoginType;
 
 import java.time.LocalDateTime;
 
-@Getter @Builder
-@AllArgsConstructor
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class LoginLogDTO {
+@Getter @Setter
+@ToString
+public class AdminLoginLogDTO {
 
     private long logSeq;
 
@@ -22,13 +23,16 @@ public class LoginLogDTO {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
     private LocalDateTime regDate;
 
-    @Getter @Builder
-    public static class LoginLogRequestDto {
-        private long userSeq;
+    private String userName;
 
-        private LoginType loginCode;
+    private String userId;
 
-        private String loginIp;
-    }
+    private String userAuth;
+
+    private String userStatus;
+
+    private String startDate;
+
+    private String endDate;
 
 }

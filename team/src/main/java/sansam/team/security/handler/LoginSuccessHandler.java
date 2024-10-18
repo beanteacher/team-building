@@ -30,8 +30,9 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
-        if(userService.setLoginLog(authentication, request)) {
+        if(userService.setLoginSuccessLog(authentication, request)) {
             log.error("setLoginLog Error : {}", authentication);
+            userService.setLoginErrorLog(authentication, request);
         }
 
         byte[] keyBytes = Decoders.BASE64.decode(env.getProperty("JWT_SECRET_KEY"));

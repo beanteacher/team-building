@@ -6,10 +6,11 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor
 public enum LoginType {
-    SUCCESS("로그인 성공"),
-    FAIL("로그인 실패"),
-    BAN("로그인 정지");
+    SUCCESS("SUCCESS", "로그인 성공"),
+    FAIL("FAIL", "로그인 실패"),
+    BAN("BAN", "로그인 정지");
 
+    private final String code;
     private final String value;
 
 }
