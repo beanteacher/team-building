@@ -24,7 +24,7 @@ public class ProjectMentorReviewQueryController {
     /* 강사 - 프로젝트 내 회원 평가한 내용 전체 조회 */
     @GetMapping("/project/{projectSeq}/mentor/review")
     @Operation(summary = "프로젝트 별 강사 평가 전체 조회 API", description = "강사가 프로젝트 내 회원 평가한 모든 내용을 조회합니다.")
-    public ApiResponse<List<ProjectMentorReviewAllQueryDTO>> getAllProjectMentorReviews() {
+    public ApiResponse<List<ProjectMentorReviewAllQueryDTO>> getAllProjectMentorReviews(@PathVariable Long projectSeq) {
         List<ProjectMentorReviewAllQueryDTO> reviews = projectMentorReviewQueryService.getAllProjectMentorReview();
         return ApiResponse.ofSuccess(reviews);
     }
@@ -32,7 +32,9 @@ public class ProjectMentorReviewQueryController {
     /* 강사 - 프로젝트 내 회원 평가한 내용 상세 조회 */
     @GetMapping("/project/{projectSeq}/mentor/review/{mentorReviewSeq}")
     @Operation(summary = "프로젝트 별 강사 평가 상세 조회 API", description = "강사가 프로젝트 내 특정 회원을 평가한 내용을 조회합니다.")
-    public ApiResponse<ProjectMentorReviewQueryDTO> getProjectMentorReviewByIdForMentor(@PathVariable Long mentorReviewSeq) {
+    public ApiResponse<ProjectMentorReviewQueryDTO> getProjectMentorReviewByIdForMentor(
+            @PathVariable Long projectSeq,
+            @PathVariable Long mentorReviewSeq) {
         ProjectMentorReviewQueryDTO review = projectMentorReviewQueryService.getProjectMentorReviewByIdForMentor(mentorReviewSeq);
         return ApiResponse.ofSuccess(review);
     }
@@ -40,7 +42,7 @@ public class ProjectMentorReviewQueryController {
     /* 회원 - 프로젝트 내 강사 평가 전체 조회 */
     @GetMapping("/user/{userSeq}/mentor/review")
     @Operation(summary = "프로젝트 별 회원의 강사 평가 전체 조회 API", description = "회원이 프로젝트 내 자신이 받은 모든 강사의 평가를 전체 조회합니다.")
-    public ApiResponse<List<ProjectMentorReviewAllUserQueryDTO>> getProjectMentorReviewAllByIdForUser() {
+    public ApiResponse<List<ProjectMentorReviewAllUserQueryDTO>> getProjectMentorReviewAllByIdForUser(@PathVariable Long userSeq) {
         List<ProjectMentorReviewAllUserQueryDTO> reviews = projectMentorReviewQueryService.getProjectMentorReviewAllByIdForUser();
         return ApiResponse.ofSuccess(reviews);
     }
@@ -48,7 +50,9 @@ public class ProjectMentorReviewQueryController {
     /* 회원 - 프로젝트 내 강사 평가 상세 조회 */
     @GetMapping("/user/{userSeq}/mentor/review/{mentorReviewSeq}")
     @Operation(summary = "프로젝트 별 회원의 강사 평가 조회 API", description = "회원이 프로젝트 내 자신이 받은 강사의 평가를 상세 조회합니다.")
-    public ApiResponse<ProjectMentorReviewUserQueryDTO> getProjectMentorReviewByIdForUser(@PathVariable Long mentorReviewSeq) {
+    public ApiResponse<ProjectMentorReviewUserQueryDTO> getProjectMentorReviewByIdForUser(
+            @PathVariable Long userSeq,
+            @PathVariable Long mentorReviewSeq) {
         ProjectMentorReviewUserQueryDTO review = projectMentorReviewQueryService.getProjectMentorReviewByIdForUser(mentorReviewSeq);
         return ApiResponse.ofSuccess(review);
     }

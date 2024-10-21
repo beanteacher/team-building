@@ -118,7 +118,7 @@ CREATE TABLE `tbl_project_apply_member`
     `project_board_seq` bigint NOT NULL,
     `user_seq` bigint NOT NULL,
     `project_apply_member_status` ENUM('APPLIED', 'APPROVED', 'REJECTED') NOT NULL,
-    /*`project_member_develop_type` ENUM('BACKEND', 'FRONTEND') NULL,*/
+    `project_member_develop_type` ENUM('BACKEND', 'FRONTEND') NULL,
     `reg_date` timestamp NOT NULL,
     `mod_date` timestamp NULL,
     PRIMARY KEY (`project_apply_member_seq`),

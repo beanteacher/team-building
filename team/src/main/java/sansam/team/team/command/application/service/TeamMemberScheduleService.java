@@ -109,7 +109,7 @@ public class TeamMemberScheduleService {
                     .orElseThrow(() -> new CustomException(ErrorCodeType.MEMBER_SCHEDULE_NOT_FOUND));
 
             if(isPossibleFeedback(teamMemberSchedule.getTeamScheduleSeq())) {
-                teamMemberSchedule.feedbackMemberSchedule(memberScheduleDTO.getMemberScheduleContent(), memberScheduleDTO.getMemberSchedulePercent(), memberScheduleDTO.getMemberScheduleFeedback());
+                teamMemberSchedule.feedbackMemberSchedule(memberScheduleDTO.getMemberScheduleContent(), memberScheduleDTO.getMemberSchedulePercent());
                 teamMemberScheduleRepository.save(teamMemberSchedule);
             }
 
