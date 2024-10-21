@@ -39,7 +39,9 @@ public class TeamReviewController {
 
     @DeleteMapping("/{reviewSeq}")
     @Operation(summary = "팀원 평가 삭제")
-    public ApiResponse<String> deleteTeamReview(@PathVariable long reviewSeq) {
+    public ApiResponse<String> deleteTeamReview(
+            @PathVariable Long teamSeq,
+            @PathVariable long reviewSeq) {
         teamReviewService.deleteTeamReview(reviewSeq);
         return ResponseUtil.successResponse("팀원 평가 삭제 성공").getBody();
     }
