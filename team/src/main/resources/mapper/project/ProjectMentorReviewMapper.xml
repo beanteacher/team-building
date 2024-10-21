@@ -67,6 +67,7 @@
     <!-- 회원 - 프로젝트 내 강사 평가 상세 조회 -->
     <select id="findByIdForUser" parameterType="long" resultType="ProjectMentorReviewUserQueryDTO">
         SELECT
+            p.project_title AS projectTitle,  <!-- projectTitle 추가 -->
             u.user_name AS projectMentorName,
             mr.mentor_review_star AS mentorReviewStar,
             mr.mentor_review_content AS mentorReviewContent,
@@ -76,8 +77,12 @@
             tbl_mentor_review mr
         JOIN
             tbl_user u ON mr.project_mentor_seq = u.user_seq
+        JOIN
+            tbl_project_member pm ON mr.project_member_seq = pm.project_member_seq  <!-- tbl_project_member와 조인 -->
+        JOIN
+            tbl_project p ON pm.project_seq = p.project_seq  <!-- tbl_project와 조인 -->
         WHERE
-            mr.mentor_review_seq = #{mentorReviewSeq}
+        mr.mentor_review_seq = #{mentorReviewSeq}
     </select>
 
 </mapper>
