@@ -40,7 +40,7 @@ public class TeamMemberScheduleController {
         return ResponseUtil.successResponse("팀원 진행상황 삭제 성공").getBody();
     }
 
-    @PutMapping("/feedback/{memberScheduleSeq}")
+    @PutMapping("/{memberScheduleSeq}/feedback")
     @Operation(summary = "강사가 팀원 진행상황 피드백")
     public ApiResponse<String> feedbackScheduleByMentor(@PathVariable long memberScheduleSeq, @RequestBody TeamMemberScheduleDTO memberScheduleDTO) {
         teamMemberScheduleService.feedbackScheduleByMentor(memberScheduleSeq, memberScheduleDTO);
