@@ -23,6 +23,7 @@ public class ProjectMentorReviewController {
     @PostMapping
     @Operation(summary = "프로젝트 별 강사 평가 추가 API", description = "강사만 평가 추가를 할 수 있음")
     public ApiResponse<?> createMentorReview(
+            @PathVariable Long projectSeq,
             @RequestBody ProjectMentorReviewCreateDTO projectMentorReviewCreateDTO) {
         try {
             // MentorReview 생성
@@ -43,6 +44,7 @@ public class ProjectMentorReviewController {
     @PutMapping("/{mentorReviewSeq}")
     @Operation(summary = "프로젝트 별 강사 평가 수정 API", description = "강사만 평가 수정을 할 수 있음")
     public ApiResponse<?> updateMentorReview(
+            @PathVariable Long projectSeq,
             @PathVariable Long mentorReviewSeq,
             @RequestBody ProjectMentorReviewUpdateDTO projectMentorReviewUpdateDTO) {
         try {
@@ -63,7 +65,9 @@ public class ProjectMentorReviewController {
     /* 멘토 평가 삭제 로직 */
     @DeleteMapping("/{mentorReviewSeq}")
     @Operation(summary = "프로젝트 별 강사 평가 삭제 API", description = "강사만 평가 삭제를 할 수 있음")
-    public ApiResponse<?> deleteMentorReview(@PathVariable Long mentorReviewSeq) {
+    public ApiResponse<?> deleteMentorReview(
+            @PathVariable Long projectSeq,
+            @PathVariable Long mentorReviewSeq) {
         try {
             // MentorReview 삭제
             projectMentorReviewService.deleteMentorReview(mentorReviewSeq);
