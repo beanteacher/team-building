@@ -12,9 +12,9 @@ import java.time.LocalDateTime;
 public class ProjectMentorReviewAllUserQueryDTO {
 
     private Long mentorReviewSeq;
+    private String projectTitle;
     private String projectMentorName;
     private double mentorReviewStar;
-    private String mentorReviewContent;
     private LocalDateTime regDate;
     private LocalDateTime modDate;
 }
