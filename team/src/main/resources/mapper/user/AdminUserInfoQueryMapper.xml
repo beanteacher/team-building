@@ -7,19 +7,41 @@
     <!-- 관리자 회원 전체 조회 -->
     <select id="findAllUserInfo" resultType="AdminUserInfoAllQueryDTO">
         SELECT
-        user_seq AS userSeq,
-        user_name AS userName,
-        user_id AS userId,
-        user_nickname AS userNickname,
-        user_auth AS userAuth,
-        user_status AS userStatus,
-        reg_date AS regDate,
-        user_email AS userEmail,
-        user_phone AS userPhone
+            user_seq AS userSeq,
+            user_name AS userName,
+            user_id AS userId,
+            user_nickname AS userNickname,
+            user_auth AS userAuth,
+            user_status AS userStatus,
+            reg_date AS regDate,
+            user_email AS userEmail,
+            user_phone AS userPhone
         FROM
-        tbl_user
+            tbl_user
         ORDER BY
-        reg_date DESC
+            reg_date DESC
+    </select>
+
+    <!-- 관리자 회원 상세 조회 -->
+    <select id="findUserInfo" parameterType="long" resultType="AdminUserInfoQueryDTO">
+        SELECT
+            u.user_seq AS userSeq,
+            u.user_name AS userName,
+            u.user_id AS userId,
+            u.user_nickname AS userNickname,
+            u.user_auth AS userAuth,
+            u.user_status AS userStatus,
+            u.reg_date AS regDate,
+            u.user_email AS userEmail,
+            u.user_phone AS userPhone,
+            u.user_gender AS userGender,
+            u.user_major AS userMajor,
+            u.user_career_years AS userCareerYears,
+            u.user_profile_img AS userProfileImg
+        FROM
+            tbl_user u
+        WHERE
+            u.user_seq = #{userSeq}
     </select>
 
 </mapper>
