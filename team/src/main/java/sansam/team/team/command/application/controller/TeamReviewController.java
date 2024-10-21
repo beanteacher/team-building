@@ -29,12 +29,12 @@ public class TeamReviewController {
 
     @PutMapping("/{reviewSeq}")
     @Operation(summary = "팀원 평가 수정")
-    public ApiResponse<TeamReview> updateTeamReview(
+    public ApiResponse<?> updateTeamReview(
             @PathVariable Long teamSeq,
             @PathVariable long reviewSeq,
             @RequestBody TeamReviewDTO reviewDTO) {
         TeamReview teamReview = teamReviewService.updateTeamReview(reviewSeq, reviewDTO);
-        return ResponseUtil.successResponse("팀원 평가 수정 성공", teamReview).getBody();
+        return ResponseUtil.successResponse("팀원 평가 수정 성공").getBody();
     }
 
     @DeleteMapping("/{reviewSeq}")
