@@ -43,7 +43,7 @@ public class ProjectApplyMemberController {
     }
 
     // 프로젝트 신청 취소 API
-    @DeleteMapping("/{projectBoardSeq}")
+    @DeleteMapping()
     @Operation(summary = "프로젝트 신청 취소", description = "취소는 완전 삭제 기능 사용")
     public ApiResponse<?> cancelApplication(
             @PathVariable Long projectBoardSeq) {
