@@ -23,6 +23,7 @@ CREATE TABLE `tbl_user`
 (
     `user_seq` bigint NOT NULL AUTO_INCREMENT,
     `user_major` varchar(30) NULL,
+    `project_member_major_yn` ENUM('Y','N') NULL,
     `user_id` varchar(30) NOT NULL,
     `user_name` varchar(30) NOT NULL,
     `user_nickname` varchar(50) NOT NULL,
@@ -104,7 +105,6 @@ CREATE TABLE `tbl_project_member`
     `project_mentor_yn` ENUM('Y', 'N') NOT NULL,
     `reg_date` timestamp NOT NULL,
     `mod_date` timestamp NULL,
-    `project_member_major_yn` ENUM('Y','N') NULL,
     `project_member_develop_type` ENUM('BACKEND', 'FRONTEND') NULL,
     `project_member_commit_score` bigint NULL,
     PRIMARY KEY (`project_member_seq`),
@@ -118,6 +118,7 @@ CREATE TABLE `tbl_project_apply_member`
     `project_board_seq` bigint NOT NULL,
     `user_seq` bigint NOT NULL,
     `project_apply_member_status` ENUM('APPLIED', 'APPROVED', 'REJECTED') NOT NULL,
+    /*`project_member_develop_type` ENUM('BACKEND', 'FRONTEND') NULL,*/
     `reg_date` timestamp NOT NULL,
     `mod_date` timestamp NULL,
     PRIMARY KEY (`project_apply_member_seq`),
