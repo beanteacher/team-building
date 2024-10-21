@@ -23,7 +23,7 @@ public class TeamBuildingRuleController {
     @Operation(summary = "팀빌딩 규칙 생성", description = "팀 빌딩 규칙 가중치 생성 API")
     public ApiResponse<TeamBuildingRule> createBuildingRule(@RequestBody TeamBuildingRuleDTO buildingRuleDTO) {
         TeamBuildingRule createdBuildingRule = buildingRuleService.createBuildingRule(buildingRuleDTO);
-        return ApiResponse.ofSuccess("Building rule created successfully", createdBuildingRule);
+        return ApiResponse.ofSuccess("Building rule created successfully");
     }
 
     @PutMapping("/{ruleSeq}")
