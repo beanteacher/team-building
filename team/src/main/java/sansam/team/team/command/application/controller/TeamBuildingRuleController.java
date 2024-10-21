@@ -34,11 +34,4 @@ public class TeamBuildingRuleController {
         TeamBuildingRule updatedBuildingRule = buildingRuleService.updateBuildingRule(ruleSeq, buildingRuleDTO);
         return ApiResponse.ofSuccess("Building rule updated successfully", updatedBuildingRule);
     }
-
-    @DeleteMapping("/{ruleSeq}")
-    @Operation(summary = "팀빌딩 규칙 삭제", description = "팀 빌딩 규칙 가중치 삭제 API")
-    public ApiResponse<Void> deleteBuildingRule(@PathVariable int ruleSeq) {
-        buildingRuleService.deleteBuildingRule(ruleSeq);
-        return ApiResponse.ofSuccess("Building rule deleted successfully");
-    }
 }
