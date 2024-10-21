@@ -43,7 +43,6 @@ public class SecurityConfig {
         return configuration.getAuthenticationManager();
     }
 
-
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
@@ -63,8 +62,8 @@ public class SecurityConfig {
                                 .hasAnyAuthority("MANAGER", "SUB_MANAGER")
                                 .requestMatchers(
                                         "/api/v1/**"
-                                ).hasAnyAuthority("MEMBER", "MENTOR", "MANAGER", "SUB_MANAGER")
-                                .anyRequest().authenticated()
+                                ).authenticated()
+                                .anyRequest().permitAll()
                 )
                 // JWT token 방식 사용
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

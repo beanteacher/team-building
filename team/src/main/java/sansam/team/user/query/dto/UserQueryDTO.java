@@ -70,10 +70,7 @@ public class UserQueryDTO extends BaseTimeEntity {
         @Override
         public Collection<? extends GrantedAuthority> getAuthorities() {
             List<GrantedAuthority> authorities = new ArrayList<>();
-            authorities.add(new SimpleGrantedAuthority(RoleType.MEMBER.getCode()));
-            authorities.add(new SimpleGrantedAuthority(RoleType.MENTOR.getCode()));
-            authorities.add(new SimpleGrantedAuthority(RoleType.SUBMANAGER.getCode()));
-            authorities.add(new SimpleGrantedAuthority(RoleType.MANAGER.getCode()));
+            authorities.add(new SimpleGrantedAuthority(userAuth.getCode()));
 
             return authorities;
         }
