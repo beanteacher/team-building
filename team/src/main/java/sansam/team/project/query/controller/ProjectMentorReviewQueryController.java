@@ -24,7 +24,7 @@ public class ProjectMentorReviewQueryController {
     /* 강사 - 프로젝트 내 회원 평가한 내용 전체 조회 */
     @GetMapping("/project/{projectSeq}/mentor/review")
     @Operation(summary = "프로젝트 별 강사 평가 전체 조회 API", description = "강사가 프로젝트 내 회원 평가한 모든 내용을 조회합니다.")
-    public ApiResponse<List<ProjectMentorReviewAllQueryDTO>> getAllProjectMentorReviews() {
+    public ApiResponse<List<ProjectMentorReviewAllQueryDTO>> getAllProjectMentorReviews(@PathVariable Long projectSeq) {
         List<ProjectMentorReviewAllQueryDTO> reviews = projectMentorReviewQueryService.getAllProjectMentorReview();
         return ApiResponse.ofSuccess(reviews);
     }
@@ -32,7 +32,9 @@ public class ProjectMentorReviewQueryController {
     /* 강사 - 프로젝트 내 회원 평가한 내용 상세 조회 */
     @GetMapping("/project/{projectSeq}/mentor/review/{mentorReviewSeq}")
     @Operation(summary = "프로젝트 별 강사 평가 상세 조회 API", description = "강사가 프로젝트 내 특정 회원을 평가한 내용을 조회합니다.")
-    public ApiResponse<ProjectMentorReviewQueryDTO> getProjectMentorReviewByIdForMentor(@PathVariable Long mentorReviewSeq) {
+    public ApiResponse<ProjectMentorReviewQueryDTO> getProjectMentorReviewByIdForMentor(
+            @PathVariable Long projectSeq,
+            @PathVariable Long mentorReviewSeq) {
         ProjectMentorReviewQueryDTO review = projectMentorReviewQueryService.getProjectMentorReviewByIdForMentor(mentorReviewSeq);
         return ApiResponse.ofSuccess(review);
     }
