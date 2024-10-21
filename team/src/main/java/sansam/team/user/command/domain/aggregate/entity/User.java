@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 
+import sansam.team.common.aggregate.YnType;
 import sansam.team.user.command.application.dto.AdminUserUpdateRequestDTO;
 import sansam.team.user.command.application.dto.UserUpdateRequestDTO;
 
@@ -29,6 +30,9 @@ public class User extends BaseTimeEntity {
     private Long userSeq;           // 회원 번호
 
     private String userMajor;
+
+    @Enumerated(value = EnumType.STRING)
+    private YnType projectMemberMajorYn;
 
     private String userId;          // 회원 아이디
 
