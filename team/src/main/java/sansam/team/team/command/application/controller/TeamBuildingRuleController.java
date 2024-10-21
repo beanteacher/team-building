@@ -32,6 +32,6 @@ public class TeamBuildingRuleController {
             @PathVariable int ruleSeq,
             @RequestBody TeamBuildingRuleDTO buildingRuleDTO) {
         TeamBuildingRule updatedBuildingRule = buildingRuleService.updateBuildingRule(ruleSeq, buildingRuleDTO);
-        return ApiResponse.ofSuccess("Building rule updated successfully", updatedBuildingRule);
+        return ApiResponse.ofSuccess("Building rule updated successfully");
     }
 }
