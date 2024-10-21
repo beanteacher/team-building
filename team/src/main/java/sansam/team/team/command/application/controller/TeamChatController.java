@@ -22,7 +22,9 @@ public class TeamChatController {
 
     @PostMapping("/{teamSeq}/chat")
     @Operation(summary = "팀 채팅방 추가")
-    public ApiResponse<?> createTeamChat(@PathVariable Long teamSeq, @RequestBody TeamChatCreateRequest request) {
+    public ApiResponse<?> createTeamChat(
+            @PathVariable Long teamSeq,
+            @RequestBody TeamChatCreateRequest request) {
         try {
             TeamChat teamChat = teamChatService.createTeamChat(teamSeq, request);
 
@@ -34,7 +36,10 @@ public class TeamChatController {
 
     @PutMapping("/{teamSeq}/chat/{teamChatSeq}")
     @Operation(summary = "팀 채팅방 정보 수정")
-    public ApiResponse<?> updateTeamChat(@PathVariable Long teamChatSeq, @RequestBody TeamChatUpdateRequest request) {
+    public ApiResponse<?> updateTeamChat(
+            @PathVariable Long teamSeq,
+            @PathVariable Long teamChatSeq,
+            @RequestBody TeamChatUpdateRequest request) {
         try {
             TeamChat teamChat = teamChatService.updateTeamChat(teamChatSeq, request);
 
