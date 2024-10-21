@@ -90,10 +90,10 @@ public class TeamBuildingService {
 
     // 2. 전공 점수 계산 로직
     public int calculateMajorScore(TeamBuildingDTO teamBuildingDTO) throws IOException {
-        ProjectMember pjMember = projectMemberRepository.findById(teamBuildingDTO.getProjectMemberSeq())
+        User user = userRepository.findById(teamBuildingDTO.getUserSeq())
                 .orElseThrow(() -> new RuntimeException("유저 정보가 존재하지 않습니다."));
-        return pjMember.getProjectMemberMajorYn()== YnType.Y?5:0;
 
+        return user.getProjectMemberMajorYn()==YnType.Y?5:0;
     }
 
     // 3. 경력 점수 계산 로직
