@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 
+import sansam.team.user.command.application.dto.AdminUserUpdateRequestDTO;
 import sansam.team.user.command.application.dto.UserUpdateRequestDTO;
 
 import sansam.team.common.aggregate.entity.BaseTimeEntity;
@@ -99,6 +100,19 @@ public class User extends BaseTimeEntity {
         this.userCareerYears = myPageDTO.getUserCareerYears();
         this.userCareerMonths = myPageDTO.getUserCareerMonths();
 
+    }
+
+    public void modifyAdminUser(AdminUserUpdateRequestDTO requestDTO) {
+        this.userProfileImg = requestDTO.getUserProfileImg();
+        this.userName = requestDTO.getUserName();
+        this.userId = requestDTO.getUserId();
+        this.userEmail = requestDTO.getUserEmail();
+        this.userAuth = requestDTO.getUserAuth();
+        this.userStatus = requestDTO.getUserStatus();
+        this.userPhone = requestDTO.getUserPhone();
+        this.userGender = requestDTO.getUserGender();
+        this.userMajor = requestDTO.getUserMajor();
+        this.userCareerYears = requestDTO.getUserCareerYears();
     }
 }
 

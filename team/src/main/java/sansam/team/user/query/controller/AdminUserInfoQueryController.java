@@ -19,7 +19,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/admin/user")
 @RequiredArgsConstructor
-@Tag(name = "1-2. Admin UserInfo API", description = "관리자의 유저 조회 페이지")
+@Tag(name = "1-3. Admin UserInfo API", description = "관리자의 유저 관리 페이지")
 public class AdminUserInfoQueryController {
 
     private final AdminUserInfoQueryService adminUserInfoQueryService;
