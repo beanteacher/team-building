@@ -3,6 +3,7 @@ package sansam.team.project.query.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
+import sansam.team.project.query.dto.ProjectQueryResponse;
 import sansam.team.security.util.SecurityUtil;
 import sansam.team.project.query.dto.AdminProjectQueryDTO;
 import sansam.team.project.query.dto.ProjectAllQueryDTO;
@@ -43,7 +44,13 @@ public class ProjectQueryService {
 
     /* 프로젝트 상세 조회 (사용자) */
     public ProjectQueryDTO getProjectByIdForUser(Long projectSeq){
-        return projectMapper.findProjectByIdForUser(projectSeq);
+        CustomUserDTO user = SecurityUtil.getAuthenticatedUser();
+
+        if(ObjectUtils.isEmpty(user.getUserSeq())){
+            throw new IllegalArgumentException("User Seq is null");
+        }
+
+        return projectMapper.findProjectByIdForUser(new ProjectQueryResponse(projectSeq, user.getUserSeq()));
     }
 
 }
