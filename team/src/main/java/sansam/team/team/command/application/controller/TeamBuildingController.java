@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import sansam.team.common.response.ApiResponse;
 import sansam.team.common.response.ResponseUtil;
+import sansam.team.team.command.application.dto.TeamBuildingResultDTO;
 import sansam.team.team.command.application.dto.TeamMemberUpdateRequest;
 import sansam.team.team.command.application.dto.TeamUpdateRequest;
 import sansam.team.team.command.application.service.TeamBuildingService;
@@ -27,18 +28,13 @@ public class TeamBuildingController {
     private final TeamMemberService teamMemberService;
 
     // 팀 빌딩 요청
-    @PostMapping
     @Operation(summary = "프로젝트 자동 팀 빌딩")
-    public ApiResponse<?> buildTeams(@RequestParam Long projectSeq , @RequestParam int teamBuildingRuleSeq) throws IOException {
-        try{
-            List<Team> teams = teamBuildingService.buildBalancedTeams(projectSeq ,teamBuildingRuleSeq);
-            return ResponseUtil.successResponse("팀 빌딩 성공",teams).getBody();
-        } catch (IllegalArgumentException e){
-            return ResponseUtil.failureResponse(e.getMessage(), "PROJECT_SEQ_NULL").getBody();
-        } catch (Exception e){
-            return ResponseUtil.failureResponse(e.getMessage(), "TEAM_BUILDING_ERROR").getBody();
-        }
+    @GetMapping("/{projectSeq}/{teamBuildingRuleSeq}")
+    public ResponseEntity<List<TeamBuildingResultDTO>> buildTeams(@PathVariable Long projectSeq, @PathVariable int teamBuildingRuleSeq) throws IOException {
+        List<TeamBuildingResultDTO> result = teamBuildingService.buildBalancedTeams(projectSeq, teamBuildingRuleSeq);
+        return ResponseEntity.ok(result); // Return the team-building result without creating the teams
     }
+
 
     @PutMapping("/{teamMemberSeq}")
     @Operation(summary = "프로젝트 수동 팀 빌딩(팀멤버 수정)")
