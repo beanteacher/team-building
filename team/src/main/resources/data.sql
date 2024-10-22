@@ -68,39 +68,39 @@ VALUES
     (2, 1, 'Beta Team B','OPEN', NOW(),NULL);
 
 -- 프로젝트 Alpha (project_seq: 1, user_seq: 1-10)
-INSERT INTO `tbl_project_member` (`project_seq`, `user_seq`, `project_member_del_yn`, `project_mentor_yn`, `project_member_major_yn`, `project_member_develop_type`,`project_member_commit_score`,`reg_date`)
+INSERT INTO `tbl_project_member` (`project_seq`, `user_seq`, `project_member_del_yn`, `project_mentor_yn`, `project_member_develop_type`,`project_member_commit_score`,`reg_date`)
 VALUES
-    (1, 1, 'N', 'Y', 'Y','BACKEND', NULL,NOW()),  -- 관리자
-    (1, 2, 'N', 'N', 'Y','BACKEND', NULL,NOW()),
-    (1, 3, 'N', 'N', 'Y','BACKEND', NULL,NOW()),
-    (1, 4, 'N', 'N', 'Y','BACKEND', NULL,NOW()),
-    (1, 5, 'N', 'N', 'Y','BACKEND', NULL,NOW()),
-    (1, 6, 'N', 'N', 'N','BACKEND', NULL,NOW()),
-    (1, 7, 'N', 'N', 'Y','BACKEND',NULL, NOW()),
-    (1, 8, 'N', 'N', 'N','BACKEND', NULL,NOW()),
-    (1, 9, 'N', 'N', 'N','BACKEND', NULL,NOW()),
-    (1, 10, 'N', 'N', 'N','BACKEND', NULL,NOW()),
+    (1, 1, 'N', 'Y', 'BACKEND', NULL,NOW()),  -- 관리자
+    (1, 2, 'N', 'N', 'BACKEND', NULL,NOW()),
+    (1, 3, 'N', 'N', 'BACKEND', NULL,NOW()),
+    (1, 4, 'N', 'N', 'BACKEND', NULL,NOW()),
+    (1, 5, 'N', 'N', 'BACKEND', NULL,NOW()),
+    (1, 6, 'N', 'N', 'BACKEND', NULL,NOW()),
+    (1, 7, 'N', 'N', 'BACKEND',NULL, NOW()),
+    (1, 8, 'N', 'N', 'BACKEND', NULL,NOW()),
+    (1, 9, 'N', 'N', 'BACKEND', NULL,NOW()),
+    (1, 10, 'N', 'N', 'BACKEND', NULL,NOW()),
 
-    (1, 11, 'N', 'N', 'Y','BACKEND',NULL,NOW()),
-    (1, 12, 'N', 'N', 'Y','BACKEND',NULL,NOW()),
-    (1, 13, 'N', 'N', 'Y','BACKEND',NULL,NOW()),
-    (1, 14, 'N', 'N', 'Y','BACKEND',NULL,NOW()),
-    (1, 15, 'N', 'N', 'N','BACKEND',NULL,NOW()),
-    (1, 16, 'N', 'N', 'Y','BACKEND',NULL,NOW()),
-    (1, 17, 'N', 'N', 'Y','BACKEND',NULL,NOW()),
-    (1, 18, 'N', 'N', 'N','BACKEND',NULL,NOW()),
-    (1, 19, 'N', 'N', 'Y','BACKEND',NULL,NOW()),
-    (1, 20, 'N', 'N', 'Y','BACKEND',NULL,NOW()),
+    (1, 11, 'N', 'N', 'BACKEND',NULL,NOW()),
+    (1, 12, 'N', 'N', 'BACKEND',NULL,NOW()),
+    (1, 13, 'N', 'N', 'BACKEND',NULL,NOW()),
+    (1, 14, 'N', 'N', 'BACKEND',NULL,NOW()),
+    (1, 15, 'N', 'N', 'BACKEND',NULL,NOW()),
+    (1, 16, 'N', 'N', 'BACKEND',NULL,NOW()),
+    (1, 17, 'N', 'N', 'BACKEND',NULL,NOW()),
+    (1, 18, 'N', 'N', 'BACKEND',NULL,NOW()),
+    (1, 19, 'N', 'N', 'BACKEND',NULL,NOW()),
+    (1, 20, 'N', 'N', 'BACKEND',NULL,NOW()),
 
-    (1, 21, 'N', 'N', 'N','BACKEND',NULL,NOW()),
-    (1, 22, 'N', 'N', 'Y','BACKEND',NULL,NOW()),
-(1, 23, 'N', 'N', 'Y','BACKEND',NULL,NOW()),
-(1, 24, 'N', 'N', 'Y','BACKEND',NULL,NOW()),
-(1, 25, 'N', 'N', 'N','BACKEND',NULL,NOW()),
-(1, 26, 'N', 'N', 'Y','BACKEND',NULL,NOW()),
-(1, 27, 'N', 'N', 'Y','BACKEND',NULL,NOW()),
-(1, 28, 'N', 'N', 'Y','BACKEND',NULL,NOW()),
-(1, 29, 'N', 'N', 'Y','BACKEND',NULL,NOW());
+    (1, 21, 'N', 'N', 'BACKEND',NULL,NOW()),
+    (1, 22, 'N', 'N', 'BACKEND',NULL,NOW()),
+(1, 23, 'N', 'N', 'BACKEND',NULL,NOW()),
+(1, 24, 'N', 'N', 'BACKEND',NULL,NOW()),
+(1, 25, 'N', 'N', 'BACKEND',NULL,NOW()),
+(1, 26, 'N', 'N', 'BACKEND',NULL,NOW()),
+(1, 27, 'N', 'N', 'BACKEND',NULL,NOW()),
+(1, 28, 'N', 'N', 'BACKEND',NULL,NOW()),
+(1, 29, 'N', 'N', 'BACKEND',NULL,NOW());
 
 
 -- Alpha Team A (team_seq: 1, user_seq: 1-5)
