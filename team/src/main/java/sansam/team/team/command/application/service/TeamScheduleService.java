@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PathVariable;
 import sansam.team.exception.CustomException;
 import sansam.team.exception.ErrorCodeType;
 import sansam.team.team.command.application.dto.TeamScheduleDTO;
@@ -27,10 +28,12 @@ public class TeamScheduleService {
     private final ModelMapper modelMapper;
 
     @Transactional
-    public boolean createTeamSchedule(TeamScheduleDTO scheduleDTO) {
+    public boolean createTeamSchedule(long teamSeq, TeamScheduleDTO scheduleDTO) {
         try {
-            if(isSchedulePeriod(scheduleDTO)) {
-                teamScheduleRepository.save(modelMapper.map(scheduleDTO, TeamSchedule.class));
+            if(isSchedulePeriod(teamSeq)) {
+                TeamSchedule teamSchedule = modelMapper.map(scheduleDTO, TeamSchedule.class);
+                teamSchedule.changeTeamSeq(teamSeq);
+                teamScheduleRepository.save(teamSchedule);
                 return true;
             }
 
@@ -48,12 +51,12 @@ public class TeamScheduleService {
     }
 
     @Transactional
-    public TeamSchedule updateTeamSchedule(long scheduleSeq, TeamScheduleDTO scheduleDTO) {
+    public TeamSchedule updateTeamSchedule(long teamSeq, long scheduleSeq, TeamScheduleDTO scheduleDTO) {
         try {
             TeamSchedule teamSchedule = teamScheduleRepository.findById(scheduleSeq)
                     .orElseThrow(() -> new CustomException(ErrorCodeType.SCHEDULE_NOT_FOUND));
 
-            if(isSchedulePeriod(modelMapper.map(teamSchedule, TeamScheduleDTO.class))) {
+            if(isSchedulePeriod(teamSeq)) {
                 teamSchedule.updateSchedule(scheduleDTO.getScheduleContent(), scheduleDTO.getScheduleStartDate(), scheduleDTO.getScheduleEndDate());
                 teamScheduleRepository.save(teamSchedule);
             }
@@ -72,8 +75,8 @@ public class TeamScheduleService {
     }
 
     /* 팀 일정 입력 가능 조건 체크 */
-    public boolean isSchedulePeriod(TeamScheduleDTO scheduleDTO) {
-        Team team = teamService.getTeamById(scheduleDTO.getTeamSeq());
+    public boolean isSchedulePeriod(long teamSeq) {
+        Team team = teamService.getTeamById(teamSeq);
 
         if (TeamStatusType.CLOSE.equals(team.getTeamStatus())) {
             throw new CustomException(ErrorCodeType.TEAM_STATUS_ERROR);

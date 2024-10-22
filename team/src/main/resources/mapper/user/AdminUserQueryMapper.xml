@@ -2,12 +2,12 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="sansam.team.user.query.mapper.UserQueryMapper">
+<mapper namespace="sansam.team.user.query.mapper.AdminLoginLogMapper">
 
-    <select id="findAllLoginLog" resultType="sansam.team.user.query.dto.AdminLoginLogDTO">
+    <select id="findAllLoginLog" parameterType="sansam.team.user.query.dto.AdminLoginLogDTO$RequestLoginLogDTO" resultType="sansam.team.user.query.dto.AdminLoginLogDTO">
         SELECT tl.login_log_seq logSeq
             , tl.login_log_code loginCode
-            , tl.login_log_reg_date regDate
+            , DATE_FORMAT(tl.login_log_reg_date, '%Y-%m-%d %H:%i:%s') regDate
             , tl.login_log_ip loginIp
             , tl.user_seq userSeq
             , tu.user_name userName
@@ -25,6 +25,9 @@
         </if>
         <if test="userAuth != ''">
             AND tu.user_auth = #{userAuth}
+        </if>
+        <if test="userStatus != ''">
+            AND tl.user_status = #{userStatus}
         </if>
         <if test="loginCode != ''">
             AND tl.login_log_code = #{loginCode}

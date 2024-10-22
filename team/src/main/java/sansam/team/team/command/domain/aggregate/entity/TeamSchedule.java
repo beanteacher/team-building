@@ -36,4 +36,8 @@ public class TeamSchedule extends BaseTimeEntity {
         this.scheduleEndDate = endDate;
     }
 
+    public void changeTeamSeq(long teamSeq) {
+        this.teamSeq = teamSeq;
+    }
+
 }

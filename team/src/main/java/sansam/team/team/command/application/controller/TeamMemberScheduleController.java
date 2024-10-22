@@ -20,16 +20,16 @@ public class TeamMemberScheduleController {
 
     @PostMapping
     @Operation(summary = "팀원 진행상황 추가")
-    public ApiResponse<String> createScheduleByMember(@RequestBody TeamMemberScheduleDTO memberScheduleDTO) {
-        boolean result = teamMemberScheduleService.createScheduleByMember(memberScheduleDTO);
+    public ApiResponse<String> createScheduleByMember(@PathVariable long teamSeq, @RequestBody TeamMemberScheduleDTO memberScheduleDTO) {
+        boolean result = teamMemberScheduleService.createScheduleByMember(teamSeq, memberScheduleDTO);
 
         return ResponseUtil.successResponse(result ? "팀원 진행상황 추가 성공" : "팀원 진행상황 추가 실패").getBody();
     }
 
     @PutMapping("/{memberScheduleSeq}")
     @Operation(summary = "팀원 진행상황 수정")
-    public ApiResponse<String> updateScheduleByMember(@PathVariable long memberScheduleSeq, @RequestBody TeamMemberScheduleDTO memberScheduleDTO) {
-        teamMemberScheduleService.updateScheduleByMember(memberScheduleSeq, memberScheduleDTO);
+    public ApiResponse<String> updateScheduleByMember(@PathVariable long teamSeq, @PathVariable long memberScheduleSeq, @RequestBody TeamMemberScheduleDTO memberScheduleDTO) {
+        teamMemberScheduleService.updateScheduleByMember(teamSeq, memberScheduleSeq, memberScheduleDTO);
         return ResponseUtil.successResponse("팀원 진행상황 수정 성공").getBody();
     }
 
@@ -42,8 +42,8 @@ public class TeamMemberScheduleController {
 
     @PutMapping("/feedback/{memberScheduleSeq}")
     @Operation(summary = "강사가 팀원 진행상황 피드백")
-    public ApiResponse<String> feedbackScheduleByMentor(@PathVariable long memberScheduleSeq, @RequestBody TeamMemberScheduleDTO memberScheduleDTO) {
-        teamMemberScheduleService.feedbackScheduleByMentor(memberScheduleSeq, memberScheduleDTO);
+    public ApiResponse<String> feedbackScheduleByMentor(@PathVariable long teamSeq, @PathVariable long memberScheduleSeq, @RequestBody TeamMemberScheduleDTO memberScheduleDTO) {
+        teamMemberScheduleService.feedbackScheduleByMentor(teamSeq, memberScheduleSeq, memberScheduleDTO);
         return ResponseUtil.successResponse("팀원 진행상황 피드백 성공").getBody();
     }
 }

@@ -20,21 +20,21 @@ public class TeamReviewController {
 
     @PostMapping
     @Operation(summary = "팀원 평가 추가")
-    public ApiResponse<String> createTeamReview(@RequestBody TeamReviewDTO reviewDTO) {
+    public ApiResponse<String> createTeamReview(@PathVariable String teamSeq, @RequestBody TeamReviewDTO reviewDTO) {
         boolean result = teamReviewService.createTeamReview(reviewDTO);
         return ResponseUtil.successResponse(result ? "팀원 평가 추가 성공" : "팀원 평가 추가 실패").getBody();
     }
 
     @PutMapping("/{reviewSeq}")
     @Operation(summary = "팀원 평가 수정")
-    public ApiResponse<TeamReview> updateTeamReview(@PathVariable long reviewSeq, @RequestBody TeamReviewDTO reviewDTO) {
+    public ApiResponse<TeamReview> updateTeamReview(@PathVariable String teamSeq, @PathVariable long reviewSeq, @RequestBody TeamReviewDTO reviewDTO) {
         TeamReview teamReview = teamReviewService.updateTeamReview(reviewSeq, reviewDTO);
         return ResponseUtil.successResponse("팀원 평가 수정 성공", teamReview).getBody();
     }
 
     @DeleteMapping("/{reviewSeq}")
     @Operation(summary = "팀원 평가 삭제")
-    public ApiResponse<String> deleteTeamReview(@PathVariable long reviewSeq) {
+    public ApiResponse<String> deleteTeamReview(@PathVariable String teamSeq, @PathVariable long reviewSeq) {
         teamReviewService.deleteTeamReview(reviewSeq);
         return ResponseUtil.successResponse("팀원 평가 삭제 성공").getBody();
     }

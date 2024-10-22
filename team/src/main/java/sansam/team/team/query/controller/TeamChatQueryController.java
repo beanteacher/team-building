@@ -32,4 +32,5 @@ public class TeamChatQueryController {
         TeamChatRoomResponse chatRoom = teamChatQueryService.selectChatRoom(teamChatSeq);
         return ApiResponse.ofSuccess("Entered chat room successfully", chatRoom);
     }
+
 }

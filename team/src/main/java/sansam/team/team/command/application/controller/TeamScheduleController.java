@@ -20,15 +20,15 @@ public class TeamScheduleController {
 
     @PostMapping
     @Operation(summary = "팀 일정 추가")
-    public ApiResponse<String> createTeamSchedule(@RequestBody TeamScheduleDTO scheduleDTO) {
-        boolean result = teamScheduleService.createTeamSchedule(scheduleDTO);
+    public ApiResponse<String> createTeamSchedule(@PathVariable long teamSeq, @RequestBody TeamScheduleDTO scheduleDTO) {
+        boolean result = teamScheduleService.createTeamSchedule(teamSeq, scheduleDTO);
         return ResponseUtil.successResponse(result ? "팀 일정 추가 성공" : "팀 일정 추가 실패").getBody();
     }
 
     @PutMapping("/{scheduleSeq}")
     @Operation(summary = "팀 일정 수정")
-    public ApiResponse<String> updateTeamSchedule(@PathVariable long scheduleSeq, @RequestBody TeamScheduleDTO scheduleDTO) {
-        TeamSchedule teamSchedule = teamScheduleService.updateTeamSchedule(scheduleSeq, scheduleDTO);
+    public ApiResponse<String> updateTeamSchedule(@PathVariable long teamSeq, @PathVariable long scheduleSeq, @RequestBody TeamScheduleDTO scheduleDTO) {
+        TeamSchedule teamSchedule = teamScheduleService.updateTeamSchedule(teamSeq, scheduleSeq, scheduleDTO);
         return ResponseUtil.successResponse("팀 일정 수정 성공").getBody();
     }
 
