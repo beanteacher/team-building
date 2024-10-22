@@ -51,15 +51,16 @@ public class AdminProjectController {
         }
     }
 
-    @PutMapping("/{projectSeq}")
+    @PutMapping(value = "/{projectSeq}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(summary = "프로젝트 수정", description = "프로젝트 수정 API (관리자만 가능)")
     public ApiResponse<?> updateProjectBoard(
             @PathVariable Long projectSeq,
-            @RequestBody AdminProjectUpdateDTO adminProjectUpdateDTO) {
+            @RequestPart AdminProjectUpdateDTO adminProjectUpdateDTO,
+            @RequestPart(required = false) MultipartFile projectImage) {
 
         try {
             // Project 수정 요청
-            Project updateProject = adminProjectService.updateProject(projectSeq, adminProjectUpdateDTO);
+            Project updateProject = adminProjectService.updateProject(projectSeq, adminProjectUpdateDTO, projectImage);
 
             // 성공 응답 반환
             return ResponseUtil.successResponse("Project updated successfully").getBody();
