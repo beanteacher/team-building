@@ -145,15 +145,14 @@ CREATE TABLE `tbl_team`
 (
     `team_seq` bigint NOT NULL AUTO_INCREMENT,
     `project_seq` bigint NOT NULL,
-    `rule_seq` bigint NOT NULL,
     `team_name` varchar(255) NOT NULL,
     `team_status` ENUM('OPEN', 'CLOSE') NULL,
     `reg_date` timestamp NOT NULL,
     `mod_date` timestamp NULL,
     `end_date` timestamp NULL,
     PRIMARY KEY (`team_seq`),
-    CONSTRAINT `FK_TBL_TEAM_PROJECT_SEQ` FOREIGN KEY (`project_seq`) REFERENCES `tbl_project`(`project_seq`),
-    CONSTRAINT `FK_TBL_TEAM_RULE_SEQ` FOREIGN KEY (`rule_seq`) REFERENCES `tbl_building_rule`(`rule_seq`)
+    CONSTRAINT `FK_TBL_TEAM_PROJECT_SEQ` FOREIGN KEY (`project_seq`) REFERENCES `tbl_project`(`project_seq`)
+
 );
 
 CREATE TABLE `tbl_team_chat`
