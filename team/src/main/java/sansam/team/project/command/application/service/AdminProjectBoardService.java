@@ -48,7 +48,6 @@ public class AdminProjectBoardService {
     }
 
     /* 프로젝트 모집글 수정 로직 (이미지 포함) */
-    /* 프로젝트 모집글 수정 로직 (이미지 포함) */
     @Transactional
     public ProjectBoard updateProjectBoard(Long projectBoardSeq, AdminProjectBoardUpdateDTO adminProjectBoardUpdateDTO, MultipartFile projectBoardImage) throws IOException {
 
