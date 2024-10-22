@@ -102,22 +102,26 @@ public class TeamBuildingService {
         User user = userRepository.findById(teamBuildingDTO.getUserSeq())
                 .orElseThrow(() -> new RuntimeException("프로젝트 정보가 존재하지 않습니다."));
         long careerMonth = user.getUserCareerYears()*12 + user.getUserCareerMonths();
-        int careerScore = 0;
-        if(careerMonth>=60){
-            careerScore = 5;
+        int careerScore;
+        if(careerMonth<6){
+            careerScore = 0;
         }
-        else if(careerMonth>=36){
-            careerScore = 4;
-        }
-        else if(careerMonth>=18){
-            careerScore = 3;
-        }
-        else if(careerMonth>=12){
-            careerScore = 2;
-        }
-        else if(careerMonth>=6){
+        else if(careerMonth<12){
             careerScore = 1;
         }
+        else if(careerMonth<18){
+            careerScore = 2;
+        }
+        else if(careerMonth<36){
+            careerScore = 3;
+        }
+        else if(careerMonth<60){
+            careerScore = 4;
+        }
+        else{
+            careerScore = 5;
+        }
+        log.info("반환 전 경력 점수: "+careerScore);
         return careerScore;
 
     }
@@ -228,16 +232,21 @@ public class TeamBuildingService {
 
             User user = userRepository.findById(member.getUserSeq()).orElseThrow(() -> new RuntimeException("User not found"));
 
+            ProjectMember pjMember = projectMemberRepository.findById(member.getProjectMemberSeq())
+                    .orElseThrow(() -> new RuntimeException("프로젝트 멤버 정보가 존재하지 않습니다."));
+
             // Create TeamMemberScoreDTO and add to the team
             TeamMemberScoreDTO teamMemberScore = new TeamMemberScoreDTO(
                     member.getUserSeq(),
                     user.getUserName(),
                     calculateCommitScore(member),
-                    calculateMajorScore(member),
                     calculateCareerScore(member),
+                    calculateMajorScore(member),
                     calculateTeamEvaluation(member),
                     calculateMentorEvaluation(member),
-                    member.getTotalScore()
+                    member.getTotalScore(),
+                    pjMember.getProjectMemberDevelopType()
+
             );
 
             teams.get(targetTeamName).add(teamMemberScore);

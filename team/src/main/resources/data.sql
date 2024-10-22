@@ -2,40 +2,40 @@ USE sansam;
 
 -- 프로젝트 1의 사용자 (user_seq: 1-10)
 
-INSERT INTO `tbl_user` (user_major, user_id, user_name, user_nickname, user_password, user_auth, user_phone, user_email, user_birth_date, user_gender, user_github_id, user_profile_img, user_status, reg_date, user_career_years, user_career_months)
+INSERT INTO `tbl_user` (user_major, project_member_major_yn, user_id, user_name, user_nickname, user_password, user_auth, user_phone, user_email, user_birth_date, user_gender, user_github_id, user_profile_img, user_status, reg_date, user_career_years, user_career_months)
 VALUES
-    ('전공학과', 'admin', '관리자', '관리자1', '$2a$10$c82NzD8IcmPvtEK8MNUOiuao868mex9PJS.2e5AR/ZKRKIKDPcHk6', 'MANAGER', NULL, 'manager@example.com', NULL, 'FEMALE', 'githubid', NULL, 'ACTIVE', NOW(), 0, 0),
+    ('전공학과', 'Y','admin', '관리자', '관리자1', '$2a$10$c82NzD8IcmPvtEK8MNUOiuao868mex9PJS.2e5AR/ZKRKIKDPcHk6', 'MANAGER', NULL, 'manager@example.com', NULL, 'FEMALE', 'githubid', NULL, 'ACTIVE', NOW(), 0, 0),
 
-    ('전공학과', 'kookong2', '구대윤', '구대윤', '$2a$10$KepjXzVi.abwxgTpSF2jbu/nxtfn02wdByBpjmlI3yh9bWgBwguXO', 'MEMBER', NULL, 'kookong2@example.com', NULL, 'MALE', 'kookong2', NULL, 'ACTIVE', NOW(), 1, 6),
-    ('전공학과', 'hyomee2', '권형미', '권형미', '$2a$10$zqjy2rOG0lO47/1q0v8QKOmFJiHsSO6ZX7EJK3CIMNF94GnkLc07O', 'MEMBER', NULL, 'hyomee2@example.com', NULL, 'FEMALE', 'hyomee2', NULL, 'ACTIVE', NOW(), 0, 10),
-    ('전공학과', 'minju0224', '김민주', '김민주', '$2a$10$lHRqkj8n4zwlZjawTERMpu4ELbW7BfypzCSuEJZVA8/QjZEo.dyqa', 'MEMBER', NULL, 'minju0224@example.com', NULL, 'FEMALE', 'minju0224', NULL, 'ACTIVE', NOW(), 1, 6),
-    ('전공학과', 'we4sley', '김영기', '김영기', '$2a$10$cYUEoMcZD6Fbzicv4al3X.ySqlmdPVXzfQ8FrRQVsKA1U2wACGDH.', 'MEMBER', NULL, 'we4sley@example.com', NULL, 'MALE', 'we4sley', NULL, 'ACTIVE', NOW(), 1, 6),
-    ('비전공학과', 'WhooGeek', '김윤후', '김윤후', '$2a$10$3e4/WDngme/FdoLrNaifg.cqMxKLRQYTSi0yGOVZWESiaDkm4Z8ji', 'MEMBER', NULL, 'rlarjswn0303@naver.com', NULL, 'MALE', 'WhooGeek', NULL, 'ACTIVE', NOW(), 0, 0),
-    ('전공학과', 'kimjm9911', '김지민', '김지민', '$2a$10$XKJgedZiUOqiKo.I2fPxt.THyhUh1DevueWsewwHxA8o2EolgePeW', 'MEMBER', NULL, 'kimjm9911@example.com', NULL, 'FEMALE', 'kimjm9911', NULL, 'ACTIVE', NOW(), 0, 10),
-    ('비전공학과', 'wildcat222', '김태영', '김태영', '$2a$10$9FDlinkq2.Sg5IcLjRy/n.AQ0f8x04/ed5/M8/hsOMaKITbVxYZJW', 'MEMBER', NULL, 'wildcat222@example.com', NULL, 'MALE', 'wildcat222', NULL, 'ACTIVE', NOW(), 0, 0),
-    ('비전공학과', 'catnine11', '남가람', '남가람', '$2a$10$VQUmcjB1wRfpl5HAhASJUu1K0LArjUlsFAA7WedebODjhGdenwJv2', 'MEMBER', NULL, 'catnine11@example.com', NULL, 'FEMALE', 'catnine11', NULL, 'ACTIVE', NOW(), 0, 10),
-    ('비전공학과', 'SANGHYUN0519', '박상현', '박상현', '$2a$10$6h5WLQywHk5b/SeD6LfDxO0ZiGTE38xX3hl8cT2xE/Sc9cnmzV5d2', 'MEMBER', NULL, 'SANGHYUN0519@example.com', NULL, 'MALE', 'SANGHYUN0519', NULL, 'ACTIVE', NOW(), 0, 0),
+    ('전공학과', 'Y','kookong2', '구대윤', '구대윤', '$2a$10$KepjXzVi.abwxgTpSF2jbu/nxtfn02wdByBpjmlI3yh9bWgBwguXO', 'MEMBER', NULL, 'kookong2@example.com', NULL, 'MALE', 'kookong2', NULL, 'ACTIVE', NOW(), 1, 6),
+    ('전공학과', 'Y','hyomee2', '권형미', '권형미', '$2a$10$zqjy2rOG0lO47/1q0v8QKOmFJiHsSO6ZX7EJK3CIMNF94GnkLc07O', 'MEMBER', NULL, 'hyomee2@example.com', NULL, 'FEMALE', 'hyomee2', NULL, 'ACTIVE', NOW(), 0, 10),
+    ('전공학과', 'Y','minju0224', '김민주', '김민주', '$2a$10$lHRqkj8n4zwlZjawTERMpu4ELbW7BfypzCSuEJZVA8/QjZEo.dyqa', 'MEMBER', NULL, 'minju0224@example.com', NULL, 'FEMALE', 'minju0224', NULL, 'ACTIVE', NOW(), 1, 6),
+    ('전공학과', 'Y','we4sley', '김영기', '김영기', '$2a$10$cYUEoMcZD6Fbzicv4al3X.ySqlmdPVXzfQ8FrRQVsKA1U2wACGDH.', 'MEMBER', NULL, 'we4sley@example.com', NULL, 'MALE', 'we4sley', NULL, 'ACTIVE', NOW(), 1, 6),
+    ('비전공학과', 'N','WhooGeek', '김윤후', '김윤후', '$2a$10$3e4/WDngme/FdoLrNaifg.cqMxKLRQYTSi0yGOVZWESiaDkm4Z8ji', 'MEMBER', NULL, 'rlarjswn0303@naver.com', NULL, 'MALE', 'WhooGeek', NULL, 'ACTIVE', NOW(), 0, 0),
+    ('전공학과', 'Y','kimjm9911', '김지민', '김지민', '$2a$10$XKJgedZiUOqiKo.I2fPxt.THyhUh1DevueWsewwHxA8o2EolgePeW', 'MEMBER', NULL, 'kimjm9911@example.com', NULL, 'FEMALE', 'kimjm9911', NULL, 'ACTIVE', NOW(), 0, 10),
+    ('비전공학과', 'Y','wildcat222', '김태영', '김태영', '$2a$10$9FDlinkq2.Sg5IcLjRy/n.AQ0f8x04/ed5/M8/hsOMaKITbVxYZJW', 'MEMBER', NULL, 'wildcat222@example.com', NULL, 'MALE', 'wildcat222', NULL, 'ACTIVE', NOW(), 0, 0),
+    ('비전공학과', 'Y','catnine11', '남가람', '남가람', '$2a$10$VQUmcjB1wRfpl5HAhASJUu1K0LArjUlsFAA7WedebODjhGdenwJv2', 'MEMBER', NULL, 'catnine11@example.com', NULL, 'FEMALE', 'catnine11', NULL, 'ACTIVE', NOW(), 0, 10),
+    ('비전공학과', 'Y','SANGHYUN0519', '박상현', '박상현', '$2a$10$6h5WLQywHk5b/SeD6LfDxO0ZiGTE38xX3hl8cT2xE/Sc9cnmzV5d2', 'MEMBER', NULL, 'SANGHYUN0519@example.com', NULL, 'MALE', 'SANGHYUN0519', NULL, 'ACTIVE', NOW(), 0, 0),
 
-    ('전공학과', 'seolbin01', '박설빈', '박설빈', '$2a$10$L.TJDvYuZXGGf3v0A4fjBOtOPIhNshoMIs53H.KKFTkqp3mdtDKtS', 'MEMBER', NULL, 'seolbin01@example.com', NULL, 'FEMALE', 'seolbin01', NULL, 'ACTIVE', NOW(), 1, 6),
-    ('전공학과', 'dispear', '박지훈', '박지훈', '$2a$10$.8zxnf.KARDRm7d9pI2vS.Udq7raJubxMFJlpWxKktQLoPWxJ3JEy', 'MEMBER', NULL, 'dispear@example.com', NULL, 'MALE', 'dispear', NULL, 'ACTIVE', NOW(), 0, 0),
-    ('전공학과', 'hcbak', '박희찬', '박희찬', '$2a$10$oqiBe3CMkr9lOOE4zIzGbe6acbSh2qXKjzWQHDevZVkc7Qb4RRYwe', 'MEMBER', NULL, 'hcbak@example.com', NULL, 'MALE', 'hcbak', NULL, 'ACTIVE', NOW(), 1, 6),
-    ('전공학과', 'SHINMIN7', '신민철', '신민철', '$2a$10$QB5sSIc7FbEYS1bG6FRFNezKeMMSLXV7jLOJCLNIOG28y8xoJiIBm', 'MEMBER', NULL, 'SHINMIN7@example.com', NULL, 'MALE', 'SHINMIN7', NULL, 'ACTIVE', NOW(), 3, 0),
-    ('비전공학과', 'SaeRyung', '안세령', '안세령', 'password14', 'MEMBER', NULL, 'SaeRyung@example.com', NULL, 'FEMALE', 'SaeRyung', NULL, 'ACTIVE', NOW(), 0, 0),
-    ('전공학과', 'ygc1994', '연건창', '연건창', 'password15', 'MEMBER', NULL, 'ygc1994@example.com', NULL, 'MALE', 'ygc1994', NULL, 'ACTIVE', NOW(), 0, 0),
-    ('전공학과', 'beanteacher', '오민성', '오민성', 'password16', 'MEMBER', NULL, 'beanteacher@example.com', NULL, 'MALE', 'beanteacher', NULL, 'ACTIVE', NOW(), 1, 6),
-    ('비전공학과', 'JIYOUNG-22', '윤지영', '윤지영', 'password17', 'MEMBER', NULL, 'JIYOUNG-22@example.com', NULL, 'FEMALE', 'JIYOUNG-22', NULL, 'ACTIVE', NOW(), 0, 0),
-    ('전공학과', 'sungmini9755', '이성민', '이성민', 'password18', 'MEMBER', NULL, 'sungmini9755@example.com', NULL, 'MALE', 'sungmini9755', NULL, 'ACTIVE', NOW(), 0, 10),
-    ('전공학과', 'eunseo-76', '이은서', '이은서', 'password19', 'MEMBER', NULL, 'eunseo-76@example.com', NULL, 'FEMALE', 'eunseo-76', NULL, 'ACTIVE', NOW(), 0, 10),
+    ('전공학과', 'Y','seolbin01', '박설빈', '박설빈', '$2a$10$L.TJDvYuZXGGf3v0A4fjBOtOPIhNshoMIs53H.KKFTkqp3mdtDKtS', 'MEMBER', NULL, 'seolbin01@example.com', NULL, 'FEMALE', 'seolbin01', NULL, 'ACTIVE', NOW(), 1, 6),
+    ('전공학과', 'Y','dispear', '박지훈', '박지훈', '$2a$10$.8zxnf.KARDRm7d9pI2vS.Udq7raJubxMFJlpWxKktQLoPWxJ3JEy', 'MEMBER', NULL, 'dispear@example.com', NULL, 'MALE', 'dispear', NULL, 'ACTIVE', NOW(), 0, 0),
+    ('전공학과', 'Y','hcbak', '박희찬', '박희찬', '$2a$10$oqiBe3CMkr9lOOE4zIzGbe6acbSh2qXKjzWQHDevZVkc7Qb4RRYwe', 'MEMBER', NULL, 'hcbak@example.com', NULL, 'MALE', 'hcbak', NULL, 'ACTIVE', NOW(), 1, 6),
+    ('전공학과', 'Y','SHINMIN7', '신민철', '신민철', '$2a$10$QB5sSIc7FbEYS1bG6FRFNezKeMMSLXV7jLOJCLNIOG28y8xoJiIBm', 'MEMBER', NULL, 'SHINMIN7@example.com', NULL, 'MALE', 'SHINMIN7', NULL, 'ACTIVE', NOW(), 3, 0),
+    ('비전공학과','N', 'SaeRyung', '안세령', '안세령', 'password14', 'MEMBER', NULL, 'SaeRyung@example.com', NULL, 'FEMALE', 'SaeRyung', NULL, 'ACTIVE', NOW(), 0, 0),
+    ('전공학과', 'Y','ygc1994', '연건창', '연건창', 'password15', 'MEMBER', NULL, 'ygc1994@example.com', NULL, 'MALE', 'ygc1994', NULL, 'ACTIVE', NOW(), 0, 0),
+    ('전공학과', 'Y','beanteacher', '오민성', '오민성', 'password16', 'MEMBER', NULL, 'beanteacher@example.com', NULL, 'MALE', 'beanteacher', NULL, 'ACTIVE', NOW(), 1, 6),
+    ('비전공학과', 'N','JIYOUNG-22', '윤지영', '윤지영', 'password17', 'MEMBER', NULL, 'JIYOUNG-22@example.com', NULL, 'FEMALE', 'JIYOUNG-22', NULL, 'ACTIVE', NOW(), 0, 0),
+    ('전공학과', 'Y','sungmini9755', '이성민', '이성민', 'password18', 'MEMBER', NULL, 'sungmini9755@example.com', NULL, 'MALE', 'sungmini9755', NULL, 'ACTIVE', NOW(), 0, 10),
+    ('전공학과', 'Y','eunseo-76', '이은서', '이은서', 'password19', 'MEMBER', NULL, 'eunseo-76@example.com', NULL, 'FEMALE', 'eunseo-76', NULL, 'ACTIVE', NOW(), 0, 10),
 
-    ('비전공학과', 'leebackcoding', '이창윤', '이창윤', 'password20', 'MEMBER', NULL, 'leebackcoding@example.com', NULL, 'MALE', 'leebackcoding', NULL, 'ACTIVE', NOW(), 1, 6),
-    ('전공학과', 'Pangtaek', '임광택', '임광택', 'password21', 'MEMBER', NULL, 'Pangtaek@example.com', NULL, 'MALE', 'Pangtaek', NULL, 'ACTIVE', NOW(), 0, 10),
-    ('전공학과', 'person76', '임서연', '임서연', 'password22', 'MEMBER', NULL, 'person76@example.com', NULL, 'FEMALE', 'person76', NULL, 'ACTIVE', NOW(), 0, 10),
-    ('전공학과', 'pbem22', '임채륜', '임채륜', 'password23', 'MEMBER', NULL, 'pbem22@example.com', NULL, 'MALE', 'pbem22', NULL, 'ACTIVE', NOW(), 0, 10),
-    ('비전공학과', 'AYeong-Jeon', '전아영', '전아영', 'password24', 'MEMBER', NULL, 'AYeong-Jeon@example.com', NULL, 'FEMALE', 'AYeong-Jeon', NULL, 'ACTIVE', NOW(), 1, 6),
-    ('전공학과', 'JungUiJin', '정의진', '정의진', 'password25', 'MEMBER', NULL, 'JungUiJin@example.com', NULL, 'MALE', 'JungUiJin', NULL, 'ACTIVE', NOW(), 1, 6),
-    ('전공학과', 'enking', '최두혁', '최두혁', 'password26', 'MEMBER', NULL, 'enking@example.com', NULL, 'MALE', 'enking', NULL, 'ACTIVE', NOW(), 0, 0),
-    ('전공학과', 'HanDJ00', '한동주', '한동주', 'password27', 'MEMBER', NULL, 'HanDJ00@example.com', NULL, 'MALE', 'HanDJ00', NULL, 'ACTIVE', NOW(), 3, 0),
-    ('전공학과', 'aosskfdlrla', '황희순', '황희순', 'password28', 'MEMBER', NULL, 'aosskfdlrla@example.com', NULL, 'FEMALE', 'aosskfdlrla', NULL, 'ACTIVE', NOW(), 1, 6);
+    ('비전공학과','N', 'leebackcoding', '이창윤', '이창윤', 'password20', 'MEMBER', NULL, 'leebackcoding@example.com', NULL, 'MALE', 'leebackcoding', NULL, 'ACTIVE', NOW(), 1, 6),
+    ('전공학과', 'Y','Pangtaek', '임광택', '임광택', 'password21', 'MEMBER', NULL, 'Pangtaek@example.com', NULL, 'MALE', 'Pangtaek', NULL, 'ACTIVE', NOW(), 0, 10),
+    ('전공학과', 'Y','person76', '임서연', '임서연', 'password22', 'MEMBER', NULL, 'person76@example.com', NULL, 'FEMALE', 'person76', NULL, 'ACTIVE', NOW(), 0, 10),
+    ('전공학과','Y', 'pbem22', '임채륜', '임채륜', 'password23', 'MEMBER', NULL, 'pbem22@example.com', NULL, 'MALE', 'pbem22', NULL, 'ACTIVE', NOW(), 0, 10),
+    ('비전공학과','N', 'AYeong-Jeon', '전아영', '전아영', 'password24', 'MEMBER', NULL, 'AYeong-Jeon@example.com', NULL, 'FEMALE', 'AYeong-Jeon', NULL, 'ACTIVE', NOW(), 1, 6),
+    ('전공학과', 'Y','JungUiJin', '정의진', '정의진', 'password25', 'MEMBER', NULL, 'JungUiJin@example.com', NULL, 'MALE', 'JungUiJin', NULL, 'ACTIVE', NOW(), 1, 6),
+    ('전공학과', 'Y','enking', '최두혁', '최두혁', 'password26', 'MEMBER', NULL, 'enking@example.com', NULL, 'MALE', 'enking', NULL, 'ACTIVE', NOW(), 0, 0),
+    ('전공학과', 'Y','HanDJ00', '한동주', '한동주', 'password27', 'MEMBER', NULL, 'HanDJ00@example.com', NULL, 'MALE', 'HanDJ00', NULL, 'ACTIVE', NOW(), 3, 0),
+    ('전공학과', 'Y','aosskfdlrla', '황희순', '황희순', 'password28', 'MEMBER', NULL, 'aosskfdlrla@example.com', NULL, 'FEMALE', 'aosskfdlrla', NULL, 'ACTIVE', NOW(), 1, 6);
 
 
 

@@ -1,6 +1,7 @@
 package sansam.team.team.command.application.dto;
 
 import lombok.*;
+import sansam.team.common.aggregate.DevelopType;
 
 @Getter
 @Setter
@@ -16,4 +17,5 @@ public class TeamMemberScoreDTO {
     private double teamEvaluationScore;
     private double mentorEvaluationScore;
     private double totalEvaluationScore;
+    private DevelopType developType;
 }
