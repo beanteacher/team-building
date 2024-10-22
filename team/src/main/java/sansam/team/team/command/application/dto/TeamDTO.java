@@ -1,26 +1,16 @@
 package sansam.team.team.command.application.dto;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import sansam.team.common.aggregate.entity.BaseTimeEntity;
-import sansam.team.team.command.domain.aggregate.TeamStatusType;
+import lombok.*;
 
-import java.time.LocalDateTime;
+import java.util.List;
 
-@Data
-@EqualsAndHashCode(callSuper = true)
-public class TeamDTO extends BaseTimeEntity {
-
-    private long teamSeq;
-
-    private long projectSeq;
-
-    private long ruleSeq;
+@ToString
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+public class TeamDTO {
 
     private String teamName;
-
-    private TeamStatusType teamStatus;
-
-    private LocalDateTime endDate;
-
+    private List<Long> userSeqs;
 }
