@@ -7,7 +7,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import sansam.team.team.query.dto.UserReviewAllQueryDTO;
+import sansam.team.team.query.dto.TeamUserReviewAllQueryDTO;
+import sansam.team.team.query.dto.TeamUserReviewQueryDTO;
 import sansam.team.team.query.service.TeamUserReviewQueryService;
 
 import java.util.List;
@@ -23,9 +24,18 @@ public class TeamUserReviewQueryController {
     // 팀의 모든 회원 평가 조회
     @GetMapping()
     @Operation(summary = "팀원 평가 전체 조회")
-    public List<UserReviewAllQueryDTO> getAllReviews(@PathVariable("teamSeq") Long teamSeq) {
+    public List<TeamUserReviewAllQueryDTO> getAllReviews(@PathVariable("teamSeq") Long teamSeq) {
 
         return teamUserReviewQueryService.getUserAllReview();
     }
 
+    // 팀의 회원 평가 상세 조회
+    @GetMapping("/{userReviewSeq}")
+    @Operation(summary = "팀원 평가 상세 조회")
+    public TeamUserReviewQueryDTO getReview(
+            @PathVariable Long teamSeq,
+            @PathVariable Long userReviewSeq) {
+
+        return teamUserReviewQueryService.getUserReview(userReviewSeq);
+    }
 }
