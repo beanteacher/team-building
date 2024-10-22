@@ -53,20 +53,26 @@
     </select>
 
     <!-- 프로젝트 상세 조회 (사용자) -->
-    <select id="findProjectByIdForUser" resultType="ProjectQueryDTO">
+    <select id="findProjectByIdForUser" parameterType="ProjectQueryResponse" resultType="ProjectQueryDTO">
         SELECT
-            project_seq AS projectSeq,
-            project_title AS projectTitle,
-            project_content AS projectContent,
-            project_status AS projectStatus,
-            project_head_count AS projectHeadCount,
-            project_img_url AS projectImgUrl,
-            project_start_date AS projectStartDate,
-            project_end_date AS projectEndDate
-        FROM
-            tbl_project
-        WHERE
-            project_seq = #{projectSeq}
+            p.project_seq
+            , p.project_title
+            , p.project_content
+            , p.project_status
+            , p.project_head_count
+            , p.project_img_url
+            , DATE_FORMAT(p.project_start_date , '%Y-%m-%d') project_start_date
+            , DATE_FORMAT(p.project_end_date , '%Y-%m-%d') project_end_date
+            , tm.team_seq
+        FROM tbl_project p
+        JOIN tbl_project_member pm
+            ON pm.project_seq = p.project_seq
+        JOIN tbl_user u
+            ON u.user_seq = pm.user_seq
+        JOIN tbl_team_member tm
+            ON tm.user_seq = u.user_seq
+        WHERE p.project_seq = #{projectSeq}
+        AND pm.user_seq = #{userSeq};
     </select>
 
 </mapper>
