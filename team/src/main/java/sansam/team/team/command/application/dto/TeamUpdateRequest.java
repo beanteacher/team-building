@@ -8,6 +8,6 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TeamUpdateRequest {
-    private long ruleSeq;
+
     private String teamName;
 }
