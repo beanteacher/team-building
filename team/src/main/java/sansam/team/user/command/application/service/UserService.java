@@ -9,6 +9,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
+import org.springframework.web.multipart.MultipartFile;
+import sansam.team.common.s3.FileUploadUtil;
 import sansam.team.user.command.application.dto.LoginLogDTO;
 import sansam.team.user.command.application.dto.UserDTO;
 import sansam.team.user.command.application.dto.UserUpdateRequestDTO;
@@ -18,6 +20,8 @@ import sansam.team.user.command.domain.aggregate.entity.User;
 import sansam.team.user.command.domain.repository.LoginLogRepository;
 import sansam.team.user.command.domain.repository.UserRepository;
 
+import java.io.IOException;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -25,7 +29,7 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final LoginLogRepository loginLogRepository;
-
+    private final FileUploadUtil fileUploadUtil;
     private final ModelMapper modelMapper;
 
     @Transactional
@@ -45,11 +49,18 @@ public class UserService {
     }
 
     @Transactional
-    public User updateUser(Long userSeq, UserUpdateRequestDTO request) {
+    public User updateUser(Long userSeq, UserUpdateRequestDTO request, MultipartFile userProfileImg) throws IOException {
         User user = userRepository.findById(userSeq).orElseThrow(() -> new EntityNotFoundException("can't find user"));
 
+        if(userProfileImg != null && !userProfileImg.isEmpty()){
+            String imagUrl = fileUploadUtil.uploadFile(userProfileImg);
+            request.setUserProfileImg(imagUrl);
+        }else {
+            request.setUserProfileImg(user.getUserProfileImg());
+        }
+
         // User 엔티티 업데이트
-        user.modifyUser(request);
+        modelMapper.map(request, user);
 
         return user;
     }

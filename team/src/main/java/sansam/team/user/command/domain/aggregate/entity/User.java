@@ -94,18 +94,6 @@ public class User extends BaseTimeEntity {
         return authorities;
     }
 
-    public void modifyUser(UserUpdateRequestDTO myPageDTO) {
-
-        this.userNickname = myPageDTO.getUserNickname();
-        this.userPhone = myPageDTO.getUserPhone();
-        this.userEmail = myPageDTO.getUserEmail();
-        this.userGithubId = myPageDTO.getUserGithubId();
-        this.userProfileImg = myPageDTO.getUserProfileImg();
-        this.userCareerYears = myPageDTO.getUserCareerYears();
-        this.userCareerMonths = myPageDTO.getUserCareerMonths();
-
-    }
-
     public void modifyAdminUser(AdminUserUpdateRequestDTO requestDTO) {
         this.userProfileImg = requestDTO.getUserProfileImg();
         this.userName = requestDTO.getUserName();

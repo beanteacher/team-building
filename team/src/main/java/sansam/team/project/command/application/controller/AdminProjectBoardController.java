@@ -3,10 +3,13 @@ package sansam.team.project.command.application.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import sansam.team.common.response.ApiResponse;
 import sansam.team.common.response.ResponseUtil;
+import sansam.team.common.s3.FileUploadUtil;
 import sansam.team.project.command.application.dto.AdminProjectApplyMemberDTO;
 import sansam.team.project.command.application.dto.AdminProjectBoardCreateDTO;
 import sansam.team.project.command.application.dto.AdminProjectBoardUpdateDTO;
@@ -22,43 +25,48 @@ import sansam.team.project.command.domain.aggregate.entity.ProjectBoard;
 public class AdminProjectBoardController {
 
     private final AdminProjectBoardService adminProjectBoardService;
+    private final FileUploadUtil fileUploadUtil;
 
-    @PostMapping
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(summary = "프로젝트 게시물 추가", description = "프로젝트 게시물 추가 API (관리자만 가능)")
     public ApiResponse<?> createProjectBoard(
-            @RequestBody AdminProjectBoardCreateDTO adminProjectBoardCreateDTO) {
+            @RequestPart("adminProjectBoardCreateDTO") AdminProjectBoardCreateDTO adminProjectBoardCreateDTO,
+            @RequestPart("projectBoardImage") MultipartFile projectBoardImage) {
 
         try {
+            // 이미지 업로드 후 S3에서 URL 반환
+            String imageUrl = fileUploadUtil.uploadFile(projectBoardImage);
+
+            // DTO에 이미지 URL 설정
+            adminProjectBoardCreateDTO.setProjectBoardImgUrl(imageUrl);
+
             // 프로젝트 게시물 생성 요청
             ProjectBoard projectBoard = adminProjectBoardService.createProjectBoard(adminProjectBoardCreateDTO);
 
             return ResponseUtil.successResponse("Project created successfully").getBody();
-        }catch (IllegalArgumentException e){
-
+        } catch (IllegalArgumentException e) {
             return ResponseUtil.failureResponse(e.getMessage(), "USER_SEQ_NULL").getBody();
-        }catch (Exception e){
-
+        } catch (Exception e) {
             return ResponseUtil.exceptionResponse(e, "PROJECT_CREATE_ERROR").getBody();
         }
-
     }
 
-    @PutMapping("/{projectBoardSeq}")
+
+    @PutMapping(value = "/{projectBoardSeq}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(summary = "프로젝트 게시물 수정", description = "프로젝트 게시물 수정 API (관리자만 가능)")
     public ApiResponse<?> updateProjectBoard(
             @PathVariable Long projectBoardSeq,
-            @RequestBody AdminProjectBoardUpdateDTO adminProjectBoardUpdateDTO) {
+            @RequestPart AdminProjectBoardUpdateDTO adminProjectBoardUpdateDTO,
+            @RequestPart(required = false) MultipartFile projectBoardImage) {
 
         try {
             // 프로젝트 게시물 업데이트 요청
-            ProjectBoard updatedProjectBoard = adminProjectBoardService.updateProjectBoard(projectBoardSeq, adminProjectBoardUpdateDTO);
+            ProjectBoard updatedProjectBoard = adminProjectBoardService.updateProjectBoard(projectBoardSeq, adminProjectBoardUpdateDTO, projectBoardImage);
 
             return ResponseUtil.successResponse("Project updated successfully").getBody();
-        }catch (IllegalArgumentException e){
-
+        } catch (IllegalArgumentException e) {
             return ResponseUtil.failureResponse(e.getMessage(), "PROJECT_BOARD_SEQ_NULL").getBody();
-        }catch (Exception e){
-
+        } catch (Exception e) {
             return ResponseUtil.exceptionResponse(e, "PROJECT_UPDATE_ERROR").getBody();
         }
     }

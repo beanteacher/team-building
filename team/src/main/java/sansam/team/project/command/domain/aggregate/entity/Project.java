@@ -40,14 +40,4 @@ public class Project extends BaseTimeEntity {
     public void setProjectAdminSeq(Long userSeq) {
         this.projectAdminSeq = userSeq;
     }
-
-    public void modifyProject(AdminProjectUpdateDTO projectDTO) {
-        this.projectTitle = projectDTO.getProjectTitle();
-        this.projectContent = projectDTO.getProjectContent();
-        this.projectHeadCount = projectDTO.getProjectHeadCount();
-        this.projectImgUrl = projectDTO.getProjectImgUrl();
-        this.projectStartDate = projectDTO.getProjectStartDate();
-        this.projectEndDate = projectDTO.getProjectEndDate();
-        this.projectStatus = projectDTO.getProjectStatus();
-    }
 }
