@@ -1,7 +1,9 @@
 package sansam.team.team.query.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
-import sansam.team.team.query.dto.UserReviewAllQueryDTO;
+import org.apache.ibatis.annotations.Param;
+import sansam.team.team.query.dto.TeamUserReviewAllQueryDTO;
+import sansam.team.team.query.dto.TeamUserReviewQueryDTO;
 
 import java.util.List;
 
@@ -9,5 +11,7 @@ import java.util.List;
 public interface TeamUserReviewQueryMapper {
 
 
-    public List<UserReviewAllQueryDTO> findUserAllReview();
+    public List<TeamUserReviewAllQueryDTO> findUserAllReview();
+
+    TeamUserReviewQueryDTO findUserReview(@Param("userReviewSeq") Long userReviewSeq);
 }
