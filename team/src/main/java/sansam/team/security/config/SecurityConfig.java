@@ -59,7 +59,7 @@ public class SecurityConfig {
                                         "/",
                                         "/swagger-ui/**",
                                         "/v3/api-docs/**",
-                                        "/api/vi/user/login",
+                                        "/api/v1/user/login",
                                         "/api/v1/user/join",
                                         "/ws/chat/**"
                                 ).permitAll()
