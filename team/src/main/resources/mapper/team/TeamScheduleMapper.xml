@@ -6,11 +6,11 @@
 
     <select id="selectTeamScheduleList" resultType="TeamScheduleQueryDTO">
         SELECT team_schedule_seq
-        , team_schedule_content
-        , DATE_FORMAT(team_schedule_start_date, '%Y-%m-%d %H:%i:%s') team_schedule_start_date
-        , DATE_FORMAT(team_schedule_end_date, '%Y-%m-%d %H:%i:%s') team_schedule_end_date
-        , DATE_FORMAT(reg_date, '%Y-%m-%d %H:%i:%s') reg_date
-        , DATE_FORMAT(mod_date, '%Y-%m-%d %H:%i:%s') mod_date
+            , team_schedule_content
+            , DATE_FORMAT(team_schedule_start_date, '%Y-%m-%d %H:%i:%s') team_schedule_start_date
+            , DATE_FORMAT(team_schedule_end_date, '%Y-%m-%d %H:%i:%s') team_schedule_end_date
+            , DATE_FORMAT(reg_date, '%Y-%m-%d %H:%i:%s') reg_date
+            , DATE_FORMAT(mod_date, '%Y-%m-%d %H:%i:%s') mod_date
         FROM tbl_team_schedule
         WHERE team_seq = #{teamSeq}
     </select>

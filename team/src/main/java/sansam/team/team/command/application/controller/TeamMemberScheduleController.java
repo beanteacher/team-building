@@ -23,7 +23,7 @@ public class TeamMemberScheduleController {
     public ApiResponse<String> createScheduleByMember(
             @PathVariable Long teamSeq,
             @RequestBody TeamMemberScheduleDTO memberScheduleDTO) {
-        boolean result = teamMemberScheduleService.createScheduleByMember(memberScheduleDTO);
+        boolean result = teamMemberScheduleService.createScheduleByMember(teamSeq, memberScheduleDTO);
 
         return ResponseUtil.successResponse(result ? "팀원 진행상황 추가 성공" : "팀원 진행상황 추가 실패").getBody();
     }
@@ -34,7 +34,7 @@ public class TeamMemberScheduleController {
             @PathVariable Long teamSeq,
             @PathVariable long memberScheduleSeq,
             @RequestBody TeamMemberScheduleDTO memberScheduleDTO) {
-        teamMemberScheduleService.updateScheduleByMember(memberScheduleSeq, memberScheduleDTO);
+        teamMemberScheduleService.updateScheduleByMember(teamSeq, memberScheduleSeq, memberScheduleDTO);
         return ResponseUtil.successResponse("팀원 진행상황 수정 성공").getBody();
     }
 
@@ -53,7 +53,7 @@ public class TeamMemberScheduleController {
             @PathVariable Long teamSeq,
             @PathVariable long memberScheduleSeq,
             @RequestBody TeamMemberScheduleDTO memberScheduleDTO) {
-        teamMemberScheduleService.feedbackScheduleByMentor(memberScheduleSeq, memberScheduleDTO);
+        teamMemberScheduleService.feedbackScheduleByMentor(teamSeq, memberScheduleSeq, memberScheduleDTO);
         return ResponseUtil.successResponse("팀원 진행상황 피드백 성공").getBody();
     }
 }

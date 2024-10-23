@@ -13,6 +13,6 @@ public class TeamScheduleQueryDTO extends BaseTimeEntity {
     private long teamScheduleSeq;
     private long teamSeq;
     private String teamScheduleContent;
-    private LocalDateTime teamScheduleStartDate;
-    private LocalDateTime teamScheduleEndDate;
+    private String teamScheduleStartDate;
+    private String teamScheduleEndDate;
 }

@@ -11,7 +11,6 @@ import sansam.team.exception.CustomException;
 import sansam.team.exception.ErrorCodeType;
 import sansam.team.security.util.SecurityUtil;
 import sansam.team.team.command.application.dto.TeamMemberScheduleDTO;
-import sansam.team.team.command.application.dto.TeamScheduleDTO;
 import sansam.team.team.command.domain.aggregate.entity.TeamMemberSchedule;
 import sansam.team.team.command.domain.aggregate.entity.TeamSchedule;
 import sansam.team.team.command.domain.repository.TeamMemberScheduleRepository;
@@ -30,11 +29,11 @@ public class TeamMemberScheduleService {
     private final ModelMapper modelMapper;
 
     @Transactional
-    public boolean createScheduleByMember(TeamMemberScheduleDTO memberScheduleDTO) {
+    public boolean createScheduleByMember(long teamSeq, TeamMemberScheduleDTO memberScheduleDTO) {
         boolean result = false;
 
         try {
-            if(isPossibleScheduleByMember(memberScheduleDTO)) {
+            if(isPossibleScheduleByMember(teamSeq, memberScheduleDTO.getTeamScheduleSeq())) {
                 teamMemberScheduleRepository.save(modelMapper.map(memberScheduleDTO, TeamMemberSchedule.class));
                 result = true;
             }
@@ -53,12 +52,12 @@ public class TeamMemberScheduleService {
     }
 
     @Transactional
-    public TeamMemberSchedule updateScheduleByMember(long memberScheduleSeq, TeamMemberScheduleDTO memberScheduleDTO) {
+    public TeamMemberSchedule updateScheduleByMember(long teamSeq, long memberScheduleSeq, TeamMemberScheduleDTO memberScheduleDTO) {
         try {
             TeamMemberSchedule teamMemberSchedule = teamMemberScheduleRepository.findById(memberScheduleSeq)
                     .orElseThrow(() -> new CustomException(ErrorCodeType.MEMBER_SCHEDULE_NOT_FOUND));
 
-            if(isPossibleScheduleByMember(memberScheduleDTO)) {
+            if(isPossibleScheduleByMember(teamSeq, memberScheduleDTO.getTeamScheduleSeq())) {
                 teamMemberSchedule.updateMemberSchedule(memberScheduleDTO.getMemberScheduleContent(), memberScheduleDTO.getMemberSchedulePercent());
                 teamMemberScheduleRepository.save(teamMemberSchedule);
             }
@@ -77,11 +76,11 @@ public class TeamMemberScheduleService {
     }
 
     /* 팀원별 일정 진행상황 입력 조건 체크 */
-    public boolean isPossibleScheduleByMember(TeamMemberScheduleDTO memberScheduleDTO) {
-        TeamSchedule teamSchedule = teamScheduleRepository.findById(memberScheduleDTO.getTeamScheduleSeq())
+    public boolean isPossibleScheduleByMember(long teamSeq, long teamScheduleSeq) {
+        TeamSchedule teamSchedule = teamScheduleRepository.findById(teamScheduleSeq)
                 .orElseThrow(() -> new CustomException(ErrorCodeType.SCHEDULE_NOT_FOUND));
 
-        if(teamScheduleService.isSchedulePeriod(modelMapper.map(teamSchedule, TeamScheduleDTO.class))) {
+        if(teamScheduleService.isSchedulePeriod(teamSeq)) {
             if(teamSchedule.getScheduleStartDate() != null && teamSchedule.getScheduleEndDate() != null) {
                 if(!DateTimeUtil.isBetweenDateTime(teamSchedule.getScheduleStartDate(), teamSchedule.getScheduleEndDate())) {
                     throw new CustomException(ErrorCodeType.SCHEDULE_PERIOD_ERROR);
@@ -103,17 +102,15 @@ public class TeamMemberScheduleService {
     }
 
     @Transactional
-    public TeamMemberSchedule feedbackScheduleByMentor(long memberScheduleSeq, TeamMemberScheduleDTO memberScheduleDTO) {
+    public void feedbackScheduleByMentor(long teamSeq, long memberScheduleSeq, TeamMemberScheduleDTO memberScheduleDTO) {
         try {
             TeamMemberSchedule teamMemberSchedule = teamMemberScheduleRepository.findById(memberScheduleSeq)
                     .orElseThrow(() -> new CustomException(ErrorCodeType.MEMBER_SCHEDULE_NOT_FOUND));
 
-            if(isPossibleFeedback(teamMemberSchedule.getTeamScheduleSeq())) {
-                teamMemberSchedule.feedbackMemberSchedule(memberScheduleDTO.getMemberScheduleContent(), memberScheduleDTO.getMemberSchedulePercent());
+            if(isPossibleFeedback(teamSeq, teamMemberSchedule.getTeamScheduleSeq())) {
+                teamMemberSchedule.feedbackMemberSchedule(memberScheduleDTO.getMemberScheduleContent(), memberScheduleDTO.getMemberSchedulePercent(), memberScheduleDTO.getMemberScheduleFeedback());
                 teamMemberScheduleRepository.save(teamMemberSchedule);
             }
-
-            return teamMemberSchedule;
 
         } catch (Exception e) {
             if(((CustomException) e).getErrorCode() != null) {
@@ -127,15 +124,13 @@ public class TeamMemberScheduleService {
     }
 
     /* 피드백 가능 조건 체크 */
-    public boolean isPossibleFeedback(long teamScheduleSeq) {
+    public boolean isPossibleFeedback(long teamSeq, long teamScheduleSeq) {
         if(!RoleType.MENTOR.equals(SecurityUtil.getAuthenticatedUser().getUserAuth())) {
             throw new CustomException(ErrorCodeType.MENTOR_AUTH_ERROR);
         }
+        teamScheduleRepository.findById(teamScheduleSeq).orElseThrow(() -> new CustomException(ErrorCodeType.SCHEDULE_NOT_FOUND));
 
-        TeamSchedule teamSchedule = teamScheduleRepository.findById(teamScheduleSeq)
-                .orElseThrow(() -> new CustomException(ErrorCodeType.SCHEDULE_NOT_FOUND));
-
-        return teamScheduleService.isSchedulePeriod(modelMapper.map(teamSchedule, TeamScheduleDTO.class));
+        return teamScheduleService.isSchedulePeriod(teamSeq);
     }
 
 }

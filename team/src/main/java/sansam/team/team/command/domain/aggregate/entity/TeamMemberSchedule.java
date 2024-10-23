@@ -35,7 +35,7 @@ public class TeamMemberSchedule extends BaseTimeEntity {
         this.memberSchedulePercent = memberSchedulePercent;
     }
 
-    public void feedbackMemberSchedule(String memberScheduleContent, String memberSchedulePercent) {
+    public void feedbackMemberSchedule(String memberScheduleContent, String memberSchedulePercent, String memberScheduleFeedback) {
         this.memberScheduleContent = memberScheduleContent;
         this.memberSchedulePercent = memberSchedulePercent;
         this.memberScheduleFeedback = memberScheduleFeedback;

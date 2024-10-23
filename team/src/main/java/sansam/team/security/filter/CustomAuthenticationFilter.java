@@ -18,7 +18,7 @@ public class CustomAuthenticationFilter extends AbstractAuthenticationProcessing
 
     /* 해당 요청이 올 때 이 필터가 동작하도록 설정한다. */
     public CustomAuthenticationFilter() {
-        super(new AntPathRequestMatcher("/login", "POST"));
+        super(new AntPathRequestMatcher("/api/vi/user/login", "POST"));
     }
 
     /* 필터 동작 시 수행할 코드 작성하는 메소드 */
