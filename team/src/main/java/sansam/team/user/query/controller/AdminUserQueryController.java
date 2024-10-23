@@ -19,9 +19,9 @@ import java.util.List;
 @RequestMapping("/api/v1/query/admin/loginLog")
 @RequiredArgsConstructor
 @Tag(name = "1-1. User API", description = "회원 API")
-public class AdminUserController {
+public class AdminUserQueryController {
 
-    ;private final AdminUserQueryService adminUserQueryService;
+    private final AdminUserQueryService adminUserQueryService;
 
     @GetMapping
     @Operation(summary = "관리자가 로그인 로그 전체 조회")

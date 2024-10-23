@@ -23,7 +23,7 @@ public class TeamScheduleController {
     public ApiResponse<String> createTeamSchedule(
             @PathVariable Long teamSeq,
             @RequestBody TeamScheduleDTO scheduleDTO) {
-        boolean result = teamScheduleService.createTeamSchedule(scheduleDTO);
+        boolean result = teamScheduleService.createTeamSchedule(teamSeq, scheduleDTO);
         return ResponseUtil.successResponse(result ? "팀 일정 추가 성공" : "팀 일정 추가 실패").getBody();
     }
 
@@ -33,14 +33,13 @@ public class TeamScheduleController {
             @PathVariable Long teamSeq,
             @PathVariable long scheduleSeq,
             @RequestBody TeamScheduleDTO scheduleDTO) {
-        TeamSchedule teamSchedule = teamScheduleService.updateTeamSchedule(scheduleSeq, scheduleDTO);
+        TeamSchedule teamSchedule = teamScheduleService.updateTeamSchedule(teamSeq, scheduleSeq, scheduleDTO);
         return ResponseUtil.successResponse("팀 일정 수정 성공").getBody();
     }
 
     @DeleteMapping("/{scheduleSeq}")
     @Operation(summary = "팀 일정 삭제")
     public ApiResponse<String> deleteTeamSchedule(
-            @PathVariable Long teamSeq,
             @PathVariable long scheduleSeq) {
         teamScheduleService.deleteTeamSchedule(scheduleSeq);
         return ResponseUtil.successResponse("팀 일정 삭제 성공").getBody();

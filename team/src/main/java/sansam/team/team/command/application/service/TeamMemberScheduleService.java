@@ -11,7 +11,6 @@ import sansam.team.exception.CustomException;
 import sansam.team.exception.ErrorCodeType;
 import sansam.team.security.util.SecurityUtil;
 import sansam.team.team.command.application.dto.TeamMemberScheduleDTO;
-import sansam.team.team.command.application.dto.TeamScheduleDTO;
 import sansam.team.team.command.domain.aggregate.entity.TeamMemberSchedule;
 import sansam.team.team.command.domain.aggregate.entity.TeamSchedule;
 import sansam.team.team.command.domain.repository.TeamMemberScheduleRepository;
@@ -103,7 +102,7 @@ public class TeamMemberScheduleService {
     }
 
     @Transactional
-    public TeamMemberSchedule feedbackScheduleByMentor(long teamSeq, long memberScheduleSeq, TeamMemberScheduleDTO memberScheduleDTO) {
+    public void feedbackScheduleByMentor(long teamSeq, long memberScheduleSeq, TeamMemberScheduleDTO memberScheduleDTO) {
         try {
             TeamMemberSchedule teamMemberSchedule = teamMemberScheduleRepository.findById(memberScheduleSeq)
                     .orElseThrow(() -> new CustomException(ErrorCodeType.MEMBER_SCHEDULE_NOT_FOUND));
@@ -112,8 +111,6 @@ public class TeamMemberScheduleService {
                 teamMemberSchedule.feedbackMemberSchedule(memberScheduleDTO.getMemberScheduleContent(), memberScheduleDTO.getMemberSchedulePercent(), memberScheduleDTO.getMemberScheduleFeedback());
                 teamMemberScheduleRepository.save(teamMemberSchedule);
             }
-
-            return teamMemberSchedule;
 
         } catch (Exception e) {
             if(((CustomException) e).getErrorCode() != null) {
