@@ -31,7 +31,7 @@ CREATE TABLE `tbl_user`
     `user_auth` ENUM('MANAGER', 'SUBMANAGER', 'MENTOR', 'MEMBER') NOT NULL,
     `user_phone` char(11) NULL,
     `user_email` varchar(30) NOT NULL,
-    `user_birth_date` char(6) NULL,
+    `user_birth_date` char(100) NULL,
     `user_gender` char(10) NOT NULL,
     `user_github_id` varchar(30) NULL,
     `user_profile_img` varchar(255) NULL,
