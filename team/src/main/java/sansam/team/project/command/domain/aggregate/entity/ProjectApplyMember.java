@@ -36,10 +36,10 @@ public class ProjectApplyMember extends BaseTimeEntity {
     }
 
     public static ProjectApplyMember createEntity(ApplyStatus applyStatus, Long userSeq, Long projectBoardSeq) {
-        return new ProjectApplyMember(applyStatus, userSeq, projectBoardSeq);
+        return new ProjectApplyMember(applyStatus, projectBoardSeq, userSeq);
     }
 
-    public void modifyApplyMemberStatus(Long projectBoardSeq, AdminProjectApplyMemberDTO adminProjectApplyMemberDTO) {
+    public void ApplyMemberStatus(Long projectBoardSeq, AdminProjectApplyMemberDTO adminProjectApplyMemberDTO) {
         this.projectBoardSeq = projectBoardSeq;
         this.projectApplyMemberStatus = adminProjectApplyMemberDTO.getApplyStatus();
     }

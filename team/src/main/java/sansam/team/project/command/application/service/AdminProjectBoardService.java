@@ -89,7 +89,7 @@ public class AdminProjectBoardService {
         ProjectBoard projectBoard = projectBoardRepository.findById(projectBoardSeq)
                 .orElseThrow(() -> new IllegalArgumentException("Project board not found"));
 
-        applyMember.modifyApplyMemberStatus(projectBoard.getProjectBoardSeq(), adminProjectApplyMemberDTO);
+        applyMember.ApplyMemberStatus(projectBoard.getProjectBoardSeq(), adminProjectApplyMemberDTO);
 
         // 저장
         return applyMember;
