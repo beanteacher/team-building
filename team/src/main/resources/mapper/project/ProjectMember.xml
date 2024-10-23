@@ -7,19 +7,19 @@
     <!-- 프로젝트 번호로 프로젝트 회원 전체 조회 -->
     <select id="findProjectMembersByProjectSeq" resultType="AdminProjectMemberAllQueryDTO">
         SELECT
-        pm.user_seq AS userSeq,
-        u.user_name AS userName,
-        pm.project_member_del_yn AS projectMemberDelYn,
-        pm.project_mentor_yn AS projectMentorYn,
-        pm.project_member_major_yn AS projectMemberMajorYn,
-        pm.project_member_interest_type AS projectMemberInterestType,
-        pm.project_member_commit_score AS projectMemberCommitScore
+            pm.user_seq AS userSeq,
+            pm.project_member_seq AS projectMemberSeq,
+            u.user_name AS userName,
+            pm.project_member_del_yn AS projectMemberDelYn,
+            pm.project_mentor_yn AS projectMentorYn,
+            pm.project_member_develop_type AS projectMemberDevelopType,
+            pm.project_member_commit_score AS projectMemberCommitScore
         FROM
-        tbl_project_member pm
+            tbl_project_member pm
         JOIN
-        tbl_user u ON pm.user_seq = u.user_seq
+            tbl_user u ON pm.user_seq = u.user_seq
         WHERE
-        pm.project_seq = #{projectSeq}
+            pm.project_seq = #{projectSeq}
     </select>
 
 </mapper>

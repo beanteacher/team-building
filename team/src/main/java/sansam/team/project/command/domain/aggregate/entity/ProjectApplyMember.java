@@ -3,6 +3,7 @@ package sansam.team.project.command.domain.aggregate.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import sansam.team.common.aggregate.DevelopType;
 import sansam.team.common.aggregate.entity.BaseTimeEntity;
 
 import sansam.team.project.command.application.dto.AdminProjectApplyMemberDTO;
@@ -20,6 +21,9 @@ public class ProjectApplyMember extends BaseTimeEntity {
 
     @Enumerated(EnumType.STRING)
     private ApplyStatus projectApplyMemberStatus = ApplyStatus.APPLIED;     // 프로젝트 신청 회원 상태 (신청, 허가, 거부)
+
+    @Enumerated(value = EnumType.STRING)
+    private DevelopType projectMemberDevelopType;
 
     private Long userSeq;                               // 프로젝트 신청 회원 번호
 

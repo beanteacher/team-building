@@ -26,11 +26,4 @@ public class TeamBuildingRuleQueryController {
         List<TeamBuildingRuleQueryDTO> buildingRules = buildingRuleQueryService.findAll();
         return ApiResponse.ofSuccess("All building rules retrieved successfully", buildingRules);
     }
-
-    @GetMapping("/{ruleSeq}")
-    @Operation(summary = "특정 팀빌딩 규칙 조회", description = "특정 팀 빌딩 규칙 가중치에 대한 조회")
-    public ApiResponse<TeamBuildingRuleQueryDTO> getBuildingRule(@PathVariable long ruleSeq) {
-        TeamBuildingRuleQueryDTO buildingRule = buildingRuleQueryService.findById(ruleSeq);
-        return ApiResponse.ofSuccess("Building rule retrieved successfully", buildingRule);
-    }
 }

@@ -3,6 +3,7 @@ package sansam.team.team.command.application.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import sansam.team.common.response.ApiResponse;
 import sansam.team.common.response.ResponseUtil;
@@ -18,6 +19,13 @@ import sansam.team.team.command.domain.aggregate.entity.Team;
 public class TeamController {
 
     private final TeamService teamService;
+
+    @PostMapping()
+    @Operation(summary = "팀 추가 ")
+    public ApiResponse<?> createTeams(@RequestBody TeamCreateRequest teamCreateRequest) {
+        teamService.createTeams(teamCreateRequest);
+        return ResponseUtil.successResponse("팀 추가 성공").getBody();
+    }
 
     @PutMapping("/{teamSeq}")
     @Operation(summary = "팀 이름, 팀 빌딩 규칙 변경")

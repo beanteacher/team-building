@@ -20,8 +20,8 @@ public class UserGithubRepositoryService {
     private final UserRepository userRepository;
 
     @Transactional
-    public UserGithubRepository createRepository(UserGithubRepositoryDTO dto) {
-        UserGithubRepository userGithubRepository = UserGithubRepositoryMapper.toEntity(dto);
+    public UserGithubRepository createRepository(Long userSeq, UserGithubRepositoryDTO dto) {
+        UserGithubRepository userGithubRepository = UserGithubRepositoryMapper.toEntity(userSeq,dto);
         userGithubRepositoryRepository.save(userGithubRepository);
         return userGithubRepository;
     }

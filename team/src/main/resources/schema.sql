@@ -23,6 +23,7 @@ CREATE TABLE `tbl_user`
 (
     `user_seq` bigint NOT NULL AUTO_INCREMENT,
     `user_major` varchar(30) NULL,
+    `project_member_major_yn` ENUM('Y','N') NULL,
     `user_id` varchar(30) NOT NULL,
     `user_name` varchar(30) NOT NULL,
     `user_nickname` varchar(50) NOT NULL,
@@ -65,7 +66,7 @@ CREATE TABLE `tbl_project`
     `project_content` longtext NOT NULL,
     `project_status` ENUM('PROGRESS', 'END') NOT NULL,
     `project_head_count` int NOT NULL,
-    `project_img_url` varchar(100) NULL,
+    `project_img_url` varchar(255) NULL,
     `project_start_date` timestamp NOT NULL,
     `project_end_date` timestamp NOT NULL,
     `reg_date` timestamp NOT NULL,
@@ -82,7 +83,7 @@ CREATE TABLE `tbl_project_board`
     `project_board_title` varchar(50) NOT NULL,
     `project_board_content` longtext NOT NULL,
     `project_board_head_count` int NOT NULL,
-    `project_board_img_url` varchar(30) NULL,
+    `project_board_img_url` varchar(255) NULL,
     `project_board_start_date` timestamp NOT NULL,
     `project_board_end_date` timestamp NOT NULL,
     `project_board_status` ENUM('RECRUITMENT', 'DEADLINE', 'DELETE') NULL,
@@ -104,7 +105,6 @@ CREATE TABLE `tbl_project_member`
     `project_mentor_yn` ENUM('Y', 'N') NOT NULL,
     `reg_date` timestamp NOT NULL,
     `mod_date` timestamp NULL,
-    `project_member_major_yn` ENUM('Y','N') NULL,
     `project_member_develop_type` ENUM('BACKEND', 'FRONTEND') NULL,
     `project_member_commit_score` bigint NULL,
     PRIMARY KEY (`project_member_seq`),
@@ -118,6 +118,7 @@ CREATE TABLE `tbl_project_apply_member`
     `project_board_seq` bigint NOT NULL,
     `user_seq` bigint NOT NULL,
     `project_apply_member_status` ENUM('APPLIED', 'APPROVED', 'REJECTED') NOT NULL,
+    `project_member_develop_type` ENUM('BACKEND', 'FRONTEND') NULL,
     `reg_date` timestamp NOT NULL,
     `mod_date` timestamp NULL,
     PRIMARY KEY (`project_apply_member_seq`),
@@ -144,15 +145,14 @@ CREATE TABLE `tbl_team`
 (
     `team_seq` bigint NOT NULL AUTO_INCREMENT,
     `project_seq` bigint NOT NULL,
-    `rule_seq` bigint NOT NULL,
     `team_name` varchar(255) NOT NULL,
     `team_status` ENUM('OPEN', 'CLOSE') NULL,
     `reg_date` timestamp NOT NULL,
     `mod_date` timestamp NULL,
     `end_date` timestamp NULL,
     PRIMARY KEY (`team_seq`),
-    CONSTRAINT `FK_TBL_TEAM_PROJECT_SEQ` FOREIGN KEY (`project_seq`) REFERENCES `tbl_project`(`project_seq`),
-    CONSTRAINT `FK_TBL_TEAM_RULE_SEQ` FOREIGN KEY (`rule_seq`) REFERENCES `tbl_building_rule`(`rule_seq`)
+    CONSTRAINT `FK_TBL_TEAM_PROJECT_SEQ` FOREIGN KEY (`project_seq`) REFERENCES `tbl_project`(`project_seq`)
+
 );
 
 CREATE TABLE `tbl_team_chat`

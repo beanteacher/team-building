@@ -21,14 +21,16 @@ public class TeamChatQueryController {
 
     @GetMapping("/{teamSeq}/chat")
     @Operation(summary = "팀 채팅방 리스트 조회")
-    public ApiResponse<List<TeamChatResponse>> selectChatRoomList() {
+    public ApiResponse<List<TeamChatResponse>> selectChatRoomList(@PathVariable Long teamSeq) {
         List<TeamChatResponse> chatRooms = teamChatQueryService.selectChatRoomList();
         return ApiResponse.ofSuccess("Chat room list retrieved successfully", chatRooms);
     }
 
     @GetMapping("/{teamSeq}/chat/{teamChatSeq}")
     @Operation(summary = "팀 채팅방 조회(입장)")
-    public ApiResponse<TeamChatRoomResponse> enterChatRoom(@PathVariable Long teamChatSeq) {
+    public ApiResponse<TeamChatRoomResponse> enterChatRoom(
+            @PathVariable Long teamSeq,
+            @PathVariable Long teamChatSeq) {
         TeamChatRoomResponse chatRoom = teamChatQueryService.selectChatRoom(teamChatSeq);
         return ApiResponse.ofSuccess("Entered chat room successfully", chatRoom);
     }

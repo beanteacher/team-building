@@ -47,6 +47,7 @@ public class AdminProjectMemberController {
     @PutMapping("/{projectSeq}/member/{projectMemberSeq}")
     @Operation(summary = "프로젝트 회원 상태 변경(탈퇴 유무, 멘토 유무)", description = "프로젝트 수정 API (관리자만 가능)")
     public ApiResponse<?> updateProjectMember(
+            @PathVariable Long projectSeq,
             @PathVariable Long projectMemberSeq,
             @RequestBody AdminProjectMemberUpdateDTO updateDTO) {
 

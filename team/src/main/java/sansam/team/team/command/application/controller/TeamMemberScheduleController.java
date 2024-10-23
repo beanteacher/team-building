@@ -20,30 +20,40 @@ public class TeamMemberScheduleController {
 
     @PostMapping
     @Operation(summary = "팀원 진행상황 추가")
-    public ApiResponse<String> createScheduleByMember(@PathVariable long teamSeq, @RequestBody TeamMemberScheduleDTO memberScheduleDTO) {
-        boolean result = teamMemberScheduleService.createScheduleByMember(teamSeq, memberScheduleDTO);
+    public ApiResponse<String> createScheduleByMember(
+            @PathVariable Long teamSeq,
+            @RequestBody TeamMemberScheduleDTO memberScheduleDTO) {
+        boolean result = teamMemberScheduleService.createScheduleByMember(memberScheduleDTO);
 
         return ResponseUtil.successResponse(result ? "팀원 진행상황 추가 성공" : "팀원 진행상황 추가 실패").getBody();
     }
 
     @PutMapping("/{memberScheduleSeq}")
     @Operation(summary = "팀원 진행상황 수정")
-    public ApiResponse<String> updateScheduleByMember(@PathVariable long teamSeq, @PathVariable long memberScheduleSeq, @RequestBody TeamMemberScheduleDTO memberScheduleDTO) {
-        teamMemberScheduleService.updateScheduleByMember(teamSeq, memberScheduleSeq, memberScheduleDTO);
+    public ApiResponse<String> updateScheduleByMember(
+            @PathVariable Long teamSeq,
+            @PathVariable long memberScheduleSeq,
+            @RequestBody TeamMemberScheduleDTO memberScheduleDTO) {
+        teamMemberScheduleService.updateScheduleByMember(memberScheduleSeq, memberScheduleDTO);
         return ResponseUtil.successResponse("팀원 진행상황 수정 성공").getBody();
     }
 
     @DeleteMapping("/{memberScheduleSeq}")
     @Operation(summary = "팀원 진행상황 삭제")
-    public ApiResponse<String> deleteScheduleByMember(@PathVariable long memberScheduleSeq) {
+    public ApiResponse<String> deleteScheduleByMember(
+            @PathVariable Long teamSeq,
+            @PathVariable long memberScheduleSeq) {
         teamMemberScheduleService.deleteScheduleByMember(memberScheduleSeq);
         return ResponseUtil.successResponse("팀원 진행상황 삭제 성공").getBody();
     }
 
-    @PutMapping("/feedback/{memberScheduleSeq}")
+    @PutMapping("/{memberScheduleSeq}/feedback")
     @Operation(summary = "강사가 팀원 진행상황 피드백")
-    public ApiResponse<String> feedbackScheduleByMentor(@PathVariable long teamSeq, @PathVariable long memberScheduleSeq, @RequestBody TeamMemberScheduleDTO memberScheduleDTO) {
-        teamMemberScheduleService.feedbackScheduleByMentor(teamSeq, memberScheduleSeq, memberScheduleDTO);
+    public ApiResponse<String> feedbackScheduleByMentor(
+            @PathVariable Long teamSeq,
+            @PathVariable long memberScheduleSeq,
+            @RequestBody TeamMemberScheduleDTO memberScheduleDTO) {
+        teamMemberScheduleService.feedbackScheduleByMentor(memberScheduleSeq, memberScheduleDTO);
         return ResponseUtil.successResponse("팀원 진행상황 피드백 성공").getBody();
     }
 }

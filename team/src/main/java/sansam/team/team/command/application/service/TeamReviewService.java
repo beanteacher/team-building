@@ -48,7 +48,7 @@ public class TeamReviewService {
     }
 
     public boolean isReviewPeriod(TeamReviewDTO teamReviewDTO) {
-        TeamMember teamMember = teamMemberService.getTeamMemberByUserSeq(teamReviewDTO.getSendMemberSeq());
+        TeamMember teamMember = teamMemberService.getTeamMemberByUserSeq(teamReviewDTO.getReceiveMemberSeq());
         Team team = teamService.getTeamById(teamMember.getTeamSeq());
 
         if(!(DateTimeUtil.isBeforeWeek(team.getEndDate(), 2) && team.getTeamStatus().equals(TeamStatusType.CLOSE))) {

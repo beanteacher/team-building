@@ -14,10 +14,10 @@ import sansam.team.common.aggregate.DevelopType;
 public class AdminProjectMemberAllQueryDTO {
 
     private Long userSeq;
+    private Long projectMemberSeq;
     private String userName;
     private YnType projectMemberDelYn;
     private YnType projectMentorYn;
-    private YnType projectMemberMajorYn;
     private DevelopType projectMemberDevelopType;
     private Long projectMemberCommitScore;
 }

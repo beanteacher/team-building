@@ -20,24 +20,16 @@ public class Team extends BaseTimeEntity {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long teamSeq;   // 팀 번호
     private long projectSeq;    // 프로젝트 번호
-    private long ruleSeq;   // 팀 빌딩 규칙 번호
     private String teamName;    // 팀명
     @Enumerated(EnumType.STRING)
     private TeamStatusType teamStatus;
     private LocalDateTime endDate;
 
-    private Team(long projectSeq, long ruleSeq, String teamName) {
+    public void modifyTeam(String teamName) {
+        this.teamName = teamName;
+    }
+
+    public void ProjectSeq(Long projectSeq) {
         this.projectSeq = projectSeq;
-        this.ruleSeq = ruleSeq;
-        this.teamName = teamName;
-    }
-
-    public static Team create(long projectSeq, long ruleSeq, String teamName) {
-        return new Team(projectSeq, ruleSeq, teamName);
-    }
-
-    public void modifyTeam(long ruleSeq, String teamName) {
-        this.ruleSeq = ruleSeq;
-        this.teamName = teamName;
     }
 }

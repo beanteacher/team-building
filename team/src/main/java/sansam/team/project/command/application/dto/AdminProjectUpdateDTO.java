@@ -21,4 +21,9 @@ public class AdminProjectUpdateDTO {
     private String projectImgUrl;
     private LocalDateTime projectStartDate;
     private LocalDateTime projectEndDate;
+
+    // S3 업로드 후 이미지 URL을 설정하는 메서드
+    public void setProjectBoardImgUrlFromS3(String imgUrl) {
+        this.projectImgUrl = imgUrl;
+    }
 }

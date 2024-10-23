@@ -13,7 +13,7 @@ import sansam.team.project.command.domain.aggregate.entity.ProjectApplyMember;
 import sansam.team.project.command.application.service.ProjectApplyMemberService;
 
 @RestController
-@RequestMapping("/api/v1/project/board/apply")
+@RequestMapping("/api/v1/project/board/{projectBoardSeq}/apply")
 @RequiredArgsConstructor
 @Tag(name = "2-2. Project Board Apply Member API", description = "프로젝트 게시물 신청 회원 API")
 public class ProjectApplyMemberController {
@@ -24,6 +24,7 @@ public class ProjectApplyMemberController {
     @PostMapping()
     @Operation(summary = "프로젝트 신청", description = "프로젝트 신청 API")
     public ApiResponse<?> applyForProject(
+            @PathVariable Long projectBoardSeq,
             @RequestBody AdminProjectApplyMemberDTO applyMemberDTO) {
 
         try {
@@ -42,7 +43,7 @@ public class ProjectApplyMemberController {
     }
 
     // 프로젝트 신청 취소 API
-    @DeleteMapping("/{projectBoardSeq}")
+    @DeleteMapping()
     @Operation(summary = "프로젝트 신청 취소", description = "취소는 완전 삭제 기능 사용")
     public ApiResponse<?> cancelApplication(
             @PathVariable Long projectBoardSeq) {

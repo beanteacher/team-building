@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import sansam.team.project.command.domain.aggregate.entity.MentorReview;
 import sansam.team.project.command.domain.repository.ProjectMentorReviewRepository;
+import sansam.team.team.command.application.dto.TeamBuildingResultDTO;
+import sansam.team.team.command.application.dto.TeamMemberScoreDTO;
 import sansam.team.team.command.application.dto.TeamBuildingRuleDTO;
 import sansam.team.team.command.domain.aggregate.entity.TeamBuildingRule;
 import sansam.team.team.command.domain.repository.TeamBuildingRuleRepository;
@@ -17,7 +19,6 @@ import sansam.team.project.command.domain.aggregate.entity.ProjectMember;
 import sansam.team.project.command.domain.repository.ProjectMemberRepository;
 import sansam.team.team.command.application.dto.TeamBuildingDTO;
 import sansam.team.team.command.domain.aggregate.entity.Team;
-import sansam.team.team.command.domain.aggregate.entity.TeamMember;
 import sansam.team.team.command.domain.aggregate.entity.TeamReview;
 import sansam.team.team.command.domain.repository.TeamMemberRepository;
 import sansam.team.team.command.domain.repository.TeamRepository;
@@ -46,7 +47,7 @@ public class TeamBuildingService {
     private final UserGithubRepositoryRepository userGithubRepositoryRepository;
 
     // 1. 깃허브 커밋 점수 계산 로직
-    public long calculateCommitScore(TeamBuildingDTO teamBuildingDTO) throws IOException {
+    public int calculateCommitScore(TeamBuildingDTO teamBuildingDTO) throws IOException {
         User user = userRepository.findById(teamBuildingDTO.getUserSeq())
                 .orElseThrow(() -> new RuntimeException("유저 정보가 존재하지 않습니다."));
 
@@ -85,15 +86,15 @@ public class TeamBuildingService {
         pjMemberUpdateDTO.setProjectMemberCommitScore(commitScore);
         pjMember.modifyProjectMember(pjMemberUpdateDTO);
 
-        return commitScore;
+        return (int) commitScore;
     }
 
     // 2. 전공 점수 계산 로직
     public int calculateMajorScore(TeamBuildingDTO teamBuildingDTO) throws IOException {
-        ProjectMember pjMember = projectMemberRepository.findById(teamBuildingDTO.getProjectMemberSeq())
+        User user = userRepository.findById(teamBuildingDTO.getUserSeq())
                 .orElseThrow(() -> new RuntimeException("유저 정보가 존재하지 않습니다."));
-        return pjMember.getProjectMemberMajorYn()== YnType.Y?5:0;
 
+        return user.getProjectMemberMajorYn()==YnType.Y?5:0;
     }
 
     // 3. 경력 점수 계산 로직
@@ -101,22 +102,26 @@ public class TeamBuildingService {
         User user = userRepository.findById(teamBuildingDTO.getUserSeq())
                 .orElseThrow(() -> new RuntimeException("프로젝트 정보가 존재하지 않습니다."));
         long careerMonth = user.getUserCareerYears()*12 + user.getUserCareerMonths();
-        int careerScore = 0;
-        if(careerMonth>=60){
-            careerScore = 5;
+        int careerScore;
+        if(careerMonth<6){
+            careerScore = 0;
         }
-        else if(careerMonth>=36){
-            careerScore = 4;
-        }
-        else if(careerMonth>=18){
-            careerScore = 3;
-        }
-        else if(careerMonth>=12){
-            careerScore = 2;
-        }
-        else if(careerMonth>=6){
+        else if(careerMonth<12){
             careerScore = 1;
         }
+        else if(careerMonth<18){
+            careerScore = 2;
+        }
+        else if(careerMonth<36){
+            careerScore = 3;
+        }
+        else if(careerMonth<60){
+            careerScore = 4;
+        }
+        else{
+            careerScore = 5;
+        }
+        log.info("반환 전 경력 점수: "+careerScore);
         return careerScore;
 
     }
@@ -157,40 +162,34 @@ public class TeamBuildingService {
     // 팀 빌딩 점수 합 구하기.
     public double calculateTotalScore(TeamBuildingDTO teamBuildingDTO, TeamBuildingRuleDTO buildingRuleDTO) throws IOException {
         //
-        long commitScore = calculateCommitScore(teamBuildingDTO) * buildingRuleDTO.getRuleGithubWeight();
+        int commitScore = calculateCommitScore(teamBuildingDTO) * buildingRuleDTO.getRuleGithubWeight();
         int majorScore = calculateMajorScore(teamBuildingDTO) * buildingRuleDTO.getRuleMajorWeight();
         int careerScore = calculateCareerScore(teamBuildingDTO) * buildingRuleDTO.getRuleCareerWeight();
         double teamEvaluationScore = calculateTeamEvaluation(teamBuildingDTO)*buildingRuleDTO.getRuleTeamReviewWeight();
         double mentorEvaluationScore = calculateMentorEvaluation(teamBuildingDTO)*buildingRuleDTO.getRuleMentorReviewWeight();
         return commitScore + majorScore + careerScore+ teamEvaluationScore + mentorEvaluationScore;
     }
-    //팀 빌딩 로직 -> 팀 빌딩 규칙 추가해야함
     @Transactional
-    public List<Team> buildBalancedTeams(Long projectSeq, int teamBuildingRuleSeq) throws IOException {
+    public List<TeamBuildingResultDTO> buildBalancedTeams(Long projectSeq, int teamBuildingRuleSeq) throws IOException {
 
-        //1. 해당 프로젝트 참여자 List와 팀빌딩 규칙 불러오기
         List<ProjectMember> projectMembers = projectMemberRepository.findAllByProjectSeq(projectSeq);
         TeamBuildingRule buildingRule = buildingRuleRepository.findById(teamBuildingRuleSeq)
                 .orElseThrow(() -> new RuntimeException("빌딩 규칙이 존재하지 않습니다."));
 
-
-        //2. 프로젝트 참여자들을 관심 분야에 따라 분류
         List<TeamBuildingDTO> frontMembers = new ArrayList<>();
         List<TeamBuildingDTO> backMembers = new ArrayList<>();
 
         for (ProjectMember pjMember : projectMembers) {
-            if(pjMember.getProjectMentorYn()==YnType.Y){
+            if(pjMember.getProjectMentorYn() == YnType.Y){
                 continue;
             }
 
             Long userSeq = pjMember.getUserSeq();
-            TeamBuildingDTO teamBuildingDTO = new TeamBuildingDTO(userSeq,pjMember.getProjectMemberSeq());
-            // 프로젝트 참여자 점수 불러오기
+
+            TeamBuildingDTO teamBuildingDTO = new TeamBuildingDTO(userSeq, pjMember.getProjectMemberSeq());
 
             double totalScore = calculateTotalScore(teamBuildingDTO, buildingRule.toDTO());
-            log.info("프로젝트 유저 번호: "+pjMember.getUserSeq()+" 총 점수: "+totalScore);
             teamBuildingDTO.setTotalScore(totalScore);
-
 
             if (pjMember.getProjectMemberDevelopType().equals(DevelopType.FRONTEND)) {
                 frontMembers.add(teamBuildingDTO);
@@ -198,54 +197,64 @@ public class TeamBuildingService {
                 backMembers.add(teamBuildingDTO);
             }
         }
-        //3. 팀 빌딩 규칙의 팀 개수에 따라 정하기
+
+        //3. Fetch the number of teams based on the rules
         int teamCnt = buildingRule.getRuleTeamCount();
 
-        //4. 팀 만들기
-        List<Team> teams = new ArrayList<>();
+        //4. Prepare to group teams and members into result DTOs
+        List<TeamBuildingResultDTO> teamBuildingResults = new ArrayList<>();
+        Map<String, List<TeamMemberScoreDTO>> teams = new HashMap<>();
 
-        Map<Team, Double> teamTotalScores = new HashMap<>();
-        Map<Team,Long> teamMemberCnt = new HashMap<>();
-
+        // Initialize teams with their names and empty member lists
         for (int i = 0; i < teamCnt; i++) {
-            Team newTeam = Team.create(projectSeq, 1, i + 1 + "조");
-            teamRepository.save(newTeam);
-            teams.add(newTeam);
-            teamTotalScores.put(newTeam,0.0);
-            teamMemberCnt.put(newTeam,0L);
+            String teamName = (i + 1) + "조";
+            teams.put(teamName, new ArrayList<>());
+            teamBuildingResults.add(new TeamBuildingResultDTO(teamName, teams.get(teamName)));
         }
 
-        // 5. 프로젝트 참여자 점수에 따라 정렬해 팀원 추가하기.
+        // 5. Sort members by total score and distribute across teams
         frontMembers.sort(Comparator.comparingDouble(TeamBuildingDTO::getTotalScore).reversed());
-        backMembers.sort(Comparator.comparingDouble(TeamBuildingDTO::getTotalScore).reversed()); 
+        backMembers.sort(Comparator.comparingDouble(TeamBuildingDTO::getTotalScore).reversed());
 
-        // 6. 팀원 분배
-        assignMembersToTeams(frontMembers, teamTotalScores, teamMemberCnt);
-        assignMembersToTeams(backMembers, teamTotalScores, teamMemberCnt);
-        return teams;
+        assignMembersToTeams(frontMembers, teams);
+        assignMembersToTeams(backMembers, teams);
+
+        return teamBuildingResults;
     }
 
-    public void assignMembersToTeams(List<TeamBuildingDTO> members, Map<Team, Double> teamTotalScores, Map<Team, Long> teamMemberCnt) {
+    private void assignMembersToTeams(List<TeamBuildingDTO> members, Map<String, List<TeamMemberScoreDTO>> teams) throws IOException {
+        List<String> teamNames = new ArrayList<>(teams.keySet());
+
+        int teamIndex = 0;
         for (TeamBuildingDTO member : members) {
-            // 1. 인원수가 가장 적은 팀 -> 점수 작은 팀 순으로 선택
-            Team targetTeam = findTargetTeam(teamTotalScores,teamMemberCnt);
+            // Rotate between teams to balance members
+            String targetTeamName = teamNames.get(teamIndex % teamNames.size());
 
-            TeamMember teamMember = new TeamMember(member.getUserSeq(),targetTeam.getTeamSeq());
+            User user = userRepository.findById(member.getUserSeq()).orElseThrow(() -> new RuntimeException("User not found"));
 
-            teamMemberRepository.save(teamMember);
+            ProjectMember pjMember = projectMemberRepository.findById(member.getProjectMemberSeq())
+                    .orElseThrow(() -> new RuntimeException("프로젝트 멤버 정보가 존재하지 않습니다."));
 
-            double updatedScore = teamTotalScores.get(targetTeam) + member.getTotalScore();
-            teamTotalScores.put(targetTeam, updatedScore);
-            teamMemberCnt.put(targetTeam, teamMemberCnt.get(targetTeam)+1);
+            // Create TeamMemberScoreDTO and add to the team
+            TeamMemberScoreDTO teamMemberScore = new TeamMemberScoreDTO(
+                    member.getUserSeq(),
+                    user.getUserName(),
+                    calculateCommitScore(member),
+                    calculateCareerScore(member),
+                    calculateMajorScore(member),
+                    calculateTeamEvaluation(member),
+                    calculateMentorEvaluation(member),
+                    member.getTotalScore(),
+                    pjMember.getProjectMemberDevelopType()
+
+            );
+
+            teams.get(targetTeamName).add(teamMemberScore);
+            teamIndex++;
         }
     }
 
-    public Team findTargetTeam(Map<Team, Double> teamTotalScores, Map<Team, Long> teamMemberCnt) {
-        return teamTotalScores.keySet().stream()
-                .min(Comparator.comparingLong(teamMemberCnt::get)
-                        .thenComparingDouble(teamTotalScores::get))
-                .orElseThrow(() -> new NoSuchElementException("팀이 존재하지 않습니다."));
-    }
+
 
 }
 

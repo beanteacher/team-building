@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 
+import sansam.team.common.aggregate.YnType;
+import sansam.team.user.command.application.dto.AdminUserUpdateRequestDTO;
 import sansam.team.user.command.application.dto.UserUpdateRequestDTO;
 
 import sansam.team.common.aggregate.entity.BaseTimeEntity;
@@ -28,6 +30,9 @@ public class User extends BaseTimeEntity {
     private Long userSeq;           // 회원 번호
 
     private String userMajor;
+
+    @Enumerated(value = EnumType.STRING)
+    private YnType projectMemberMajorYn;
 
     private String userId;          // 회원 아이디
 
@@ -89,16 +94,17 @@ public class User extends BaseTimeEntity {
         return authorities;
     }
 
-    public void modifyUser(UserUpdateRequestDTO myPageDTO) {
-
-        this.userNickname = myPageDTO.getUserNickname();
-        this.userPhone = myPageDTO.getUserPhone();
-        this.userEmail = myPageDTO.getUserEmail();
-        this.userGithubId = myPageDTO.getUserGithubId();
-        this.userProfileImg = myPageDTO.getUserProfileImg();
-        this.userCareerYears = myPageDTO.getUserCareerYears();
-        this.userCareerMonths = myPageDTO.getUserCareerMonths();
-
+    public void modifyAdminUser(AdminUserUpdateRequestDTO requestDTO) {
+        this.userProfileImg = requestDTO.getUserProfileImg();
+        this.userName = requestDTO.getUserName();
+        this.userId = requestDTO.getUserId();
+        this.userEmail = requestDTO.getUserEmail();
+        this.userAuth = requestDTO.getUserAuth();
+        this.userStatus = requestDTO.getUserStatus();
+        this.userPhone = requestDTO.getUserPhone();
+        this.userGender = requestDTO.getUserGender();
+        this.userMajor = requestDTO.getUserMajor();
+        this.userCareerYears = requestDTO.getUserCareerYears();
     }
 }
 

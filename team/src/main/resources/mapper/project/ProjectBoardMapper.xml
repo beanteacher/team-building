@@ -58,6 +58,7 @@
     <select id="findApplyMembersByProjectBoardSeq" resultType="ProjectApplyMemberQueryDTO">
         SELECT
             pam.project_apply_member_status AS applyStatus,
+            pam.project_apply_member_seq AS projectApplyMemberSeq,
             u.user_seq AS userSeq,
             u.user_name AS userName,
             u.user_nickname AS userNickname
