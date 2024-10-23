@@ -9,6 +9,7 @@ public class ProjectApplyMemberMapper {
         return ProjectApplyMember.createEntity(
                 applyMemberDTO.getApplyStatus(),
                 applyMemberDTO.getProjectBoardSeq(),
+                applyMemberDTO.getProjectMemberDevelopType(),
                 userSeq
         );
 

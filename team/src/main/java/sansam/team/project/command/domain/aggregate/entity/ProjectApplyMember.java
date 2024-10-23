@@ -3,6 +3,7 @@ package sansam.team.project.command.domain.aggregate.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import sansam.team.common.aggregate.DevelopType;
 import sansam.team.common.aggregate.entity.BaseTimeEntity;
 
@@ -29,14 +30,16 @@ public class ProjectApplyMember extends BaseTimeEntity {
 
     private Long projectBoardSeq;                       // 프로젝트 게시글 번호
 
-    private ProjectApplyMember(ApplyStatus applyStatus, Long userSeq, Long projectBoardSeq) {
+    private ProjectApplyMember(ApplyStatus applyStatus, Long userSeq,DevelopType projectMemberDevelopType, Long projectBoardSeq) {
         this.projectApplyMemberStatus = applyStatus;
         this.userSeq = userSeq;
+        this.projectMemberDevelopType = projectMemberDevelopType;
         this.projectBoardSeq = projectBoardSeq;
     }
 
-    public static ProjectApplyMember createEntity(ApplyStatus applyStatus, Long userSeq, Long projectBoardSeq) {
-        return new ProjectApplyMember(applyStatus, projectBoardSeq, userSeq);
+
+    public static ProjectApplyMember createEntity(ApplyStatus applyStatus, Long userSeq,DevelopType projectMemberDevelopType, Long projectBoardSeq) {
+        return new ProjectApplyMember(applyStatus, projectBoardSeq,projectMemberDevelopType, userSeq);
     }
 
     public void ApplyMemberStatus(Long projectBoardSeq, AdminProjectApplyMemberDTO adminProjectApplyMemberDTO) {
