@@ -43,7 +43,7 @@ INSERT INTO `tbl_project` (`project_admin_seq`, `project_title`, `project_conten
 VALUES
     (1, 'Project Alpha', 'Content for Project Alpha', 'PROGRESS', 10, 'http://example.com/alpha.png', '2024-01-01 00:00:00', '2024-12-31 23:59:59', NOW()),
     (11, 'Project Beta', 'Content for Project Beta', 'PROGRESS', 10, 'http://example.com/beta.png', '2024-02-01 00:00:00', '2024-11-30 23:59:59', NOW()),
-(1, '백엔드 프로젝트', '한화시스템 beyond 캠프 10기', 'PROGRESS', 28, 'http://example.com/alpha.png', '2024-01-01 00:00:00', '2024-12-31 23:59:59', NOW());
+    (1, '백엔드 프로젝트', '한화시스템 beyond 캠프 10기', 'PROGRESS', 28, 'http://example.com/alpha.png', '2024-01-01 00:00:00', '2024-12-31 23:59:59', NOW());
 
 INSERT INTO tbl_building_rule ( rule_team_count
                               , rule_major_weight
@@ -58,14 +58,14 @@ VALUES
     (5,3 , 4,5, 0,0,'Y',NOW());
 
 -- 프로젝트 Alpha (project_seq: 1)
-INSERT INTO `tbl_team` (`project_seq`, `rule_seq`, `team_name`, `team_status`, `reg_date`, `end_date`)
+INSERT INTO `tbl_team` (`project_seq`,  `team_name`, `team_status`, `reg_date`, `end_date`)
 VALUES
-    (1, 1, 'Alpha Team A', 'CLOSE', NOW(), '2024-09-16 14:58:01'),
-    (1, 1, 'Alpha Team B', 'CLOSE', NOW(), '2024-09-10 14:58:01'),
+    (1, 'Alpha Team A', 'CLOSE', NOW(), '2024-09-16 14:58:01'),
+    (1,  'Alpha Team B', 'CLOSE', NOW(), '2024-09-10 14:58:01'),
 
 -- 프로젝트 Beta (project_seq: 2)
-    (2, 1, 'Beta Team A','OPEN', NOW(), NULL),
-    (2, 1, 'Beta Team B','OPEN', NOW(),NULL);
+    (2, 'Beta Team A','OPEN', NOW(), NULL),
+    (2,'Beta Team B','OPEN', NOW(),NULL);
 
 -- 프로젝트 Alpha (project_seq: 1, user_seq: 1-10)
 INSERT INTO `tbl_project_member` (`project_seq`, `user_seq`, `project_member_del_yn`, `project_mentor_yn`, `project_member_develop_type`,`project_member_commit_score`,`reg_date`)
@@ -94,13 +94,13 @@ VALUES
 
     (1, 21, 'N', 'N', 'BACKEND',NULL,NOW()),
     (1, 22, 'N', 'N', 'BACKEND',NULL,NOW()),
-(1, 23, 'N', 'N', 'BACKEND',NULL,NOW()),
-(1, 24, 'N', 'N', 'BACKEND',NULL,NOW()),
-(1, 25, 'N', 'N', 'BACKEND',NULL,NOW()),
-(1, 26, 'N', 'N', 'BACKEND',NULL,NOW()),
-(1, 27, 'N', 'N', 'BACKEND',NULL,NOW()),
-(1, 28, 'N', 'N', 'BACKEND',NULL,NOW()),
-(1, 29, 'N', 'N', 'BACKEND',NULL,NOW());
+    (1, 23, 'N', 'N', 'BACKEND',NULL,NOW()),
+    (1, 24, 'N', 'N', 'BACKEND',NULL,NOW()),
+    (1, 25, 'N', 'N', 'BACKEND',NULL,NOW()),
+    (1, 26, 'N', 'N', 'BACKEND',NULL,NOW()),
+    (1, 27, 'N', 'N', 'BACKEND',NULL,NOW()),
+    (1, 28, 'N', 'N', 'BACKEND',NULL,NOW()),
+    (1, 29, 'N', 'N', 'BACKEND',NULL,NOW());
 
 
 -- Alpha Team A (team_seq: 1, user_seq: 1-5)
@@ -143,19 +143,19 @@ VALUES
 
 INSERT INTO `tbl_user_review` (`send_team_member_seq`,`receive_team_member_seq`,`team_member_review_star`,`team_member_review_content`,`reg_date`)
 VALUES
-        (1,2,5,'GREAT',NOW()),
-        (2,1,5,'GREAT',NOW()),
-        (10,3,5,'GREAT',NOW()),
-        (2,3,4,'GREAT',NOW());
+    (1,2,5,'GREAT',NOW()),
+    (2,1,5,'GREAT',NOW()),
+    (10,3,5,'GREAT',NOW()),
+    (2,3,4,'GREAT',NOW());
 
 
 INSERT INTO `tbl_mentor_review` (project_member_seq, project_mentor_seq, mentor_review_star, mentor_review_content, reg_date)
 VALUES
-        (2,1,5,'GREAT',NOW()),
-        (3,1,5,'GREAT',NOW()),
-        (5,1,5,'GREAT',NOW()),
-        (7,1,5,'GREAT',NOW()),
-        (9,1,5,'GREAT',NOW());
+    (2,1,5,'GREAT',NOW()),
+    (3,1,5,'GREAT',NOW()),
+    (5,1,5,'GREAT',NOW()),
+    (7,1,5,'GREAT',NOW()),
+    (9,1,5,'GREAT',NOW());
 
 INSERT INTO `tbl_user_github_repository` (user_repository_url, user_repository_name, develop_type,user_seq)
 VALUES
