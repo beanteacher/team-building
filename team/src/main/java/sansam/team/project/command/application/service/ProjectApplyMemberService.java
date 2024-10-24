@@ -1,19 +1,15 @@
 package sansam.team.project.command.application.service;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 import sansam.team.security.util.SecurityUtil;
-import sansam.team.project.command.application.dto.AdminProjectApplyMemberDTO;
+import sansam.team.project.command.application.dto.ProjectApplyMemberRequestDTO;
 import sansam.team.project.command.domain.aggregate.entity.ProjectApplyMember;
-import sansam.team.project.command.domain.aggregate.entity.ProjectBoard;
 import sansam.team.project.command.domain.repository.ProjectApplyMemberRepository;
 import sansam.team.project.command.domain.repository.ProjectBoardRepository;
 import sansam.team.project.command.mapper.ProjectApplyMemberMapper;
-import sansam.team.user.command.domain.aggregate.entity.User;
 import sansam.team.user.query.dto.CustomUserDTO;
 
 @Service
@@ -25,7 +21,7 @@ public class ProjectApplyMemberService {
 
 
     @Transactional
-    public ProjectApplyMember applyForProject(AdminProjectApplyMemberDTO applyMemberDTO) {
+    public ProjectApplyMember applyForProject(ProjectApplyMemberRequestDTO applyMemberDTO) {
 
         // SecurityContext에서 현재 인증된 사용자(User 객체) 추출
         CustomUserDTO user = SecurityUtil.getAuthenticatedUser();
