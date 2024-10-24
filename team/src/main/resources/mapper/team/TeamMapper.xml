@@ -10,6 +10,7 @@
 
         <association property="teamChatResponse" javaType="TeamChatResponse">
             <id column="team_chat_seq" property="teamChatSeq" />
+            <result column="team_seq" property="teamSeq"/>
             <result column="team_chat_name" property="teamChatName"/>
             <result column="team_chat_comment" property="teamChatComment"/>
             <result column="reg_date" property="regDate"/>

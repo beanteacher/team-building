@@ -38,10 +38,10 @@ public class TeamChatQueryService {
                 .is(response.getTeamMemberSeq()));
         TeamChatMemberDTO teamChatMember = mongoTemplate.findOne(query, TeamChatMemberDTO.class, "chatMember");
 
-        if(teamChatMember == null) {
-            teamChatMember = new TeamChatMemberDTO(response.getTeamChatSeq(), response.getTeamMemberSeq(), response.getUserNickName());
+        /*if(teamChatMember == null) {
+            teamChatMember = new TeamChatMemberDTO(response.getTeamChatSeq(), response.getTeamMemberSeq(), response.getUserNickname());
             mongoTemplate.insert(teamChatMember);
-        }
+        }*/
 
         query = new Query(Criteria.where("teamChatSeq").is(teamChatSeq));
 

@@ -59,7 +59,7 @@ public class WebSocketChatHandler extends TextWebSocketHandler {
 
         // 페이로드 -> chatMessageDto로 변환
         TeamChatMessageDTO chatDTO = mapper.readValue(payload, TeamChatMessageDTO.class);
-        insertTeamChatMessage(chatDTO);
+        boolean result = insertTeamChatMessage(chatDTO);
 
         Long chatRoomId = chatDTO.getTeamChatSeq();  // 팀 채팅 Seq로 채팅방 Id 생성
         // 메모리 상에 채팅방에 대한 세션 없으면 만들어줌
@@ -80,7 +80,7 @@ public class WebSocketChatHandler extends TextWebSocketHandler {
             removeClosedSession(chatRoomSession);
         }
 
-        sendMessageToChatRoom(chatDTO, chatRoomSession);
+        if(result) sendMessageToChatRoom(chatDTO, chatRoomSession);
     }
 
     // 소켓 종료 확인
@@ -107,7 +107,7 @@ public class WebSocketChatHandler extends TextWebSocketHandler {
         }
     }
 
-    public void insertTeamChatMessage(TeamChatMessageDTO chatDTO) {
+    public boolean insertTeamChatMessage(TeamChatMessageDTO chatDTO) {
         int count = 0;
         chatDTO.setTeamChatMessageSeq(sequenceCreator.createSeq("teamChatMessageSeq"));
 
@@ -115,10 +115,15 @@ public class WebSocketChatHandler extends TextWebSocketHandler {
             if (chatDTO.getMessageType().equals(TeamChatMessageType.ENTER)) {
                 Query query = new Query(Criteria.where("teamChatSeq").is(chatDTO.getTeamChatSeq()));
                 List<TeamChatMemberDTO> teamChatMemberList = mongoTemplate.find(query, TeamChatMemberDTO.class, "chatMember");
+                log.info("teamChatMemberList : {}", teamChatMemberList);
                 for(TeamChatMemberDTO teamChatMember : teamChatMemberList) {
                     if(teamChatMember.getTeamMemberSeq() == chatDTO.getTeamMemberSeq()) {
                         count++;
                     }
+                }
+                if(count == 0) {
+                    TeamChatMemberDTO teamChatMember = new TeamChatMemberDTO(chatDTO.getTeamChatSeq(), chatDTO.getTeamMemberSeq(), chatDTO.getMessage().split("님이 입장하였습니다.")[0]);
+                    mongoTemplate.insert(teamChatMember);
                 }
             }
 
@@ -128,5 +133,7 @@ public class WebSocketChatHandler extends TextWebSocketHandler {
         } catch (Exception e) {
             throw new CustomException(ErrorCodeType.MONGO_ERROR);
         }
+
+        return count == 0;
     }
 }

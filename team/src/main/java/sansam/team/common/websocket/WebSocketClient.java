@@ -16,7 +16,7 @@ public class WebSocketClient extends WebSocketListener {
     private final MongoTemplate mongoTemplate;
 
     private WebSocket webSocket;
-    private String userNickName;
+    private String userNickname;
     private Long teamChatSeq;
     private Long teamMemberSeq;
     private TeamChatMemberDTO teamChatMember;
@@ -27,7 +27,7 @@ public class WebSocketClient extends WebSocketListener {
                 .build();
 
         this.teamChatSeq = teamChatRoom.getTeamChatSeq();
-        this.userNickName = teamChatRoom.getUserNickName();
+        this.userNickname = teamChatRoom.getUserNickname();
         this.teamMemberSeq = teamChatRoom.getTeamMemberSeq();
 
         webSocket = client.newWebSocket(request, this); // this = WebSocketListner
@@ -45,7 +45,7 @@ public class WebSocketClient extends WebSocketListener {
             teamChatMessage.setMessageType(TeamChatMessageType.ENTER);
             teamChatMessage.setTeamChatSeq(teamChatSeq);
             teamChatMessage.setTeamMemberSeq(teamMemberSeq);
-            teamChatMessage.setMessage(userNickName + "님이 입장하였습니다.");
+            teamChatMessage.setMessage(userNickname + "님이 입장하였습니다.");
 
             mongoTemplate.insert(teamChatMessage);
 
@@ -66,7 +66,7 @@ public class WebSocketClient extends WebSocketListener {
             teamChatMessage.setMessageType(TeamChatMessageType.LEAVE);
             teamChatMessage.setTeamChatSeq(teamChatSeq);
             teamChatMessage.setTeamMemberSeq(teamMemberSeq);
-            teamChatMessage.setMessage(userNickName + "님이 채팅방을 나갔습니다.");
+            teamChatMessage.setMessage(userNickname + "님이 채팅방을 나갔습니다.");
 
             mongoTemplate.insert(teamChatMessage);
 
