@@ -61,6 +61,8 @@ public class SecurityConfig {
                                         "/v3/api-docs/**",
                                         "/api/v1/user/login",
                                         "/api/v1/user/join",
+                                        "/api/v1/project/board",
+                                        "/api/v1/project/board/{projectBoardSeq}",
                                         "/ws/chat/**"
                                 ).permitAll()
                                 .requestMatchers("/api/v1/admin/**")
