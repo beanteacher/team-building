@@ -10,6 +10,7 @@
         SELECT
             pam.project_apply_member_seq AS projectApplyMemberSeq,
             pam.project_apply_member_status AS applyStatus,
+            pb.project_board_seq AS projectBoardSeq,
             pb.project_board_title AS projectBoardTitle,
             pb.project_board_content AS projectBoardContent,
             pb.project_board_head_count AS projectBoardHeadCount,
