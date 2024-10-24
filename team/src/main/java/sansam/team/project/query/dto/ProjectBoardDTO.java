@@ -18,6 +18,8 @@ public class ProjectBoardDTO {
     private int projectBoardHeadCount;
     private String projectBoardImgUrl;
     private String projectBoardStatus;
+    private LocalDateTime projectBoardStartDate;
+    private LocalDateTime projectBoardEndDate;
     private LocalDateTime projectStartDate;
     private LocalDateTime projectEndDate;
 

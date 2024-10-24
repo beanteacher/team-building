@@ -48,6 +48,8 @@
             project_board_head_count,
             project_board_img_url,
             project_board_status,
+            project_board_start_date,
+            project_board_end_date,
             project_start_date,
             project_end_date
         FROM tbl_project_board
