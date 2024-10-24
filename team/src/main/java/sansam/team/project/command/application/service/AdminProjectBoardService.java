@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.multipart.MultipartFile;
 import sansam.team.common.s3.FileUploadUtil;
-import sansam.team.project.command.application.dto.AdminProjectApplyMemberDTO;
+import sansam.team.project.command.application.dto.ProjectApplyMemberRequestDTO;
 import sansam.team.project.command.application.dto.AdminProjectBoardCreateDTO;
 import sansam.team.project.command.application.dto.AdminProjectBoardUpdateDTO;
 import sansam.team.project.command.domain.aggregate.entity.ProjectApplyMember;
@@ -79,7 +79,7 @@ public class AdminProjectBoardService {
     }
 
     @Transactional
-    public ProjectApplyMember updateApplyMemberStatus(Long projectBoardSeq, Long applyMemberSeq, AdminProjectApplyMemberDTO adminProjectApplyMemberDTO) {
+    public ProjectApplyMember updateApplyMemberStatus(Long projectBoardSeq, Long applyMemberSeq, ProjectApplyMemberRequestDTO projectApplyMemberRequestDTO) {
 
         // 신청 회원(ProjectApplyMember) 존재 확인
         ProjectApplyMember applyMember = projectApplyMemberRepository.findById(applyMemberSeq)
@@ -89,7 +89,7 @@ public class AdminProjectBoardService {
         ProjectBoard projectBoard = projectBoardRepository.findById(projectBoardSeq)
                 .orElseThrow(() -> new IllegalArgumentException("Project board not found"));
 
-        applyMember.ApplyMemberStatus(projectBoard.getProjectBoardSeq(), adminProjectApplyMemberDTO);
+        applyMember.ApplyMemberStatus(projectBoard.getProjectBoardSeq(), projectApplyMemberRequestDTO);
 
         // 저장
         return applyMember;

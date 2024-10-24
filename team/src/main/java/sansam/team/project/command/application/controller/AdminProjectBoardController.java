@@ -4,17 +4,15 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import sansam.team.common.response.ApiResponse;
 import sansam.team.common.response.ResponseUtil;
 import sansam.team.common.s3.FileUploadUtil;
-import sansam.team.project.command.application.dto.AdminProjectApplyMemberDTO;
+import sansam.team.project.command.application.dto.ProjectApplyMemberRequestDTO;
 import sansam.team.project.command.application.dto.AdminProjectBoardCreateDTO;
 import sansam.team.project.command.application.dto.AdminProjectBoardUpdateDTO;
 import sansam.team.project.command.application.service.AdminProjectBoardService;
-import sansam.team.project.command.domain.aggregate.entity.MentorReview;
 import sansam.team.project.command.domain.aggregate.entity.ProjectApplyMember;
 import sansam.team.project.command.domain.aggregate.entity.ProjectBoard;
 
@@ -91,11 +89,11 @@ public class AdminProjectBoardController {
     public ApiResponse<?> updateApplyMemberStatus(
             @PathVariable Long projectBoardSeq,
             @PathVariable Long applyMemberSeq,
-            @RequestBody AdminProjectApplyMemberDTO adminProjectApplyMemberDTO) {
+            @RequestBody ProjectApplyMemberRequestDTO projectApplyMemberRequestDTO) {
 
         try {
             // 서비스로 상태 업데이트 요청
-            ProjectApplyMember updatedApplyMember = adminProjectBoardService.updateApplyMemberStatus(projectBoardSeq, applyMemberSeq, adminProjectApplyMemberDTO);
+            ProjectApplyMember updatedApplyMember = adminProjectBoardService.updateApplyMemberStatus(projectBoardSeq, applyMemberSeq, projectApplyMemberRequestDTO);
 
             // 성공 응답 반환
             return ResponseUtil.successResponse("Project board apply member updated successfully").getBody();
