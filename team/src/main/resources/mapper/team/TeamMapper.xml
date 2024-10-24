@@ -7,6 +7,14 @@
     <resultMap id="teamFindByIdResponse" type="TeamFindByIdResponse">
         <id column="team_seq" property="teamSeq" javaType="Long"/>
         <result column="team_name" property="teamName" javaType="String"/>
+
+        <association property="teamChatResponse" javaType="TeamChatResponse">
+            <id column="team_chat_seq" property="teamChatSeq" />
+            <result column="team_chat_name" property="teamChatName"/>
+            <result column="team_chat_comment" property="teamChatComment"/>
+            <result column="reg_date" property="regDate"/>
+        </association>
+
         <collection property="teamMemberList" column="teamSeq = team_seq" ofType="TeamMemberResponse" javaType="java.util.ArrayList" select="selectTeamMemberListById"/>
         <collection property="teamScheduleList" column="teamSeq = team_seq" ofType="TeamScheduleResponse" javaType="java.util.ArrayList" select="selectTeamScheduleListById"/>
     </resultMap>
@@ -67,12 +75,18 @@
     </select>
 
     <select id="selectTeamById" resultMap="teamFindByIdResponse">
-        SELECT team_seq
+        SELECT t.team_seq
             , team_name
+            , team_chat_seq
+            , team_chat_name
+            , team_chat_comment
+            , tc.reg_date
         FROM tbl_team t
         JOIN tbl_project p
             ON t.project_seq = p.project_seq
-        WHERE team_seq = #{teamSeq}
+        JOIN tbl_team_chat tc
+            ON tc.team_seq = t.team_seq
+        WHERE t.team_seq = #{teamSeq}
     </select>
 </mapper>
 
