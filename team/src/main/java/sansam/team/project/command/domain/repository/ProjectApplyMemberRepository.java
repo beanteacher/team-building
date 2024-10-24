@@ -10,7 +10,7 @@ public interface ProjectApplyMemberRepository {
 
     ProjectApplyMember save(ProjectApplyMember projectApplyMember);
 
-    void deleteById(Long projectBoardSeq);
+    void deleteById(Long projectApplyMemberSeq);
 
 
 }
