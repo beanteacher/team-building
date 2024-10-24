@@ -46,11 +46,10 @@ public class ProjectApplyMemberService {
     public void cancelApplication(Long projectBoardSeq) {
 
         // SecurityContext에서 현재 인증된 사용자(User 객체) 추출
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        User user = (User) authentication.getPrincipal();
+        CustomUserDTO user = SecurityUtil.getAuthenticatedUser();
 
         // 추출한 User의 userSeq가 null이 아닌지 확인
-        if (user.getUserSeq() == null) {
+        if(ObjectUtils.isEmpty(user.getUserSeq())){
             throw new IllegalArgumentException("User Seq is null");
         }
 
