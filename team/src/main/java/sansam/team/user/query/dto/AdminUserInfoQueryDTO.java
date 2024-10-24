@@ -21,8 +21,10 @@ public class AdminUserInfoQueryDTO {
     private RoleType userAuth;
     private StatusType userStatus;
     private LocalDateTime regDate;
+    private String userGithubId;
     private String userPhone;
     private String userGender;
+    private String userBirthDate;
     private String userMajor;
     private Long userCareerYears;
     private String projectBoardImgUrl;
