@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 public class ApplyMemberQueryDTO {
 
     private Long projectApplyMemberSeq;
+    private Long projectBoardSeq;
     private ApplyStatus applyStatus;        // 신청 상태
     private String projectBoardTitle;       // 프로젝트 제목
     private String projectBoardContent;     // 프로젝트 내용
