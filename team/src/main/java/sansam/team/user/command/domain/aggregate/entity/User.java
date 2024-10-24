@@ -103,6 +103,8 @@ public class User extends BaseTimeEntity {
         this.userStatus = requestDTO.getUserStatus();
         this.userPhone = requestDTO.getUserPhone();
         this.userGender = requestDTO.getUserGender();
+        this.userBirthDate = requestDTO.getUserBirthDate();
+        this.userGithubId = requestDTO.getUserGithubId();
         this.userMajor = requestDTO.getUserMajor();
         this.userCareerYears = requestDTO.getUserCareerYears();
     }

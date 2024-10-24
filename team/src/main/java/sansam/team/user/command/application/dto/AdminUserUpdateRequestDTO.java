@@ -23,6 +23,8 @@ public class AdminUserUpdateRequestDTO {
     private StatusType userStatus;
     private String userPhone;
     private String userGender;
+    private String userBirthDate;
+    private String userGithubId;
     private String userMajor;
     private Long userCareerYears;
 }

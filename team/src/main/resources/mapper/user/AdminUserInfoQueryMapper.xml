@@ -32,9 +32,11 @@
             u.user_auth AS userAuth,
             u.user_status AS userStatus,
             u.reg_date AS regDate,
+            u.user_github_id AS userGithubId,
             u.user_email AS userEmail,
             u.user_phone AS userPhone,
             u.user_gender AS userGender,
+            u.user_birth_date AS userBirthDate,
             u.user_major AS userMajor,
             u.user_career_years AS userCareerYears,
             u.user_profile_img AS userProfileImg
