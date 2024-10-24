@@ -19,7 +19,7 @@ public class AdminProjectBoardUpdateDTO {
     private String projectBoardImgUrl; // 이미지 URL을 저장하는 필드
     private LocalDateTime projectBoardStartDate;
     private LocalDateTime projectBoardEndDate;
-    private BoardStatus boardStatus;
+    private BoardStatus projectBoardStatus;
     private LocalDateTime projectStartDate;
     private LocalDateTime projectEndDate;
 
