@@ -14,7 +14,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "chatMember")
 public class TeamChatMemberDTO {
 
-    private Long teamChatSeq;
-    private Long teamMemberSeq;
+    private long teamChatSeq;
+    private long teamMemberSeq;
     private String teamMemberNickname;
 }
