@@ -43,7 +43,7 @@ public class ProjectApplyMemberService {
     }
 
     @Transactional
-    public void cancelApplication(Long projectBoardSeq) {
+    public void cancelApplication(Long projectApplyMemberSeq) {
 
         // SecurityContext에서 현재 인증된 사용자(User 객체) 추출
         CustomUserDTO user = SecurityUtil.getAuthenticatedUser();
@@ -53,11 +53,10 @@ public class ProjectApplyMemberService {
             throw new IllegalArgumentException("User Seq is null");
         }
 
-        // 기존 프로젝트 보드를 찾음
-        ProjectBoard projectBoard = projectBoardRepository.findById(projectBoardSeq)
-                .orElseThrow(() -> new IllegalArgumentException("Project board not found"));
+        ProjectApplyMember projectApplyMember= projectApplyMemberRepository.findById(projectApplyMemberSeq)
+                        .orElseThrow(() -> new IllegalArgumentException("Project apply member not found"));
 
-        projectApplyMemberRepository.deleteById(projectBoardSeq);
+        projectApplyMemberRepository.deleteById(projectApplyMemberSeq);
 
     }
 }

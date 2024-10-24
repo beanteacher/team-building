@@ -43,14 +43,15 @@ public class ProjectApplyMemberController {
     }
 
     // 프로젝트 신청 취소 API
-    @DeleteMapping()
+    @DeleteMapping("{projectApplyMemberSeq}")
     @Operation(summary = "프로젝트 신청 취소", description = "취소는 완전 삭제 기능 사용")
     public ApiResponse<?> cancelApplication(
-            @PathVariable Long projectBoardSeq) {
+            @PathVariable Long projectBoardSeq,
+            @PathVariable Long projectApplyMemberSeq) {
 
         try {
             // 서비스로 전달하여 삭제 처리
-            projectApplyMemberService.cancelApplication(projectBoardSeq);
+            projectApplyMemberService.cancelApplication(projectApplyMemberSeq);
 
             // 성공 응답 반환
             return ResponseUtil.successResponse("Project apply member deleted successfully").getBody();
