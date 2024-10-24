@@ -13,8 +13,8 @@ public class TeamScheduleDTO extends BaseTimeEntity {
 
     private String scheduleContent;
 
-    private LocalDateTime scheduleStartDate;
+    private String scheduleStartDate;
 
-    private LocalDateTime scheduleEndDate;
+    private String scheduleEndDate;
 
 }

@@ -5,7 +5,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PathVariable;
 import sansam.team.exception.CustomException;
 import sansam.team.exception.ErrorCodeType;
 import sansam.team.team.command.application.dto.TeamScheduleDTO;
@@ -13,6 +12,7 @@ import sansam.team.team.command.domain.aggregate.TeamStatusType;
 import sansam.team.team.command.domain.aggregate.entity.Team;
 import sansam.team.team.command.domain.aggregate.entity.TeamSchedule;
 import sansam.team.team.command.domain.repository.TeamScheduleRepository;
+import sansam.team.team.command.mapper.TeamScheduleMapper;
 
 import java.time.LocalDateTime;
 
@@ -31,8 +31,7 @@ public class TeamScheduleService {
     public boolean createTeamSchedule(long teamSeq, TeamScheduleDTO scheduleDTO) {
         try {
             if(isSchedulePeriod(teamSeq)) {
-                TeamSchedule teamSchedule = modelMapper.map(scheduleDTO, TeamSchedule.class);
-                teamSchedule.changeTeamSeq(teamSeq);
+                TeamSchedule teamSchedule = TeamScheduleMapper.toEntity(teamSeq, scheduleDTO);
                 teamScheduleRepository.save(teamSchedule);
                 return true;
             }
