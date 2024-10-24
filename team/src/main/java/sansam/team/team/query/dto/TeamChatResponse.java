@@ -12,6 +12,8 @@ public class TeamChatResponse {
     private long teamSeq;
     private String teamChatName;
     private String teamChatComment;
+    private long teamMemberSeq;
+    private String userNickname;
 
     private String regDate;
 }
