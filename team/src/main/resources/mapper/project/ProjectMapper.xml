@@ -63,14 +63,11 @@
             , p.project_img_url
             , DATE_FORMAT(p.project_start_date , '%Y-%m-%d') project_start_date
             , DATE_FORMAT(p.project_end_date , '%Y-%m-%d') project_end_date
-            , tm.team_seq
         FROM tbl_project p
         JOIN tbl_project_member pm
             ON pm.project_seq = p.project_seq
         JOIN tbl_user u
             ON u.user_seq = pm.user_seq
-        JOIN tbl_team_member tm
-            ON tm.user_seq = u.user_seq
         WHERE p.project_seq = #{projectSeq}
         AND pm.user_seq = #{userSeq};
     </select>
