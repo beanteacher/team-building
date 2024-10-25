@@ -42,12 +42,15 @@ public class TeamSchedule extends BaseTimeEntity {
 
     public void updateSchedule(String content, String startDate, String endDate) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        LocalDateTime startDateParse = LocalDateTime.parse(startDate, formatter);
-        LocalDateTime endDateParse = LocalDateTime.parse(endDate, formatter);
+        String startDateParse = startDate + " 00:00:00";
+        String endDateParse = endDate + " 23:59:59";
+
+        LocalDateTime startLocalDate = LocalDateTime.parse(startDateParse, formatter);
+        LocalDateTime endLocalDate = LocalDateTime.parse(endDateParse, formatter);
 
         this.scheduleContent = content;
-        this.scheduleStartDate = startDateParse;
-        this.scheduleEndDate = endDateParse;
+        this.scheduleStartDate = startLocalDate;
+        this.scheduleEndDate = endLocalDate;
     }
 
 }
