@@ -19,9 +19,9 @@ public class TeamQueryService {
 
     private final TeamQueryMapper teamQueryMapper;
 
-    public List<TeamResponse> selectTeamList() {
+    public List<TeamResponse> selectTeamList(Long projectSeq) {
         CustomUserDTO user = SecurityUtil.getAuthenticatedUser();
-        return teamQueryMapper.selectTeamList(new TeamRequest(user.getUserSeq(), user.getUserAuth()));
+        return teamQueryMapper.selectTeamList(new TeamRequest(user.getUserSeq(), user.getUserAuth(), projectSeq));
     }
 
     public TeamFindByIdResponse selectTeamById(Long teamSeq) {

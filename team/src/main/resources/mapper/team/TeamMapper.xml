@@ -38,12 +38,14 @@
             AND pm.project_mentor_yn = 'Y'
             AND pm.project_member_del_yn = 'N'
             AND team_status = 'OPEN'
+            AND p.project_seq = #{projectSeq}
         </if>
         <if test="roleType.getCode() == 'MEMBER'">
             <!-- 멤버 : 내가 속한 팀 -->
             JOIN tbl_team_member tm
                 ON tm.team_seq = t.team_seq
             WHERE tm.user_seq = #{userSeq}
+            AND p.project_seq = #{projectSeq}
         </if>
     </select>
 

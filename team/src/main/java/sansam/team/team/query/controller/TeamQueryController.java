@@ -24,10 +24,10 @@ public class TeamQueryController {
 
     private final TeamQueryService teamQueryService;
 
-    @GetMapping
+    @GetMapping("/project/{projectSeq}")
     @Operation(summary = "팀 리스트 조회")
-    public ApiResponse<List<TeamResponse>> selectTeamList() {
-        List<TeamResponse> teamList = teamQueryService.selectTeamList();
+    public ApiResponse<List<TeamResponse>> selectTeamList(@PathVariable Long projectSeq) {
+        List<TeamResponse> teamList = teamQueryService.selectTeamList(projectSeq);
         return ApiResponse.ofSuccess("Team list retrieved successfully", teamList);
     }
 
