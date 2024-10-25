@@ -47,6 +47,9 @@
             WHERE tm.user_seq = #{userSeq}
             AND p.project_seq = #{projectSeq}
         </if>
+        <if test="roleType.getCode() == 'MANAGER' || roleType.getCode() == 'SUB_MANAGER'">
+            WHERE p.project_seq = #{projectSeq}
+        </if>
     </select>
 
     <select id="selectTeamMemberListById" resultType="TeamMemberResponse">
