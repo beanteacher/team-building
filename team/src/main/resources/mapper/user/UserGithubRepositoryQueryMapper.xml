@@ -7,7 +7,7 @@
     <!-- 깃허브 레포지토리 전체 조회 -->
     <select id="findAllGithubRepoByUserSeq" resultType="UserGithubRepositoryQueryDTO">
         SELECT
-            user_repository_seq AS UserRepositorySeq,
+            user_repository_seq AS userGithubRepositorySeq,
             user_repository_url AS UserRepositoryUrl,
             user_repository_name AS UserRepositoryName,
             develop_type AS DevelopType
