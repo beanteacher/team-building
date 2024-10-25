@@ -63,6 +63,7 @@
             , p.project_img_url
             , DATE_FORMAT(p.project_start_date , '%Y-%m-%d') project_start_date
             , DATE_FORMAT(p.project_end_date , '%Y-%m-%d') project_end_date
+            , pm.project_mentor_yn
         FROM tbl_project p
         JOIN tbl_project_member pm
             ON pm.project_seq = p.project_seq
