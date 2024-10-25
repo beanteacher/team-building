@@ -22,5 +22,4 @@ public class ProjectQueryDTO {
     private String projectImgUrl;
     private String projectStartDate;
     private String projectEndDate;
-    private long teamSeq;
 }
