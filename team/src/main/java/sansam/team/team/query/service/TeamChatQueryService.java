@@ -30,7 +30,7 @@ public class TeamChatQueryService {
 
     public TeamChatRoomResponse selectChatRoom(Long teamChatSeq) {
         CustomUserDTO user = SecurityUtil.getAuthenticatedUser();
-        TeamChatRoomResponse response = teamChatQueryMapper.selectChatRoom(new TeamChatRoomRequest(teamChatSeq, user.getUserSeq()));
+        TeamChatRoomResponse response = teamChatQueryMapper.selectChatRoom(new TeamChatRoomRequest(teamChatSeq, user.getUserSeq(), user.getUserAuth()));
 
         Query query = new Query(Criteria.where("teamChatSeq")
                 .is(teamChatSeq)

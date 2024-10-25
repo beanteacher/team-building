@@ -1,6 +1,7 @@
 package sansam.team.team.query.dto;
 
 import lombok.*;
+import sansam.team.common.aggregate.RoleType;
 
 @Getter
 @Setter
@@ -10,4 +11,5 @@ import lombok.*;
 public class TeamChatRoomRequest {
     Long teamChatSeq;
     Long userSeq;
+    RoleType roleType;
 }

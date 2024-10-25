@@ -4,6 +4,33 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="sansam.team.team.query.mapper.TeamChatQueryMapper">
     <!-- 모든 채팅방을 조회해오는 쿼리 -->
+    <select id="selectChatRoom" parameterType="TeamChatRoomRequest" resultType="TeamChatRoomResponse">
+        SELECT team_chat_seq
+        , t.team_seq
+        , team_chat_name
+        , team_chat_comment
+        <if test="roleType.getCode() == 'MEMBER'">
+        , team_member_seq
+        , u.user_nickname
+        </if>
+        FROM tbl_team_chat tc
+        <if test="roleType.getCode() == 'SUB_MANAGER' || roleType.getCode() == 'MANAGER' || roleType.getCode() == 'MENTOR'">
+            JOIN tbl_team t
+            ON t.team_seq = tc.team_seq
+            WHERE team_chat_seq = #{teamChatSeq}
+        </if>
+        <if test="roleType.getCode() == 'MEMBER'">
+            JOIN tbl_team t
+            ON t.team_seq = tc.team_seq
+            JOIN tbl_team_member tm
+            ON tm.team_seq = t.team_seq
+            JOIN tbl_user u
+            ON u.user_seq = tm.user_seq
+            WHERE team_chat_seq = #{teamChatSeq}
+            AND u.user_seq = #{userSeq}
+        </if>
+    </select>
+
     <select id="selectChatRoomList" parameterType="TeamChatRequest" resultType="TeamChatResponse">
         SELECT team_chat_seq
             , tc.team_seq
@@ -31,23 +58,5 @@
                 ON tm.team_seq = t.team_seq
             WHERE tm.user_seq = #{userSeq}
         </if>
-    </select>
-
-    <select id="selectChatRoom" parameterType="TeamChatRoomRequest" resultType="TeamChatRoomResponse">
-        SELECT team_chat_seq
-                , t.team_seq
-                , team_chat_name
-                , team_chat_comment
-                , team_member_seq
-                , u.user_nickname
-        FROM tbl_team_chat tc
-        JOIN tbl_team t
-            ON t.team_seq = tc.team_seq
-        JOIN tbl_team_member tm
-            ON tm.team_seq = t.team_seq
-        JOIN tbl_user u
-            ON u.user_seq = tm.user_seq
-        WHERE team_chat_seq = #{teamChatSeq}
-        AND u.user_seq = #{userSeq}
     </select>
 </mapper>
