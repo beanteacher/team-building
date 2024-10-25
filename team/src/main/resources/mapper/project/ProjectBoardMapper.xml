@@ -63,7 +63,8 @@
             pam.project_apply_member_seq AS projectApplyMemberSeq,
             u.user_seq AS userSeq,
             u.user_name AS userName,
-            u.user_nickname AS userNickname
+            u.user_nickname AS userNickname,
+            pam.project_member_develop_type AS projectMemberDevelopType
         FROM tbl_project_apply_member pam
         JOIN tbl_user u ON pam.user_seq = u.user_seq
         WHERE pam.project_board_seq = #{projectBoardSeq}
