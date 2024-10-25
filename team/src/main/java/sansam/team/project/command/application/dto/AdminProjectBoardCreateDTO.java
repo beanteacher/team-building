@@ -16,7 +16,7 @@ public class AdminProjectBoardCreateDTO {
     private String projectBoardImgUrl;
     private LocalDateTime projectBoardStartDate;
     private LocalDateTime projectBoardEndDate;
-    private BoardStatus boardStatus;
+    private BoardStatus projectBoardStatus;
     private LocalDateTime projectStartDate;
     private LocalDateTime projectEndDate;
     private Long projectBoardAdminSeq;

@@ -5,17 +5,18 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Getter
 @Setter
 @ToString
 public class TeamChatMessageDTO {
 
-    private Long teamChatMessageSeq;
+    private long teamChatMessageSeq;
     private TeamChatMessageType messageType; // 입장 혹은 메시지
-    private Long teamChatSeq;   // 팀별 채팅방 ID
-    private Long teamMemberSeq;  // 보낸 사람 팀원 Seq
+    private long teamChatSeq;   // 팀별 채팅방 ID
+    private long teamMemberSeq;  // 보낸 사람 팀원 Seq
     private String message;
 
-    private LocalDateTime regDate = LocalDateTime.now();
+    private String regDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 }

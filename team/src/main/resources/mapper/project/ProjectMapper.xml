@@ -63,16 +63,27 @@
             , p.project_img_url
             , DATE_FORMAT(p.project_start_date , '%Y-%m-%d') project_start_date
             , DATE_FORMAT(p.project_end_date , '%Y-%m-%d') project_end_date
-            , tm.team_seq
+            , pm.project_mentor_yn
         FROM tbl_project p
         JOIN tbl_project_member pm
             ON pm.project_seq = p.project_seq
         JOIN tbl_user u
             ON u.user_seq = pm.user_seq
-        JOIN tbl_team_member tm
-            ON tm.user_seq = u.user_seq
         WHERE p.project_seq = #{projectSeq}
         AND pm.user_seq = #{userSeq};
     </select>
 
+    <select id="findProjectMemberByIdForUser" resultType="ProjectMemberQueryDTO">
+        SELECT project_member_seq
+            , user_name
+            , project_member_del_yn
+            , project_mentor_yn
+            , u.project_member_major_yn as user_major_yn
+            , project_member_develop_type
+            , project_member_commit_score
+        FROM tbl_project_member pm
+        JOIN tbl_user u
+            ON pm.user_seq = u.user_seq
+        WHERE project_seq = #{projectSeq}
+    </select>
 </mapper>

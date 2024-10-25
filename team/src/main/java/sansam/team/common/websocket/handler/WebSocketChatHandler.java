@@ -3,19 +3,25 @@ package sansam.team.common.websocket.handler;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.jetbrains.annotations.NotNull;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
+import sansam.team.common.mongo.MongoDBSequenceCreator;
+import sansam.team.common.websocket.dto.TeamChatMemberDTO;
 import sansam.team.common.websocket.dto.TeamChatMessageDTO;
 import sansam.team.common.websocket.dto.TeamChatMessageType;
+import sansam.team.exception.CustomException;
+import sansam.team.exception.ErrorCodeType;
+import sansam.team.team.command.application.service.TeamChatMessageService;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /*
  * WebSocket Handler 작성
@@ -29,6 +35,8 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class WebSocketChatHandler extends TextWebSocketHandler {
     private final ObjectMapper mapper;
+    private final MongoDBSequenceCreator sequenceCreator;
+    private final MongoTemplate mongoTemplate;
 
     // 현재 연결된 세션들
     private final Set<WebSocketSession> sessions = new HashSet<>();
@@ -45,18 +53,18 @@ public class WebSocketChatHandler extends TextWebSocketHandler {
 
     // 소켓 통신 시 메세지의 전송을 다루는 부분
     @Override
-    protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
+    protected void handleTextMessage(@NotNull WebSocketSession session, TextMessage message) throws Exception {
         String payload = message.getPayload();
         log.info("payload {}", payload);
 
         // 페이로드 -> chatMessageDto로 변환
         TeamChatMessageDTO chatDTO = mapper.readValue(payload, TeamChatMessageDTO.class);
-        log.info("session {}", chatDTO.toString());
+        boolean result = insertTeamChatMessage(chatDTO);
 
-        Long chatRoomId = chatDTO.getTeamChatSeq();  // 팀 Seq로 채팅방 Id 생성
+        Long chatRoomId = chatDTO.getTeamChatSeq();  // 팀 채팅 Seq로 채팅방 Id 생성
         // 메모리 상에 채팅방에 대한 세션 없으면 만들어줌
         if(!chatRoomSessionMap.containsKey(chatRoomId)){
-            chatRoomSessionMap.put(chatRoomId,new HashSet<>());
+            chatRoomSessionMap.put(chatRoomId, new HashSet<>());
         }
 
         Set<WebSocketSession> chatRoomSession = chatRoomSessionMap.get(chatRoomId);
@@ -72,7 +80,7 @@ public class WebSocketChatHandler extends TextWebSocketHandler {
             removeClosedSession(chatRoomSession);
         }
 
-        sendMessageToChatRoom(chatDTO, chatRoomSession);
+        if(result) sendMessageToChatRoom(chatDTO, chatRoomSession);
     }
 
     // 소켓 종료 확인
@@ -88,7 +96,7 @@ public class WebSocketChatHandler extends TextWebSocketHandler {
     }
 
     private void sendMessageToChatRoom(TeamChatMessageDTO chatDTO, Set<WebSocketSession> chatRoomSession) {
-        chatRoomSession.parallelStream().forEach(sess -> sendMessage(sess, chatDTO.getMessage()));//2
+        chatRoomSession.parallelStream().forEach(sess -> sendMessage(sess, chatDTO));
     }
 
     public <T> void sendMessage(WebSocketSession session, T message) {
@@ -97,5 +105,35 @@ public class WebSocketChatHandler extends TextWebSocketHandler {
         } catch (IOException e) {
             log.error(e.getMessage(), e);
         }
+    }
+
+    public boolean insertTeamChatMessage(TeamChatMessageDTO chatDTO) {
+        int count = 0;
+        chatDTO.setTeamChatMessageSeq(sequenceCreator.createSeq("teamChatMessageSeq"));
+
+        try {
+            if (chatDTO.getMessageType().equals(TeamChatMessageType.ENTER)) {
+                Query query = new Query(Criteria.where("teamChatSeq").is(chatDTO.getTeamChatSeq()));
+                List<TeamChatMemberDTO> teamChatMemberList = mongoTemplate.find(query, TeamChatMemberDTO.class, "chatMember");
+                log.info("teamChatMemberList : {}", teamChatMemberList);
+                for(TeamChatMemberDTO teamChatMember : teamChatMemberList) {
+                    if(teamChatMember.getTeamMemberSeq() == chatDTO.getTeamMemberSeq()) {
+                        count++;
+                    }
+                }
+                if(count == 0) {
+                    TeamChatMemberDTO teamChatMember = new TeamChatMemberDTO(chatDTO.getTeamChatSeq(), chatDTO.getTeamMemberSeq(), chatDTO.getMessage().split("님이 입장하였습니다.")[0]);
+                    mongoTemplate.insert(teamChatMember);
+                }
+            }
+
+            if (chatDTO.getMessageType().equals(TeamChatMessageType.TALK) || count == 0) {
+                mongoTemplate.insert(chatDTO);
+            }
+        } catch (Exception e) {
+            throw new CustomException(ErrorCodeType.MONGO_ERROR);
+        }
+
+        return count == 0;
     }
 }

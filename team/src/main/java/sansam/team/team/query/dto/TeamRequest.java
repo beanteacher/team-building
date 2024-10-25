@@ -11,4 +11,5 @@ import sansam.team.common.aggregate.RoleType;
 public class TeamRequest {
     Long userSeq;
     RoleType roleType;
+    Long projectSeq;
 }

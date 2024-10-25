@@ -3,11 +3,8 @@ package sansam.team.project.query.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
-import sansam.team.project.query.dto.ProjectQueryResponse;
+import sansam.team.project.query.dto.*;
 import sansam.team.security.util.SecurityUtil;
-import sansam.team.project.query.dto.AdminProjectQueryDTO;
-import sansam.team.project.query.dto.ProjectAllQueryDTO;
-import sansam.team.project.query.dto.ProjectQueryDTO;
 import sansam.team.project.query.mapper.ProjectMapper;
 import sansam.team.user.command.domain.aggregate.entity.User;
 import sansam.team.user.query.dto.CustomUserDTO;
@@ -53,4 +50,7 @@ public class ProjectQueryService {
         return projectMapper.findProjectByIdForUser(new ProjectQueryResponse(projectSeq, user.getUserSeq()));
     }
 
+    public List<ProjectMemberQueryDTO> getProjectMemberByIdForUser(Long projectSeq) {
+        return projectMapper.findProjectMemberByIdForUser(projectSeq);
+    }
 }

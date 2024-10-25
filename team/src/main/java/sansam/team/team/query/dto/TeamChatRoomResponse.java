@@ -17,7 +17,7 @@ public class TeamChatRoomResponse {
     private String teamChatName;
     private String teamChatComment;
     private long teamMemberSeq;
-    private String userNickName;
+    private String userNickname;
 
     private List<TeamChatMessageDTO> teamChatMessageList;
     private List<TeamChatMemberDTO> teamChatMemberList;
