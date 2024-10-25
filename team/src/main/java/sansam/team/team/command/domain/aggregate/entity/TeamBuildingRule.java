@@ -47,4 +47,8 @@ public class TeamBuildingRule extends BaseTimeEntity {
         this.ruleMentorReviewWeight = buildingRuleDTO.getRuleMentorReviewWeight();
         this.ruleTechStackYn = YnType.valueOf(String.valueOf(buildingRuleDTO.getRuleTechStackYn()));
     }
+
+    public Long getTeamBuildingRuleSeq() {
+        return ruleSeq;
+    }
 }

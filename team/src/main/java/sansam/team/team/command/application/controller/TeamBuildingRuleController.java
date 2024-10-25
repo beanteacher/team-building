@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import sansam.team.team.command.application.dto.TeamBuildingRuleDTO;
+import sansam.team.team.command.application.dto.TeamBuildingRuleResponseDTO;
 import sansam.team.team.command.application.service.TeamBuildingRuleService;
 import sansam.team.team.command.domain.aggregate.entity.TeamBuildingRule;
 import sansam.team.common.response.ResponseUtil;
@@ -21,10 +22,14 @@ public class TeamBuildingRuleController {
 
     @PostMapping
     @Operation(summary = "팀빌딩 규칙 생성", description = "팀 빌딩 규칙 가중치 생성 API")
-    public ApiResponse<TeamBuildingRule> createBuildingRule(@RequestBody TeamBuildingRuleDTO buildingRuleDTO) {
+    public ApiResponse<TeamBuildingRuleResponseDTO> createBuildingRule(@RequestBody TeamBuildingRuleDTO buildingRuleDTO) {
         TeamBuildingRule createdBuildingRule = buildingRuleService.createBuildingRule(buildingRuleDTO);
-        return ApiResponse.ofSuccess("Building rule created successfully");
+
+        // teamBuildingRuleSeq만 포함한 DTO를 반환
+        TeamBuildingRuleResponseDTO responseDTO = new TeamBuildingRuleResponseDTO(createdBuildingRule.getTeamBuildingRuleSeq());
+        return ApiResponse.ofSuccess(responseDTO);  // 새로운 DTO를 ApiResponse로 반환
     }
+
 
     @PutMapping("/{ruleSeq}")
     @Operation(summary = "팀빌딩 규칙 수정", description = "팀 빌딩 규칙 가중치 수정 API")
