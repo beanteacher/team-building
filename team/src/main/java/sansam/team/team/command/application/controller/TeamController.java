@@ -8,9 +8,12 @@ import org.springframework.web.bind.annotation.*;
 import sansam.team.common.response.ApiResponse;
 import sansam.team.common.response.ResponseUtil;
 import sansam.team.team.command.application.dto.TeamCreateRequest;
+import sansam.team.team.command.application.dto.TeamCreateResponseDTO;
 import sansam.team.team.command.application.dto.TeamUpdateRequest;
 import sansam.team.team.command.application.service.TeamService;
 import sansam.team.team.command.domain.aggregate.entity.Team;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/team")
@@ -22,10 +25,14 @@ public class TeamController {
 
     @PostMapping()
     @Operation(summary = "팀 추가 ")
-    public ApiResponse<?> createTeams(@RequestBody TeamCreateRequest teamCreateRequest) {
-        teamService.createTeams(teamCreateRequest);
-        return ResponseUtil.successResponse("팀 추가 성공").getBody();
+    public ApiResponse<List<TeamCreateResponseDTO>> createTeams(@RequestBody TeamCreateRequest teamCreateRequest) {
+        // 팀 생성 서비스 호출 후 생성된 팀 리스트 반환
+        List<TeamCreateResponseDTO> createdTeams = teamService.createTeams(teamCreateRequest);
+
+        // 생성된 팀 정보를 포함한 응답 반환
+        return ResponseUtil.successResponse(createdTeams).getBody();
     }
+
 
     @PutMapping("/{teamSeq}")
     @Operation(summary = "팀 이름, 팀 빌딩 규칙 변경")
