@@ -223,14 +223,17 @@ public class TeamBuildingService {
     }
 
     private void assignMembersToTeams(List<TeamBuildingDTO> members, Map<String, List<TeamMemberScoreDTO>> teams) throws IOException {
-        List<String> teamNames = new ArrayList<>(teams.keySet());
-
-        int teamIndex = 0;
         for (TeamBuildingDTO member : members) {
-            // Rotate between teams to balance members
-            String targetTeamName = teamNames.get(teamIndex % teamNames.size());
+            // Find the team with the lowest total score
+            String targetTeamName = teams.entrySet().stream()
+                    .min(Comparator.comparingDouble(entry -> entry.getValue().stream()
+                            .mapToDouble(TeamMemberScoreDTO::getTotalEvaluationScore)
+                            .sum()))
+                    .map(Map.Entry::getKey)
+                    .orElseThrow(() -> new RuntimeException("No teams available"));
 
-            User user = userRepository.findById(member.getUserSeq()).orElseThrow(() -> new RuntimeException("User not found"));
+            User user = userRepository.findById(member.getUserSeq())
+                    .orElseThrow(() -> new RuntimeException("User not found"));
 
             ProjectMember pjMember = projectMemberRepository.findById(member.getProjectMemberSeq())
                     .orElseThrow(() -> new RuntimeException("프로젝트 멤버 정보가 존재하지 않습니다."));
@@ -246,13 +249,13 @@ public class TeamBuildingService {
                     calculateMentorEvaluation(member),
                     member.getTotalScore(),
                     pjMember.getProjectMemberDevelopType()
-
             );
 
+            // Add member to the selected team with the lowest score
             teams.get(targetTeamName).add(teamMemberScore);
-            teamIndex++;
         }
     }
+
 
 
 
