@@ -65,6 +65,8 @@ public class SecurityConfig {
                                         "/api/v1/project/board/{projectBoardSeq}",
                                         "/ws/chat/**"
                                 ).permitAll()
+                                .requestMatchers("/api/v1/admin/project/{projectSeq}/member")
+                                .authenticated()
                                 .requestMatchers("/api/v1/admin/**")
                                 .hasAnyAuthority("MANAGER", "SUB_MANAGER")
                                 .requestMatchers(
@@ -116,7 +118,7 @@ public class SecurityConfig {
     public UrlBasedCorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
-        config.addAllowedOrigin("http://localhost:5173"); // 허용할 도메인
+        config.addAllowedOrigin("http://localhost:5178"); // 허용할 도메인
         config.addAllowedHeader("*"); // 모든 헤더 허용
         config.addAllowedMethod("*"); // 모든 HTTP 메소드 허용
 
