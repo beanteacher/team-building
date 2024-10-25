@@ -33,13 +33,14 @@ public class ProjectMember extends BaseTimeEntity {
 
     private Long projectMemberCommitScore;
 
-    public ProjectMember(Long userSeq, Long projectSeq) {
+    public ProjectMember(Long userSeq, Long projectSeq, DevelopType projectMemberDevelopType) {
         this.userSeq = userSeq;
         this.projectSeq = projectSeq;
+        this.projectMemberDevelopType = projectMemberDevelopType;
     }
 
-    public static ProjectMember createEntity(Long userSeq, Long projectSeq ) {
-        return new ProjectMember(userSeq, projectSeq);
+    public static ProjectMember createEntity(Long userSeq, Long projectSeq, DevelopType projectMemberDevelopType) {
+        return new ProjectMember(userSeq, projectSeq, projectMemberDevelopType);
     }
 
     public void modifyProjectMember(AdminProjectMemberUpdateDTO updateDTO) {
@@ -52,7 +53,6 @@ public class ProjectMember extends BaseTimeEntity {
         if(updateDTO.getProjectInterest() != null) {
             this.projectMemberDevelopType = updateDTO.getProjectInterest();
         }
-        
         if(updateDTO.getProjectMemberCommitScore()!= null) {
             this.projectMemberCommitScore = updateDTO.getProjectMemberCommitScore();
         }
