@@ -33,6 +33,7 @@ public class UserGithubRepositoryController {
             @PathVariable Long userSeq,
             @PathVariable Long userGithubRepositorySeq,
             @RequestBody UserGithubRepositoryDTO dto) {
+        log.info("dto : {}", dto);
         UserGithubRepository userGithubRepository = userGithubRepositoryService.updateRepository(userGithubRepositorySeq, dto);
         return ResponseUtil.successResponse(userGithubRepository).getBody();
     }

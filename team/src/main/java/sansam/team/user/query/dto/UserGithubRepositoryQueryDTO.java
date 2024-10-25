@@ -8,7 +8,7 @@ import sansam.team.common.aggregate.DevelopType;
 @Builder
 public class UserGithubRepositoryQueryDTO {
 
-    private Long userRepositorySeq;
+    private Long userGithubRepositorySeq;
     private String userRepositoryUrl;
     private String userRepositoryName;
     private DevelopType developType;

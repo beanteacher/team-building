@@ -7,6 +7,7 @@ import sansam.team.common.aggregate.DevelopType;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class UserGithubRepositoryDTO {
     
     private String userRepositoryUrl;

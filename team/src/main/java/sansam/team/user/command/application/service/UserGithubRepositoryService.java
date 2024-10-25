@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestBody;
 import sansam.team.user.command.application.dto.UserGithubRepositoryDTO;
 import sansam.team.user.command.domain.aggregate.entity.UserGithubRepository;
 import sansam.team.user.command.domain.repository.UserGithubRepositoryRepository;
@@ -20,7 +21,8 @@ public class UserGithubRepositoryService {
     private final UserRepository userRepository;
 
     @Transactional
-    public UserGithubRepository createRepository(Long userSeq, UserGithubRepositoryDTO dto) {
+    public UserGithubRepository createRepository(Long userSeq, @RequestBody UserGithubRepositoryDTO dto) {
+        log.info("Dto ; {}", dto);
         UserGithubRepository userGithubRepository = UserGithubRepositoryMapper.toEntity(userSeq,dto);
         userGithubRepositoryRepository.save(userGithubRepository);
         return userGithubRepository;
