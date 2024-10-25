@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import sansam.team.exception.CustomException;
 import sansam.team.exception.ErrorCodeType;
 import sansam.team.team.command.application.dto.TeamCreateRequest;
+import sansam.team.team.command.application.dto.TeamCreateResponseDTO;
 import sansam.team.team.command.application.dto.TeamDTO;
 import sansam.team.team.command.application.dto.TeamUpdateRequest;
 import sansam.team.team.command.domain.aggregate.entity.Team;
@@ -15,6 +16,9 @@ import sansam.team.team.command.domain.aggregate.entity.TeamMember;
 import sansam.team.team.command.domain.repository.TeamMemberRepository;
 import sansam.team.team.command.domain.repository.TeamRepository;
 import sansam.team.team.command.domain.repository.TeamScheduleRepository;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Slf4j
 @Service
@@ -27,9 +31,9 @@ public class TeamService {
     private final ModelMapper modelMapper;
 
     @Transactional
-    public void createTeams(TeamCreateRequest teamCreateRequest) {
-
+    public List<TeamCreateResponseDTO> createTeams(TeamCreateRequest teamCreateRequest) {
         Long projectSeq = teamCreateRequest.getProjectSeq();
+        List<TeamCreateResponseDTO> teamCreateResponseList = new ArrayList<>();  // 팀 생성 후 반환할 리스트
 
         for (TeamDTO teamDTO : teamCreateRequest.getTeams()) {
             // ModelMapper로 TeamDTO를 Team 엔티티로 변환
@@ -42,8 +46,16 @@ public class TeamService {
                 TeamMember teamMember = new TeamMember(userSeq, team.getTeamSeq());
                 teamMemberRepository.save(teamMember);
             }
+
+            // 생성된 팀의 teamSeq를 TeamCreateResponseDTO에 담아서 리스트에 추가
+            TeamCreateResponseDTO teamCreateResponse = new TeamCreateResponseDTO(team.getTeamSeq(),team.getTeamName());
+            teamCreateResponseList.add(teamCreateResponse);
         }
+
+        // 생성된 팀 리스트 반환
+        return teamCreateResponseList;
     }
+
 
     @Transactional
     public Team updateTeam(Long teamSeq, TeamUpdateRequest request) {
