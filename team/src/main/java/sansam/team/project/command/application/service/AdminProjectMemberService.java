@@ -1,8 +1,10 @@
 package sansam.team.project.command.application.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import sansam.team.common.aggregate.DevelopType;
 import sansam.team.project.command.application.dto.AdminProjectMemberUpdateDTO;
 import sansam.team.project.command.domain.aggregate.entity.Project;
 import sansam.team.project.command.domain.aggregate.entity.ProjectMember;
@@ -12,13 +14,14 @@ import sansam.team.project.command.mapper.ProjectMemberMapper;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class AdminProjectMemberService {
 
     private final ProjectMemberRepository projectMemberRepository;
     private final ProjectRepository projectRepository;
 
     @Transactional
-    public ProjectMember containForProject(Long projectSeq, Long userSeq) {
+    public ProjectMember containForProject(Long projectSeq, Long userSeq, DevelopType projectMemberDevelopType) {
 
         // 주어진 userSeq로 사용자 정보 확인
         if (userSeq == null) {
@@ -30,13 +33,16 @@ public class AdminProjectMemberService {
                 .orElseThrow(() -> new IllegalArgumentException("Project not found"));
 
         // ProjectMember 엔티티 생성
-        ProjectMember projectMember = ProjectMemberMapper.toEntity(userSeq, project.getProjectSeq());
+        ProjectMember projectMember = ProjectMemberMapper.toEntity(userSeq, project.getProjectSeq(), projectMemberDevelopType); // Enum 개발 분야 추가
+        // adminProjectMemberService 안에서 확인
+        log.info("In Service, projectMemberDevelopType: {}", projectMemberDevelopType);
 
         // 프로젝트 멤버 저장
         projectMemberRepository.save(projectMember);
 
         return projectMember;
     }
+
 
     @Transactional
     public ProjectMember updateProjectMember(Long projectMemberSeq, AdminProjectMemberUpdateDTO updateDTO) {
