@@ -21,7 +21,8 @@
             p.project_seq AS projectSeq,
             p.project_title AS projectTitle,
             p.project_status AS projectStatus,
-            p.project_img_url AS projectImgUrl
+            p.project_img_url AS projectImgUrl,
+            pm.project_mentor_yn
         FROM
             tbl_project p
         JOIN
@@ -35,7 +36,7 @@
     <!-- 프로젝트 상세 조회 (관리자) - 관리자 이름 포함 -->
     <select id="findProjectByIdForAdmin" resultType="AdminProjectQueryDTO">
         SELECT
-z            p.project_seq
+            p.project_seq
             , p.project_title
             , p.project_content
             , p.project_status
@@ -85,5 +86,16 @@ z            p.project_seq
         JOIN tbl_user u
             ON pm.user_seq = u.user_seq
         WHERE project_seq = #{projectSeq}
+    </select>
+
+    <select id="selectTeamListForMentor" resultType="TeamResponse">
+        SELECT project_title
+            , t.team_seq
+            , team_name
+            , DATE_FORMAT(t.reg_date, '%Y-%m-%d %H:%i:%s') reg_date
+        FROM tbl_team t
+        JOIN tbl_project p
+            ON t.project_seq = p.project_seq
+        WHERE p.project_seq = #{projectSeq}
     </select>
 </mapper>

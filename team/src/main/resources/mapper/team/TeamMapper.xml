@@ -28,18 +28,6 @@
         FROM tbl_team t
         JOIN tbl_project p
         ON t.project_seq = p.project_seq
-        <if test="roleType.getCode() == 'MENTOR'">
-            <!-- 멘토 : 내가 속한 프로젝트의 모든 팀 -->
-            JOIN tbl_project_member pm
-                ON p.project_seq = pm.project_seq
-            JOIN tbl_user u
-                ON pm.user_seq = u.user_seq
-            WHERE u.user_seq = #{userSeq}
-            AND pm.project_mentor_yn = 'Y'
-            AND pm.project_member_del_yn = 'N'
-            AND team_status = 'OPEN'
-            AND p.project_seq = #{projectSeq}
-        </if>
         <if test="roleType.getCode() == 'MEMBER'">
             <!-- 멤버 : 내가 속한 팀 -->
             JOIN tbl_team_member tm

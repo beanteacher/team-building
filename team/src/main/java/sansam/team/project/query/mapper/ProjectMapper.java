@@ -2,6 +2,7 @@ package sansam.team.project.query.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
 import sansam.team.project.query.dto.*;
+import sansam.team.team.query.dto.TeamResponse;
 
 import java.util.List;
 
@@ -17,4 +18,6 @@ public interface ProjectMapper {
     ProjectQueryDTO findProjectByIdForUser(ProjectQueryResponse projectQueryResponse);
 
     List<ProjectMemberQueryDTO> findProjectMemberByIdForUser(Long projectSeq);
+
+    List<TeamResponse> selectTeamListForMentor(Long projectSeq);
 }

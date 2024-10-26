@@ -12,6 +12,7 @@ import sansam.team.project.query.dto.ProjectAllQueryDTO;
 import sansam.team.project.query.dto.ProjectMemberQueryDTO;
 import sansam.team.project.query.dto.ProjectQueryDTO;
 import sansam.team.project.query.service.ProjectQueryService;
+import sansam.team.team.query.dto.TeamResponse;
 
 import java.util.List;
 
@@ -41,6 +42,16 @@ public class ProjectMemberQueryController {
     public ApiResponse<ProjectQueryDTO> getProjectByIdForUser(@PathVariable Long projectSeq) {
         ProjectQueryDTO project = projectQueryService.getProjectByIdForUser(projectSeq);
         return ApiResponse.ofSuccess(project);
+    }
+
+    /**
+     * 프로젝트 팀 리스트 조회 (강사용)
+     */
+    @GetMapping("/{projectSeq}/team")
+    @Operation(summary = "프로젝트 팀 리스트 조회(강사용)", description = "프로젝트 팀 리스트 조회(강사용)")
+    public ApiResponse<List<TeamResponse>> selectTeamListForMentor(@PathVariable Long projectSeq) {
+        List<TeamResponse> teamList = projectQueryService.selectTeamListForMentor(projectSeq);
+        return ApiResponse.ofSuccess(teamList);
     }
 
     /*
