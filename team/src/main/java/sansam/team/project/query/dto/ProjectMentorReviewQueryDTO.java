@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class ProjectMentorReviewQueryDTO {
 
+    private Long mentorReviewSeq;
     private String userName;
     private double mentorReviewStar;
     private String mentorReviewContent;

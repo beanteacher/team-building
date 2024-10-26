@@ -27,14 +27,13 @@ public class ProjectMentorReviewQueryController {
     }
 
     /* 강사 - 프로젝트 내 특정 회원에 대한 평가 조회 */
-    @PostMapping("/mentor/review/member")
+    @GetMapping("/project/{projectSeq}/mentor/{mentorSeq}/review/{projectMemberSeq}")
     @Operation(summary = "특정 프로젝트 내 특정 회원에 대한 멘토의 평가 조회 API", description = "멘토가 프로젝트 내 특정 회원에 대해 작성한 평가를 조회합니다.")
     public ApiResponse<ProjectMentorReviewQueryDTO> getProjectMentorReview(
-            @RequestBody ProjectMentorReviewRequestDTO requestDTO) {
-        ProjectMentorReviewQueryDTO review = projectMentorReviewQueryService.getProjectMentorReview(
-                requestDTO.getMentorSeq(),
-                requestDTO.getProjectMemberSeq()
-        );
+            @PathVariable Long projectSeq,
+            @PathVariable Long mentorSeq,
+            @PathVariable Long projectMemberSeq) {
+        ProjectMentorReviewQueryDTO review = projectMentorReviewQueryService.getProjectMentorReview(mentorSeq, projectMemberSeq);
         return ApiResponse.ofSuccess(review);
     }
 
