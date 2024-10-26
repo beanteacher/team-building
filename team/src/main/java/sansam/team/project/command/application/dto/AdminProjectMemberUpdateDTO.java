@@ -14,7 +14,7 @@ import sansam.team.common.aggregate.DevelopType;
 public class AdminProjectMemberUpdateDTO {
     private YnType projectMemberDelYn;
     private YnType projectMentorYn;
-    private DevelopType projectInterest;
+    private DevelopType projectMemberDevelopType;
     private YnType majorYn;
     private Long projectMemberCommitScore;
 }

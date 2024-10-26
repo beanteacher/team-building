@@ -59,6 +59,13 @@ public class AdminProjectController {
             @RequestPart(required = false) MultipartFile projectImage) {
 
         try {
+            // 이미지 업로드 후 S3에서 URL 반환
+            if(projectImage != null) {
+                String imageUrl = fileUploadUtil.uploadFile(projectImage);
+
+                adminProjectUpdateDTO.setProjectImgUrl(imageUrl);
+            }
+
             // Project 수정 요청
             Project updateProject = adminProjectService.updateProject(projectSeq, adminProjectUpdateDTO, projectImage);
 
@@ -76,8 +83,6 @@ public class AdminProjectController {
     @DeleteMapping("/{projectSeq}")
     @Operation(summary = "프로젝트 삭제", description = "프로젝트 삭제 API (관리자만 가능), 테스트 용도 삭제 API")
     public ApiResponse<?> deleteProject(@PathVariable Long projectSeq) {
-
-
         try {
             // Project 삭제 요청
             adminProjectService.deleteProject(projectSeq);

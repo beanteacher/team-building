@@ -10,5 +10,5 @@ public interface ProjectRepository {
 
     Optional<Project> findById(Long projectSeq);
 
-    void deleteById(Long projectSeq);
+    void deleteById(Long projectSeq) throws Exception;
 }

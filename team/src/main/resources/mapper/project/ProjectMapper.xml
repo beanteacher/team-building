@@ -35,15 +35,15 @@
     <!-- 프로젝트 상세 조회 (관리자) - 관리자 이름 포함 -->
     <select id="findProjectByIdForAdmin" resultType="AdminProjectQueryDTO">
         SELECT
-            p.project_seq AS projectSeq,
-            p.project_title AS projectTitle,
-            p.project_content AS projectContent,
-            p.project_status AS projectStatus,
-            p.project_head_count AS projectHeadCount,
-            p.project_img_url AS projectImgUrl,
-            p.project_start_date AS projectStartDate,
-            p.project_end_date AS projectEndDate,
-            u.user_name AS projectAdminName    <!-- 관리자 이름 추가 -->
+z            p.project_seq
+            , p.project_title
+            , p.project_content
+            , p.project_status
+            , p.project_head_count
+            , p.project_img_url
+            , DATE_FORMAT(p.project_start_date , '%Y-%m-%d') project_start_date
+            , DATE_FORMAT(p.project_end_date , '%Y-%m-%d') project_end_date
+            , u.user_name
         FROM
             tbl_project p
         LEFT JOIN
