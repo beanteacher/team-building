@@ -20,4 +20,8 @@ public class TeamMemberScheduleDTO extends BaseTimeEntity {
 
     private final String memberScheduleFeedback;
 
+    private final String startDate;
+
+    private final String endDate;
+
 }

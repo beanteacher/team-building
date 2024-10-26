@@ -202,6 +202,8 @@ CREATE TABLE `tbl_team_member_schedule_progress`
     `team_schedule_progress_content` varchar(1000) NOT NULL,
     `team_schedule_progress_percent` varchar(10),
     `team_schedule_progress_feedback` varchar(1000) NULL,
+    `start_date` varchar(50) NULL,
+    `end_date` varchar(50) NULL,
     `reg_date` timestamp NOT NULL,
     `mod_date` timestamp NULL,
     PRIMARY KEY (`team_schedule_progress_seq`),
