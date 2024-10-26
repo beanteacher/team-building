@@ -58,7 +58,7 @@ public class TeamMemberScheduleService {
                     .orElseThrow(() -> new CustomException(ErrorCodeType.MEMBER_SCHEDULE_NOT_FOUND));
 
             if(isPossibleScheduleByMember(teamSeq, memberScheduleDTO.getTeamScheduleSeq())) {
-                teamMemberSchedule.updateMemberSchedule(memberScheduleDTO.getMemberScheduleContent(), memberScheduleDTO.getMemberSchedulePercent());
+                teamMemberSchedule.updateMemberSchedule(memberScheduleDTO.getMemberScheduleContent(), memberScheduleDTO.getMemberSchedulePercent(), memberScheduleDTO.getStartDate(), memberScheduleDTO.getEndDate());
                 teamMemberScheduleRepository.save(teamMemberSchedule);
             }
 

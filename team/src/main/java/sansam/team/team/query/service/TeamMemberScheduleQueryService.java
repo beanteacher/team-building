@@ -15,8 +15,8 @@ public class TeamMemberScheduleQueryService {
 
     private final TeamMemberScheduleQueryMapper teamMemberScheduleQueryMapper;
 
-    public List<TeamMemberScheduleQueryDTO> getTeamMemberScheduleList(long teamScheduleSeq) {
-        return teamMemberScheduleQueryMapper.selectTeamMemberScheduleList(teamScheduleSeq);
+    public List<TeamMemberScheduleQueryDTO> getTeamMemberScheduleList(long teamSeq) {
+        return teamMemberScheduleQueryMapper.selectTeamMemberScheduleList(teamSeq);
     }
 
 }
