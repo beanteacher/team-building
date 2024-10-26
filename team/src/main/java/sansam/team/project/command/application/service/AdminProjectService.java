@@ -1,6 +1,7 @@
 package sansam.team.project.command.application.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
@@ -19,6 +20,7 @@ import java.io.IOException;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class AdminProjectService {
 
     private final ProjectRepository projectRepository;
@@ -35,7 +37,7 @@ public class AdminProjectService {
             throw new IllegalArgumentException("User Seq is null");
         }
 
-        if(adminProjectCreateDTO.getProjectStartDate().isBefore(adminProjectCreateDTO.getProjectEndDate())) {
+        if(!adminProjectCreateDTO.getProjectStartDate().isBefore(adminProjectCreateDTO.getProjectEndDate())) {
             throw new IllegalArgumentException("Project Date Check Error");
         }
 
@@ -71,9 +73,12 @@ public class AdminProjectService {
 
     /* 프로젝트 삭제 로직 */
     @Transactional
-    public void deleteProject(Long projectSeq){
-
+    public void deleteProject(Long projectSeq) throws Exception {
         /* 완전 삭제로 할지 소프트 삭제로 할지 의논 후 제대로 구현해야 함 */
-        projectRepository.deleteById(projectSeq);
+        try {
+            projectRepository.deleteById(projectSeq);
+        } catch (Exception e) {
+            throw new Exception("Project DELETE FAIL");
+        }
     }
 }

@@ -3,6 +3,7 @@ package sansam.team.project.command.domain.aggregate.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import sansam.team.common.aggregate.YnType;
 import sansam.team.common.aggregate.entity.BaseTimeEntity;
 import sansam.team.project.command.application.dto.AdminProjectMemberUpdateDTO;
@@ -50,8 +51,8 @@ public class ProjectMember extends BaseTimeEntity {
         if (updateDTO.getProjectMentorYn() != null) {
             this.projectMentorYn = updateDTO.getProjectMentorYn();
         }
-        if(updateDTO.getProjectInterest() != null) {
-            this.projectMemberDevelopType = updateDTO.getProjectInterest();
+        if(updateDTO.getProjectMemberDevelopType() != null) {
+            this.projectMemberDevelopType = updateDTO.getProjectMemberDevelopType();
         }
         if(updateDTO.getProjectMemberCommitScore()!= null) {
             this.projectMemberCommitScore = updateDTO.getProjectMemberCommitScore();
