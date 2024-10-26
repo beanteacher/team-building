@@ -11,9 +11,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class TeamUserReviewQueryDTO {
 
-    private String projectTitle;
-    private double reviewStar;
-    private String reviewContent;
-    private LocalDateTime regDate;
-    private LocalDateTime modDate;
+    private Long userReviewSeq;
+    private String teamMemberReviewContent;
+    private double teamMemberReviewStar;
 }

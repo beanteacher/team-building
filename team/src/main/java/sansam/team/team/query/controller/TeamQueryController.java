@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import sansam.team.common.response.ApiResponse;
 import sansam.team.team.query.dto.TeamFindByIdResponse;
+import sansam.team.team.query.dto.TeamMemberResponse;
 import sansam.team.team.query.dto.TeamResponse;
 import sansam.team.team.query.service.TeamQueryService;
 
@@ -36,5 +37,14 @@ public class TeamQueryController {
     public ApiResponse<TeamFindByIdResponse> selectTeamById(@PathVariable Long teamSeq) {
         TeamFindByIdResponse team = teamQueryService.selectTeamById(teamSeq);
         return ApiResponse.ofSuccess("Team retrieved successfully", team);
+    }
+
+    @GetMapping("/member/{teamSeq}")
+    @Operation(summary = "팀 조회")
+    public ApiResponse<TeamMemberResponse> selectTeamMemberByTeamSeq(@PathVariable Long teamSeq) {
+        log.info("@@@2");
+
+        TeamMemberResponse teamMember = teamQueryService.selectTeamMemberByTeamSeq(teamSeq);
+        return ApiResponse.ofSuccess("teamMemberSeq retrieved successfully", teamMember);
     }
 }
