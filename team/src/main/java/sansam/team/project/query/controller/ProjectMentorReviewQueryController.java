@@ -5,10 +5,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import sansam.team.common.response.ApiResponse;
-import sansam.team.project.query.dto.ProjectMentorReviewAllQueryDTO;
-import sansam.team.project.query.dto.ProjectMentorReviewAllUserQueryDTO;
-import sansam.team.project.query.dto.ProjectMentorReviewQueryDTO;
-import sansam.team.project.query.dto.ProjectMentorReviewUserQueryDTO;
+import sansam.team.project.query.dto.*;
 import sansam.team.project.query.service.ProjectMentorReviewQueryService;
 
 import java.util.List;
@@ -29,15 +26,19 @@ public class ProjectMentorReviewQueryController {
         return ApiResponse.ofSuccess(reviews);
     }
 
-    /* 강사 - 프로젝트 내 회원 평가한 내용 상세 조회 */
-    @GetMapping("/project/{projectSeq}/mentor/review/{mentorReviewSeq}")
-    @Operation(summary = "프로젝트 별 강사 평가 상세 조회 API", description = "강사가 프로젝트 내 특정 회원을 평가한 내용을 조회합니다.")
-    public ApiResponse<ProjectMentorReviewQueryDTO> getProjectMentorReviewByIdForMentor(
-            @PathVariable Long projectSeq,
-            @PathVariable Long mentorReviewSeq) {
-        ProjectMentorReviewQueryDTO review = projectMentorReviewQueryService.getProjectMentorReviewByIdForMentor(mentorReviewSeq);
+    /* 강사 - 프로젝트 내 특정 회원에 대한 평가 조회 */
+    @PostMapping("/mentor/review/member")
+    @Operation(summary = "특정 프로젝트 내 특정 회원에 대한 멘토의 평가 조회 API", description = "멘토가 프로젝트 내 특정 회원에 대해 작성한 평가를 조회합니다.")
+    public ApiResponse<ProjectMentorReviewQueryDTO> getProjectMentorReview(
+            @RequestBody ProjectMentorReviewRequestDTO requestDTO) {
+        ProjectMentorReviewQueryDTO review = projectMentorReviewQueryService.getProjectMentorReview(
+                requestDTO.getMentorSeq(),
+                requestDTO.getProjectMemberSeq()
+        );
         return ApiResponse.ofSuccess(review);
     }
+
+
 
     /* 회원 - 프로젝트 내 강사 평가 전체 조회 */
     @GetMapping("/user/{userSeq}/mentor/review")

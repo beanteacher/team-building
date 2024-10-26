@@ -12,7 +12,7 @@ import java.util.List;
 public interface ProjectMentorReviewMapper {
     List<ProjectMentorReviewAllQueryDTO> findAllForMentor();
 
-    ProjectMentorReviewQueryDTO findByIdForMentor(Long mentorReviewSeq);
+    ProjectMentorReviewQueryDTO findByMentorAndProjectMember(Long mentorSeq, Long projectMemberSeq);
 
     ProjectMentorReviewUserQueryDTO findByIdForUser(Long mentorReviewSeq);
 
