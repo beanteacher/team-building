@@ -16,5 +16,5 @@ public class ProjectAllQueryDTO {
     private String projectTitle;
     private ProjectStatus projectStatus;
     private String projectImgUrl;
-
+    private String projectMentorYn;
 }

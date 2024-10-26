@@ -6,7 +6,7 @@ import org.springframework.util.ObjectUtils;
 import sansam.team.project.query.dto.*;
 import sansam.team.security.util.SecurityUtil;
 import sansam.team.project.query.mapper.ProjectMapper;
-import sansam.team.user.command.domain.aggregate.entity.User;
+import sansam.team.team.query.dto.TeamResponse;
 import sansam.team.user.query.dto.CustomUserDTO;
 
 import java.util.List;
@@ -52,5 +52,9 @@ public class ProjectQueryService {
 
     public List<ProjectMemberQueryDTO> getProjectMemberByIdForUser(Long projectSeq) {
         return projectMapper.findProjectMemberByIdForUser(projectSeq);
+    }
+
+    public List<TeamResponse> selectTeamListForMentor(Long projectSeq) {
+        return projectMapper.selectTeamListForMentor(projectSeq);
     }
 }
