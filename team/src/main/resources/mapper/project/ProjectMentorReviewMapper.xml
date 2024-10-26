@@ -26,6 +26,7 @@
     <!-- 강사 - 특정 프로젝트 내 특정 회원에 대한 평가 조회 -->
     <select id="findByMentorAndProjectMember" parameterType="map" resultType="ProjectMentorReviewQueryDTO">
         SELECT
+        mr.mentor_review_seq AS mentorReviewSeq,
         u.user_name AS userName,
         mr.mentor_review_star AS mentorReviewStar,
         mr.mentor_review_content AS mentorReviewContent,
