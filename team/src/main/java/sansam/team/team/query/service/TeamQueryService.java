@@ -4,9 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import sansam.team.security.util.SecurityUtil;
-import sansam.team.team.query.dto.TeamFindByIdResponse;
-import sansam.team.team.query.dto.TeamRequest;
-import sansam.team.team.query.dto.TeamResponse;
+import sansam.team.team.query.dto.*;
 import sansam.team.team.query.mapper.TeamQueryMapper;
 import sansam.team.user.query.dto.CustomUserDTO;
 
@@ -28,4 +26,8 @@ public class TeamQueryService {
         return teamQueryMapper.selectTeamById(teamSeq);
     }
 
+    public TeamMemberResponse selectTeamMemberByTeamSeq(Long teamSeq) {
+        CustomUserDTO user = SecurityUtil.getAuthenticatedUser();
+        return teamQueryMapper.selectTeamMemberByTeamSeq(new TeamMemberRequest(user.getUserSeq(), teamSeq));
+    }
 }

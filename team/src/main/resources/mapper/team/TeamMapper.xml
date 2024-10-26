@@ -82,5 +82,16 @@
             ON tc.team_seq = t.team_seq
         WHERE t.team_seq = #{teamSeq}
     </select>
+
+    <select id="selectTeamMemberByTeamSeq" resultType="TeamMemberResponse">
+        SELECT team_member_seq
+        FROM tbl_team_member tm
+        JOIN tbl_team t
+            ON t.team_seq = tm.team_seq
+        JOIN tbl_user u
+            ON tm.user_seq = u.user_seq
+        WHERE t.team_seq = #{teamSeq}
+        AND u.user_seq = #{userSeq}
+    </select>
 </mapper>
 

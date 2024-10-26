@@ -29,10 +29,10 @@ public class TeamReviewService {
         boolean result = false;
 
         try {
-            if(isReviewPeriod(teamReviewDTO)) {
+            // if(isReviewPeriod(teamReviewDTO)) {
                 teamReviewRepository.save(modelMapper.map(teamReviewDTO, TeamReview.class));
                 result = true;
-            }
+            // }
 
         } catch (Exception e) {
             if(((CustomException) e).getErrorCode() != null) {
