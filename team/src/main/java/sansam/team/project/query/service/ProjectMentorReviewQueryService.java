@@ -21,9 +21,9 @@ public class ProjectMentorReviewQueryService {
         return projectMentorReviewMapper.findAllForMentor();
     }
 
-    /* 강사 - 프로젝트 내 회원 평가한 내용 상세 조회 */
-    public ProjectMentorReviewQueryDTO getProjectMentorReviewByIdForMentor(Long mentorReviewSeq){
-        return projectMentorReviewMapper.findByIdForMentor(mentorReviewSeq);
+    // 강사 - 특정 프로젝트 내 특정 회원에 대한 평가 조회
+    public ProjectMentorReviewQueryDTO getProjectMentorReview(Long mentorSeq, Long projectMemberSeq) {
+        return projectMentorReviewMapper.findByMentorAndProjectMember(mentorSeq, projectMemberSeq);
     }
 
     /* 회원 - 프로젝트 내 강사 평가 전체 조회*/

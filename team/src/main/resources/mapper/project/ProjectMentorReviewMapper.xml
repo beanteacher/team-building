@@ -23,27 +23,32 @@
             pm.project_member_del_yn = 'N'
     </select>
 
-    <!-- 강사 - 프로젝트 내 회원 평가한 내용 상세 조회 -->
-    <select id="findByIdForMentor" parameterType="long" resultType="ProjectMentorReviewQueryDTO">
+    <!-- 강사 - 특정 프로젝트 내 특정 회원에 대한 평가 조회 -->
+    <select id="findByMentorAndProjectMember" parameterType="map" resultType="ProjectMentorReviewQueryDTO">
         SELECT
-            u.user_name AS userName,
-            mr.mentor_review_star AS mentorReviewStar,
-            mr.mentor_review_content AS mentorReviewContent,
-            mr.reg_date AS regDate,
-            mr.mod_date AS modDate
+        u.user_name AS userName,
+        mr.mentor_review_star AS mentorReviewStar,
+        mr.mentor_review_content AS mentorReviewContent,
+        mr.reg_date AS regDate,
+        mr.mod_date AS modDate
         FROM
-            tbl_mentor_review mr
+        tbl_mentor_review mr
         JOIN
-            tbl_project_member pm ON mr.project_member_seq = pm.project_member_seq
+        tbl_project_member pm ON mr.project_member_seq = pm.project_member_seq
         JOIN
-            tbl_user u ON pm.user_seq = u.user_seq
+        tbl_user u ON pm.user_seq = u.user_seq
         WHERE
-            mr.mentor_review_seq = #{mentorReviewSeq}
+        mr.project_member_seq = #{projectMemberSeq}
         AND
-            pm.project_mentor_yn = 'N'
+        mr.project_mentor_seq = #{mentorSeq}
         AND
-            pm.project_member_del_yn = 'N'
+        pm.project_mentor_yn = 'N'
+        AND
+        pm.project_member_del_yn = 'N'
     </select>
+
+
+
 
     <select id="findAllByIdForUser" resultType="ProjectMentorReviewAllUserQueryDTO">
         SELECT
