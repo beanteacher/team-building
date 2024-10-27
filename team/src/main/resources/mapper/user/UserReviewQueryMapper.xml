@@ -7,24 +7,43 @@
 
     <select id="getTeamMemberReviewList" resultType="sansam.team.user.query.dto.UserMemberReviewResponseDTO">
         SELECT tur.user_review_seq userReviewSeq
-              , tur.send_team_member_seq sendMemberSeq
-              , tur.receive_team_member_seq receiveMemberSeq
-              , tur.team_member_review_star reviewStar
-              , tur.team_member_review_content reviewContent
-              , tur.reg_date regDate
-              , tur.mod_date modDate
-              , t.team_name teamName
-              , p.project_title projectTitle
+        , tur.send_team_member_seq sendMemberSeq
+        , tur.receive_team_member_seq receiveMemberSeq
+        , tur.team_member_review_star reviewStar
+        , tur.team_member_review_content reviewContent
+        , tur.reg_date regDate
+        , tur.mod_date modDate
+        , t.team_name teamName
+        , p.project_title projectTitle
         FROM tbl_user_review tur
         JOIN tbl_team_member tm ON (tur.send_team_member_seq = tm.team_member_seq)
         JOIN tbl_team t ON (tm.team_seq = t.team_seq)
         JOIN tbl_project p ON (t.project_seq = p.project_seq)
+        JOIN tbl_project_member tpm ON (tpm.project_seq = p.project_seq) AND (tpm.user_seq = tm.user_seq)
+        JOIN tbl_user tu ON (tm.user_seq = tu.user_seq)
         WHERE tur.receive_team_member_seq = #{userSeq}
+        AND tpm.project_mentor_yn = 'N'
     </select>
 
     <select id="getTeamMentorReviewList" resultType="sansam.team.user.query.dto.UserMentorReviewResponseDTO">
-
-
+        SELECT tur.user_review_seq userReviewSeq
+            , tur.send_team_member_seq sendMemberSeq
+            , tur.receive_team_member_seq receiveMemberSeq
+            , tur.team_member_review_star reviewStar
+            , tur.team_member_review_content reviewContent
+            , tur.reg_date regDate
+            , tur.mod_date modDate
+            , t.team_name teamName
+            , p.project_title projectTitle
+            , tu.user_nickname mentorNickName
+        FROM tbl_user_review tur
+        JOIN tbl_team_member tm ON (tur.send_team_member_seq = tm.team_member_seq)
+        JOIN tbl_team t ON (tm.team_seq = t.team_seq)
+        JOIN tbl_project p ON (t.project_seq = p.project_seq)
+        JOIN tbl_project_member tpm ON (tpm.project_seq = p.project_seq) AND (tpm.user_seq = tm.user_seq)
+        JOIN tbl_user tu ON (tm.user_seq = tu.user_seq)
+        WHERE tur.receive_team_member_seq = #{userSeq}
+        AND tpm.project_mentor_yn = 'Y'
     </select>
 
 
