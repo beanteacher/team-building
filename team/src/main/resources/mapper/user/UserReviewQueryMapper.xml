@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="sansam.team.user.query.mapper.UserReviewQueryMapper">
+
+    <select id="getTeamMemberReviewList" resultType="sansam.team.user.query.dto.UserMemberReviewResponseDTO">
+        SELECT tur.user_review_seq userReviewSeq
+              , tur.send_team_member_seq sendMemberSeq
+              , tur.receive_team_member_seq receiveMemberSeq
+              , tur.team_member_review_star reviewStar
+              , tur.team_member_review_content reviewContent
+              , tur.reg_date regDate
+              , tur.mod_date modDate
+              , t.team_name teamName
+              , p.project_title projectTitle
+        FROM tbl_user_review tur
+        JOIN tbl_team_member tm ON (tur.send_team_member_seq = tm.team_member_seq)
+        JOIN tbl_team t ON (tm.team_seq = t.team_seq)
+        JOIN tbl_project p ON (t.project_seq = p.project_seq)
+        WHERE tur.receive_team_member_seq = #{userSeq}
+    </select>
+
+    <select id="getTeamMentorReviewList" resultType="sansam.team.user.query.dto.UserMentorReviewResponseDTO">
+
+
+    </select>
+
+
+</mapper>
